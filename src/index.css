@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Commissioner");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Poppins', 'sans-serif';
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .heading2 {
+    @apply font-bold text-[24px] text-uiBlack;
+  }
+}
