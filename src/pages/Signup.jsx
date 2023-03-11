@@ -5,9 +5,9 @@ import AlertBox from "../components/common/AlertBox";
 import Layout from "../components/common/Layout";
 import SignupForm from "../components/login/SignupForm";
 import {
-  getAccessToken,
   getsignupError,
   getsignupStatus,
+  getUser,
   removeSignupMessage,
 } from "../redux/slice/authSlice";
 
@@ -16,13 +16,13 @@ const Signup = () => {
 
   const status = useSelector(getsignupStatus);
   const error = useSelector(getsignupError);
-  const token = useSelector(getAccessToken);
+  const user = useSelector(getUser);
 
   useEffect(() => {
-    if (token) {
+    if (user) {
       navigate("/", { replace: true });
     }
-  }, [token, navigate]);
+  }, [user, navigate]);
 
   return (
     <Layout>

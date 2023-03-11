@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { logoBig } from "../../../assets";
+import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
 const MainFooter = () => {
   const [email, setEmail] = useState("");
@@ -10,19 +11,19 @@ const MainFooter = () => {
         <div className="h-[48px]">
           <img src={logoBig} className="h-full" />
         </div>
-        <ul className="list-none text-[14px]">
-          <li className="flex flex-row gap-2">
-            <span className="text-black/80 font-medium">Address:</span>
+        <ul className="list-none text-[14px] flex flex-col gap-1">
+          <li className="flex flex-row gap-2 items-center">
+            <FiMapPin className="text-black/80" />
             <span className="text-uiBlack">
               Growcomers Building, <br /> Vellore, Tamilnadu, 632014, India
             </span>
           </li>
-          <li className="flex flex-row gap-2">
-            <span className="text-black/80 font-medium">Phone:</span>
+          <li className="flex flex-row gap-2 items-center">
+            <FiPhone className="text-black/80" />
             <span className="text-uiBlack">+91-890000000</span>
           </li>
-          <li className="flex flex-row gap-2">
-            <span className="text-black/80 font-medium">Email:</span>
+          <li className="flex flex-row gap-2 items-center">
+            <FiMail className="text-black/80" />
             <span className="text-uiBlack">info@growcomers.com</span>
           </li>
         </ul>

@@ -58,11 +58,11 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get("auth/logout", {
-        withCredentials: true,
-      });
+      // const response = await NODE_API.get("auth/logout", {
+      //   withCredentials: true,
+      // });
       localStorage.removeItem("accessToken");
-      return response.data;
+      return { data: "success" };
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error);
     }

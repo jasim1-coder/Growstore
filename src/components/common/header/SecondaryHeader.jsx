@@ -8,7 +8,7 @@ const SecondaryHeader = () => {
     <nav className="flex flex-row py-4 gap-4 items-center justify-between flex-wrap">
       <Link
         to="/categories"
-        className="bg-baseGreen rounded-sm py-[10px] px-4 flex flex-row gap-2 font-medium text-uiWhite items-center"
+        className="primary-button flex flex-row gap-2 font-medium text-uiWhite items-center"
       >
         <AiOutlineAppstore className="text-[22px]" />
         <span>Browse Categories</span>

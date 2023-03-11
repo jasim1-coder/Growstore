@@ -8,6 +8,7 @@ module.exports = {
         formBackground: "#FCFDFC",
         baseGreen: "#3BB77E",
         lightGreen: "#DEF9EC",
+        darkGreen: "#339C6C",
         uiGrey: "#ADADAD",
         greyLight: "#F3F3F3",
         uiBlack: "#253D4E",

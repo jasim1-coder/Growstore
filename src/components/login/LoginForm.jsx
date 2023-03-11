@@ -112,7 +112,7 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="primary-button"
+            className="submit-button"
             disabled={status !== "idle"}
           >
             {status == "loading" ? (

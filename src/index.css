@@ -47,8 +47,28 @@
     @apply text-[12px] text-uiRed;
   }
 
+  .submit-button {
+    @apply h-[50px] text-uiWhite bg-baseGreen border border-baseGreen rounded-sm font-medium flex flex-row justify-center items-center disabled:bg-baseGreen/60 disabled:border-baseGreen/30 hover:bg-darkGreen transition-all duration-150;
+  }
+
   .primary-button {
-    @apply h-[50px] text-formBackground bg-baseGreen border border-baseGreen rounded-sm font-medium flex flex-row justify-center items-center disabled:bg-baseGreen/60 disabled:border-baseGreen/30;
+    @apply py-[10px] px-4 text-uiWhite bg-baseGreen rounded-sm font-medium hover:bg-darkGreen transition-all duration-150
+  }
+
+  .heading2 {
+    @apply font-semibold sm:text-[28px] text-[22px] text-uiBlack;
+  }
+
+  .main-container {
+    @apply flex flex-col gap-4 sm:py-8 py-6
+  }
+
+  .grid-list-4 {
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1
+  }
+
+  .grid-list-5 {
+    @apply grid grid-cols-2 gap-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2
   }
 }
 

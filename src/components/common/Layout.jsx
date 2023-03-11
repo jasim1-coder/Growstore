@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
     <div className="min-h-[100vh] flex flex-col">
       <ScrollToTop />
       <Header />
-      <main className="sm:py-12 py-6">{children}</main>
+      <main className="">{children}</main>
       <Footer />
     </div>
   );

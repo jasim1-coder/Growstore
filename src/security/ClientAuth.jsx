@@ -1,29 +1,19 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import {
   getAccessToken,
   getLoginWithTokenStatus,
   getUserRole,
-  loginwithtoken,
-  removeLoginWithTokenMessage,
 } from "../redux/slice/authSlice";
 
 const ClientAuth = () => {
-  const dispatch = useDispatch();
-  const token = useSelector(getAccessToken);
   const userRole = useSelector(getUserRole);
   const status = useSelector(getLoginWithTokenStatus);
+  const token = useSelector(getAccessToken);
 
-  useEffect(() => {
-    if (token && !userRole) {
-      dispatch(loginwithtoken(token));
-    }
-  }, []);
-
-  if (status === "failed") {
-    dispatch(removeLoginWithTokenMessage());
-    return <Navigate to="/" replace />;
+  if ((token && status === "idle" && !userRole) || status === "loading") {
+    return <p>Loading ...</p>;
   }
 
   return userRole === "ADMIN" ? (

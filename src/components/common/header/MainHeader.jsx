@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { logoBig } from "../../../assets";
-import { TfiAngleDown } from "react-icons/tfi";
-import { FiSearch, FiHeart, FiShoppingCart } from "react-icons/fi";
+import {
+  FiSearch,
+  FiHeart,
+  FiShoppingCart,
+  FiChevronDown,
+} from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -22,9 +26,11 @@ const MainHeader = () => {
       </Link>
       <div className="flex flex-row flex-wrap">
         <div className="bg-greyLight p-3 rounded-tl-sm rounded-bl-sm">
-          <div className="flex flex-row items-center gap-2 text-uiBlack text-[14px] font-medium max-w-full overflow-clip">
-            <span className="whitespace-nowrap">All Categories</span>
-            <TfiAngleDown />
+          <div className="flex flex-row items-center gap-2 text-uiBlack  max-w-full overflow-clip">
+            <span className="whitespace-nowrap text-[14px] font-medium">
+              All Categories
+            </span>
+            <FiChevronDown />
             <div className="ml-3 w-[1px] bg-uiGrey h-[20px]" />
           </div>
         </div>

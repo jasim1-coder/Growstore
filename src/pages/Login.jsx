@@ -5,9 +5,9 @@ import AlertBox from "../components/common/AlertBox";
 import Layout from "../components/common/Layout";
 import LoginForm from "../components/login/LoginForm";
 import {
-  getAccessToken,
   getLoginError,
   getLoginStatus,
+  getUser,
   removeLoginMessage,
 } from "../redux/slice/authSlice";
 
@@ -15,17 +15,16 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from;
-  console.log(from);
 
   const status = useSelector(getLoginStatus);
   const error = useSelector(getLoginError);
-  const token = useSelector(getAccessToken);
+  const user = useSelector(getUser);
 
   useEffect(() => {
-    if (status === "success" || token) {
+    if (status === "success" || user) {
       navigate(from ? from.pathname : "/", { replace: true });
     }
-  }, [navigate, status, token]);
+  }, [navigate, status, user]);
 
   return (
     <Layout>
