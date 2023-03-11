@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Commissioner");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,120 @@
 }
 
 @layer components {
-  .heading2 {
-    @apply font-bold text-[24px] text-uiBlack;
+  .footerHeading {
+    @apply font-semibold text-[20px] text-uiBlack;
   }
+
+  .footer-item {
+    @apply text-uiBlack text-[14px] hover:text-baseGreen transition-all duration-150
+  }
+
+  .linkActive {
+    @apply text-baseGreen p-2 
+  }
+
+  .linkInactive {
+    @apply text-uiBlack p-2 hover:text-baseGreen transition-all duration-150
+  }
+
+  .input-row-container {
+    @apply flex sm:flex-row flex-col gap-3 sm:items-start justify-between;
+  }
+
+  .input-container {
+    @apply flex flex-col gap-2 w-full;
+  }
+
+  .input-label {
+    @apply font-medium text-uiBlack text-sm;
+  }
+
+  .input-box {
+    @apply h-[50px] w-full px-3 text-uiBlack focus:outline-none border border-uiGrey rounded-sm;
+  }
+
+  .input-error {
+    @apply text-[12px] text-uiRed;
+  }
+
+  .primary-button {
+    @apply h-[50px] text-formBackground bg-baseGreen border border-baseGreen rounded-sm font-medium flex flex-row justify-center items-center disabled:bg-baseGreen/60 disabled:border-baseGreen/30;
+  }
+}
+
+
+.alertbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.success {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+
+.success p {
+  background-color: #0f5132;
+}
+
+.failed {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
+.failed p {
+  background-color: #842029;
+}
+
+.warning {
+  color: #664d03;
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+}
+
+.warning p {
+  background-color: #664d03;
+}
+
+.primary {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+}
+
+.primary p {
+  background-color: #084298;
+}
+
+.secondary {
+  color: #41464b;
+  background-color: #e2e3e5;
+  border-color: #d3d6d8;
+}
+
+.secondary p {
+  background-color: #084298;
+}
+
+.info {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
+
+.info p{
+  background-color: #055160;
+}
+.alertbox-close-btn {
+  font-size: 26px;
+  font-weight: 500;
+  cursor: pointer;
 }

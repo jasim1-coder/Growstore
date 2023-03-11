@@ -1,8 +1,13 @@
 import axios from "axios";
 
 export const NODE_BASE_URL = "http://localhost:4000";
+export const PYTHON_BASE_URL = "http://localhost:4002";
 
-export const API = axios.create({
+export const NODE_API = axios.create({
+  baseURL: NODE_BASE_URL,
+});
+
+export const PYTHON_API = axios.create({
   baseURL: NODE_BASE_URL,
 });
 
