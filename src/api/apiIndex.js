@@ -8,7 +8,7 @@ export const NODE_API = axios.create({
 });
 
 export const PYTHON_API = axios.create({
-  baseURL: NODE_BASE_URL,
+  baseURL: PYTHON_BASE_URL,
 });
 
 export const PRIVATE_API = axios.create({

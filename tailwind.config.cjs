@@ -15,7 +15,7 @@ module.exports = {
         uiWhite: "#FFFFFF",
         uiRed: "#DE3A3A",
         textDim: "#908F8F",
-        rightBar: "#F2F2F2",
+        uiOrange: "#F4845E",
       },
     },
     container: {

@@ -15,7 +15,7 @@ const MainFooter = () => {
           <li className="flex flex-row gap-2 items-center">
             <FiMapPin className="text-black/80" />
             <span className="text-uiBlack">
-              Growcomers Building, <br /> Vellore, Tamilnadu, 632014, India
+              Growcomers Building, <br /> City name, Tamilnadu, India
             </span>
           </li>
           <li className="flex flex-row gap-2 items-center">

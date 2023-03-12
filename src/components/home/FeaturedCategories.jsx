@@ -19,6 +19,7 @@ const FeaturedCategories = () => {
       dispatch(fetchFeaturedCategories());
     }
   }, []);
+
   return (
     <div className="container main-container">
       <h2 className="heading2">Explore Categories</h2>

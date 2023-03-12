@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PagenotFound from "./pages/PagenotFound";
@@ -33,10 +34,12 @@ function App() {
 
         <Route path="/" element={<ClientAuth />}>
           <Route path="/" element={<Home />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
 
         <Route path="/" element={<RequireAuth allowedRole="CUSTOMER" />}>
           <Route path="profile" element={<Profile />} />
+          <Route path="checkout" element={<p>Checkout page</p>} />
         </Route>
 
         <Route path="/admin" element={<RequireAuth allowedRole="ADMIN" />}>

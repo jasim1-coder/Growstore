@@ -4,12 +4,10 @@ import SecondaryHeader from "./SecondaryHeader";
 
 const Header = () => {
   return (
-    <div className="bg-formBackground shadow-sm">
-      <div className="container">
-        <MainHeader />
-        <SecondaryHeader />
-      </div>
-    </div>
+    <>
+      <MainHeader />
+      <SecondaryHeader />
+    </>
   );
 };
 

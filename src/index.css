@@ -59,8 +59,12 @@
     @apply font-semibold sm:text-[28px] text-[22px] text-uiBlack;
   }
 
+  .heading3 {
+    @apply font-medium text-left sm:text-[22px] text-[16px] text-uiBlack;
+  }
+
   .main-container {
-    @apply flex flex-col gap-4 sm:py-8 py-6
+    @apply flex flex-col gap-4 sm:py-[3rem] py-[2rem]
   }
 
   .grid-list-4 {
