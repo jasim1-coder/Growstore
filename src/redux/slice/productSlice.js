@@ -21,6 +21,10 @@ const initialState = {
   topPicks: [],
   topPicksError: "",
   topPicksStatus: "idle",
+
+  product: "",
+  productError: "",
+  productStatus: "idle",
 };
 
 export const fetchFeaturedProduct = createAsyncThunk(
@@ -82,11 +86,28 @@ export const fetchTopPicks = createAsyncThunk(
     }
   }
 );
+export const fetchProductDetails = createAsyncThunk(
+  "product/fetchProductDetails",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.get(`/product/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    clearProductDetails: (state) => {
+      state.product = "";
+      state.productStatus = "idle";
+      state.productError = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       // GET FEATURED Product
@@ -161,9 +182,25 @@ const productSlice = createSlice({
       .addCase(fetchTopPicks.rejected, (state, action) => {
         state.topPicksStatus = "failed";
         state.topPicksError = action.payload.message;
+      })
+      // GET Product Details
+      .addCase(fetchProductDetails.pending, (state) => {
+        state.productStatus = "loading";
+        state.productError = "";
+      })
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        state.productStatus = "success";
+        state.productError = "";
+        state.product = action.payload.data;
+      })
+      .addCase(fetchProductDetails.rejected, (state, action) => {
+        state.productStatus = "failed";
+        state.productError = action.payload.message;
       });
   },
 });
+
+export const { clearProductDetails } = productSlice.actions;
 
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
@@ -188,5 +225,9 @@ export const getPopularProductsError = (state) => state.product.popularError;
 export const getTopPicks = (state) => state.product.topPicks;
 export const getTopPicksStatus = (state) => state.product.topPicksStatus;
 export const getTopPicksError = (state) => state.product.topPicksError;
+
+export const getProductDetails = (state) => state.product.product;
+export const getProductStatus = (state) => state.product.productStatus;
+export const getProductError = (state) => state.product.productError;
 
 export default productSlice.reducer;

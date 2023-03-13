@@ -13,7 +13,7 @@ const CheckoutCard = () => {
   };
 
   return (
-    <div className="w-[420px] bg-greyLight p-8 rounded-sm flex flex-col h-max">
+    <div className="md:w-[420px] max-w-[350px] bg-greyLight p-8 rounded-sm flex flex-col h-max">
       <div className="flex flex-col gap-4 border-b border-uiGrey pb-6">
         <div className="flex flex-row justify-between items-center">
           <span className="text-textDim text-sm">Subtotal</span>

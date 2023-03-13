@@ -1,17 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CheckoutCard from "../components/cart/CheckoutCard";
 import ProductList from "../components/cart/ProductList";
 import Layout from "../components/common/Layout";
-import { getCartItemsLength } from "../redux/slice/cartSlice";
+import { getUser } from "../redux/slice/authSlice";
+import { fetchCartItems, getCartItemsLength } from "../redux/slice/cartSlice";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
   const itemsLength = useSelector(getCartItemsLength);
+
+  useEffect(() => {
+    if (user && itemsLength === 0) {
+      dispatch(fetchCartItems());
+    }
+  }, []);
   return (
     <Layout>
-      <div className="container py-[2rem] px-[4rem]">
-        <div className="flex flex-row justify-between gap-16">
+      <div className="container py-[2rem] sm:px-[4rem]">
+        <div className="flex md:flex-row flex-col justify-between gap-16">
           <div className="flex-1 flex flex-col gap-3">
             <div className="flex flex-row justify-between items-center border-b border-textDim py-4">
               <h2 className="heading2">Your Cart</h2>

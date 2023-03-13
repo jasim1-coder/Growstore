@@ -6,15 +6,15 @@ import { FiPhone } from "react-icons/fi";
 const SecondaryHeader = () => {
   return (
     <div className="bg-formBackground shadow-sm">
-      <nav className="container  flex flex-row py-4 gap-4 items-center justify-between flex-wrap">
-        <Link
+      <nav className="container  flex flex-row py-2 gap-4 items-center justify-between flex-wrap">
+        {/* <Link
           to="/categories"
           className="primary-button flex flex-row gap-2 font-medium text-uiWhite items-center"
         >
           <AiOutlineAppstore className="text-[22px]" />
           <span>Browse Categories</span>
-        </Link>
-        <div className="flex flex-row gap-[24px] flex-wrap">
+        </Link> */}
+        <div className="flex flex-row gap-[24px] flex-wrap self-end">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -30,6 +30,14 @@ const SecondaryHeader = () => {
             }
           >
             Products
+          </NavLink>
+          <NavLink
+            to="/categories"
+            className={({ isActive }) =>
+              isActive ? "linkActive" : "linkInactive"
+            }
+          >
+            Categories
           </NavLink>
           <NavLink
             to="/brands"

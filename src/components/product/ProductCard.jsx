@@ -1,29 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import { product } from "../../assets";
 import StarRating from "../common/starRating/StarRating";
 import { FiShoppingCart } from "react-icons/fi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/slice/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  addToCartNOUSER,
+  getCartItems,
+} from "../../redux/slice/cartSlice";
+import { getUser } from "../../redux/slice/authSlice";
+import { ImSpinner2 } from "react-icons/im";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
+  const cartItems = useSelector(getCartItems);
+  const [existsInCart, setExistsInCart] = useState(false);
+  const [addStatus, setAddStatus] = useState("idle");
 
-  const handleAddtoCart = () => {
-    const quantity = 3;
-    const _total = data.price * quantity;
-    const total = _total.toFixed(2);
+  useEffect(() => {
+    const exists = cartItems.find((item) => item.id === data._id);
+    setExistsInCart(!!exists);
+  }, [cartItems]);
 
-    const _data = { ...data, quantity, total };
-    dispatch(addToCart(_data));
+  const handleAddtoCart = async () => {
+    const quantity = 1;
+
+    if (user) {
+      setAddStatus("loading");
+      const _data = { id: data._id, quantity };
+      await dispatch(addToCart({ productData: [_data] })).unwrap();
+      setAddStatus("success");
+    } else {
+      const _total = data.price * quantity;
+      const total = _total.toFixed(2);
+
+      const _data = {
+        id: data._id,
+        title: data.title,
+        price: data.price,
+        imageUrl: data.imageUrl,
+        quantity,
+        total,
+      };
+      dispatch(addToCartNOUSER(_data));
+    }
   };
 
   return (
     <div className="m-auto sm:min-h-[300px] h-full max-w-[300px] w-full">
       <div className="group outline outline-1 outline-greyLight rounded-sm">
         <div className="h-[250px] w-full overflow-hidden relative bg-greyLight">
-          <Link to="/product">
+          <Link to={`/product/${data._id}`}>
             <img
               className="object-contain h-full w-full"
               src={data.imageUrl}
@@ -41,7 +71,7 @@ const ProductCard = ({ data }) => {
 
           <p className="text-uiBlack text-[18px] font-medium ">
             <Link
-              to="/product"
+              to={`/product/${data._id}`}
               className="hover:text-uiOrange transition-all duration-150"
               dangerouslySetInnerHTML={{ __html: data.title }}
             />
@@ -55,23 +85,28 @@ const ProductCard = ({ data }) => {
           </div>
           <div className="flex flex-col gap-3 mt-auto">
             <p className="">
-              <Link to="/product">
-                <span className="text-baseGreen text-[22px] font-semibold">
-                  &#8377; {data.price}
-                </span>
-                &nbsp;
-                <span className="text-textDim line-through">
-                  &#8377; {data.MRP}
-                </span>
-              </Link>
+              <span className="text-baseGreen text-[22px] font-semibold">
+                &#8377; {data.price}
+              </span>
+              &nbsp;
+              <span className="text-textDim line-through">
+                &#8377; {data.MRP}
+              </span>
             </p>
             <button
               type="button"
               onClick={handleAddtoCart}
-              className="flex flex-row gap-2 py-3 w-full rounded-sm text-baseGreen bg-lightGreen items-center justify-center hover:bg-baseGreen hover:text-uiWhite transition-all duration-150"
+              className="flex flex-row gap-2 py-3 w-full rounded-sm text-baseGreen bg-lightGreen items-center justify-center hover:bg-baseGreen hover:text-uiWhite transition-all duration-150 disabled:bg-greyLight disabled:text-uiGrey"
+              disabled={existsInCart || addStatus !== "idle"}
             >
-              <FiShoppingCart />
-              <span>Add</span>
+              {addStatus === "loading" ? (
+                <ImSpinner2 className="animate-spin text-[18px]" />
+              ) : (
+                <>
+                  <FiShoppingCart />
+                  <span>{existsInCart ? "Added" : "Add"}</span>
+                </>
+              )}
             </button>
           </div>
         </div>

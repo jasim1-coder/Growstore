@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { RiHeartLine, RiHeartFill } from "react-icons/ri";
-import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../redux/slice/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getUser } from "../../redux/slice/authSlice";
+import {
+  removeFromCart,
+  removeFromCartNOUSER,
+} from "../../redux/slice/cartSlice";
 
 const ProductItem = ({ data }) => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
+  const [deleteStatus, setDeleteStatus] = useState("idle");
 
-  const handleDelete = () => {
-    dispatch(removeFromCart(data._id));
+  const handleDelete = async () => {
+    setDeleteStatus("loading");
+    if (user) {
+      await dispatch(removeFromCart(data.id)).unwrap();
+    } else {
+      dispatch(removeFromCartNOUSER(data.id));
+    }
+    setDeleteStatus("success");
   };
 
   const handleWishlist = () => {
@@ -24,16 +37,27 @@ const ProductItem = ({ data }) => {
             src={data.imageUrl}
             alt=""
           />
-          <span className="" dangerouslySetInnerHTML={{ __html: data.title }} />
+          <Link to={`/product/${data.id}`}>
+            <span
+              className="text-sm hover:text-uiOrange"
+              dangerouslySetInnerHTML={{ __html: data.title }}
+            />
+          </Link>
         </div>
         <div className="flex flex-row">
-          <button
-            type="button"
-            onClick={handleDelete}
-            className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
-          >
-            <FiTrash2 /> <span className="text-[12px]">Delete</span>
-          </button>
+          {deleteStatus === "loading" ? (
+            <span className="text-uiRed text-[12px] pr-3 border-r-[2px] border-textDim/60">
+              Deleting...
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
+            >
+              <FiTrash2 /> <span className="text-[12px]">Delete</span>
+            </button>
+          )}
           <button
             type="button"
             onClick={handleWishlist}

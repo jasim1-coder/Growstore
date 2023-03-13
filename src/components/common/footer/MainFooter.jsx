@@ -64,7 +64,7 @@ const MainFooter = () => {
         <div className="flex flex-row gap-3">
           <input
             type="text"
-            className="bg-uiGrey/20 p-3 focus:outline-none text-sm rounded-sm"
+            className="bg-uiGrey/20 p-3 focus:outline-none text-sm rounded-sm sm:w-full w-[220px]"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email"

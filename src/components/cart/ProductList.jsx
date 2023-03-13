@@ -1,10 +1,15 @@
 import React from "react";
 import ProductItem from "./ProductItem";
 import { useSelector } from "react-redux";
-import { getCartItems } from "../../redux/slice/cartSlice";
+import {
+  getCartItemFetchStatus,
+  getCartItems,
+} from "../../redux/slice/cartSlice";
 
 const ProductList = () => {
   const data = useSelector(getCartItems);
+  const fetchStatus = useSelector(getCartItemFetchStatus);
+
   return (
     <table className="table-auto">
       <thead className="">
@@ -16,7 +21,13 @@ const ProductList = () => {
         </tr>
       </thead>
       <tbody>
-        {data.length === 0 ? (
+        {fetchStatus === "loading" ? (
+          <tr className="py-2 border-b border-greyLight">
+            <td colSpan={4} className="text-center px-2 py-4 font-medium">
+              Loading...
+            </td>
+          </tr>
+        ) : data.length === 0 ? (
           <tr className="py-2 border-b border-greyLight">
             <td colSpan={4} className="text-center px-2 py-4 font-medium">
               No items found in your cart
