@@ -39,7 +39,7 @@ const ProductMain = () => {
         id: data._id,
         title: data.title,
         price: data.price,
-        imageUrl: data.imageUrl,
+        imageUrl: data.imageURLHighRes[0],
         quantity,
         total,
       };
@@ -79,10 +79,12 @@ const ProductMain = () => {
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-row gap-2 items-center pr-4 border-r-[2px] border-r-uiGrey/80">
             <FaStar className="text-[#FDC040]" />
-            <span className="text-uiBlack font-medium">4.5/5</span>
+            <span className="text-uiBlack font-medium">{data.rating}/5</span>
           </div>
           <p className="">
-            <span className="text-uiBlack font-medium">124</span>
+            <span className="text-uiBlack font-medium">
+              {data.totalReviews}
+            </span>
             &nbsp;
             <span className="text-textDim">Reviews</span>
           </p>

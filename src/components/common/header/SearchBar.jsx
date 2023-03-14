@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
-import { NODE_API } from "../../../api/apiIndex";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  getSearchQuery,
+  setsearchQuery,
+} from "../../../redux/slice/productSlice";
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
+  const dispatch = useDispatch();
+  const oldQuery = useSelector(getSearchQuery);
+  const navigate = useNavigate();
+
+  const [query, setQuery] = useState(oldQuery);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log("search Clicked");
-    const { data } = await NODE_API.get(`/product/search?query=${query}`);
-    console.log(data.data);
+    // const { data } = await NODE_API.get(`/product/search?query=${query}`);
+    // console.log(data.data);
+    dispatch(setsearchQuery(query));
+    navigate("/products");
   };
 
   return (

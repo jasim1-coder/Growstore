@@ -2,7 +2,7 @@ import React from "react";
 import { logoBig } from "../../../assets";
 import { FiHeart } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserName } from "../../../redux/slice/authSlice";
 import CartButton from "./CartButton";
@@ -10,6 +10,12 @@ import SearchBar from "./SearchBar";
 
 const MainHeader = () => {
   const name = useSelector(getUserName);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/login", { state: { from: location } });
+  };
 
   return (
     <div className="bg-formBackground sticky top-0 z-50 shadow-sm">
@@ -43,12 +49,12 @@ const MainHeader = () => {
               </span>
             </Link>
           ) : (
-            <Link
-              to="/login"
+            <button
+              onClick={handleLogin}
               className="px-6 py-1 hover:bg-baseGreen text-baseGreen border border-baseGreen hover:text-uiWhite transition-all duration-100 rounded-sm font-medium"
             >
               Login
-            </Link>
+            </button>
           )}
         </div>
       </div>

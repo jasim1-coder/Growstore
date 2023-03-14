@@ -4,7 +4,7 @@ const ImageSection = ({ imageURL, imageURLHighRes }) => {
   const [index, setIndex] = useState(0);
   return (
     <div className="flex flex-col gap-6">
-      <div className="bg-greyLight/60 border border-greyLight rounded-sm p-5 w-[500px]">
+      <div className="bg-greyLight/60 border border-greyLight rounded-sm p-5 sm:w-[500px]">
         <img
           src={imageURLHighRes[index]}
           className="h-[400px] max-w-auto object-contain m-auto"

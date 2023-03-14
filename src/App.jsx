@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PagenotFound from "./pages/PagenotFound";
 import Product from "./pages/Product";
+import ProductListing from "./pages/ProductListing";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
 import {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/" element={<ClientAuth />}>
           <Route path="/" element={<Home />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="products" element={<ProductListing />} />
           <Route path="product/:id" element={<Product />} />
         </Route>
 

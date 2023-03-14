@@ -25,6 +25,8 @@ const initialState = {
   product: "",
   productError: "",
   productStatus: "idle",
+
+  searchQuery: "",
 };
 
 export const fetchFeaturedProduct = createAsyncThunk(
@@ -106,6 +108,9 @@ const productSlice = createSlice({
       state.product = "";
       state.productStatus = "idle";
       state.productError = "";
+    },
+    setsearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -200,7 +205,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { clearProductDetails } = productSlice.actions;
+export const { clearProductDetails, setsearchQuery } = productSlice.actions;
 
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
@@ -229,5 +234,7 @@ export const getTopPicksError = (state) => state.product.topPicksError;
 export const getProductDetails = (state) => state.product.product;
 export const getProductStatus = (state) => state.product.productStatus;
 export const getProductError = (state) => state.product.productError;
+
+export const getSearchQuery = (state) => state.product.searchQuery;
 
 export default productSlice.reducer;

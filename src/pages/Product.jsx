@@ -27,7 +27,8 @@ const Product = () => {
     return () => {
       dispatch(clearProductDetails());
     };
-  }, []);
+  }, [id]);
+
   return (
     <Layout>
       <div className="container sm:py-12 py-6">
@@ -44,7 +45,7 @@ const Product = () => {
             </div>
             <div className="flex flex-col gap-2">
               <h3 className="heading3">Description</h3>
-              <p className="text-[#2e2e2e] tex-sm">{productData.description}</p>
+              <p className="text-bodyText text-sm">{productData.description}</p>
             </div>
 
             <ProductRelated />
