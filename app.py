@@ -28,6 +28,7 @@ ratings_df = pd.read_csv('dataset/cleanedRatings.csv')
 with open('trainedModels/svdModel.pkl', 'rb') as f:
     svdModel = pickle.load(f)
 
+
 neuralModel = tf.keras.models.load_model(
     'trainedModels/neuralNetwork.h5', compile=False)
 neuralModel.compile(
@@ -282,7 +283,7 @@ def recommend():
         user = np.array([int(user_id) for _ in range(product_len)])
         pred = neuralModel.predict([product_arr, user])
         pred = pred.reshape([product_len])
-        pred_ids = (-pred).argsort()[0:30]
+        pred_ids = (-pred).argsort()[0:10]
         prediction_actual_id = ratings_df.loc[ratings_df["product_id"].isin(
             pred_ids)].reset_index(drop=True)
         prediction_actual_id_list = list(
@@ -294,9 +295,9 @@ def recommend():
                                 "active": True
                             },
                         },
-                        {
-                            "$sample": {"size": 4},
-                        },
+                        # {
+                        #     "$sample": {"size": 4},
+                        # },
                         {
                             "$lookup": {
                                 "from": "reviews",
@@ -340,19 +341,63 @@ def recommend():
 
 @app.route('/product/search', methods=['GET'])
 def searchProduct():
-    query = request.args.get('query')
-    new_df = products_df.copy()
+    try:
+        query = request.args.get('query')
+        new_df = products_df.copy()
 
-    new_df['match_score'] = new_df['title'].apply(
-        lambda x: get_match_score(x, query))
+        new_df['match_score'] = new_df['title'].apply(
+            lambda x: get_match_score(x, query))
 
-    # Sort the dataframe by the match score in descending order
-    new_df = new_df.sort_values('match_score', ascending=False)
+        # Sort the dataframe by the match score in descending order
+        new_df = new_df.sort_values('match_score', ascending=False)
 
-    products = new_df[["title", "_id"]].head(10)
-    data = json.dumps(products.to_dict('records'))
+        products = new_df[["title", "_id", "match_score"]].head(10)
+        product_ids = list(products._id)
+        products = list(productsModel.aggregate([
+                        {
+                            "$match": {
+                                "_id": {"$in": product_ids},
+                                "active": True
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "reviews",
+                                "localField": "_id",
+                                "foreignField": "ProductID",
+                                "as": "reviews",
+                            },
+                        },
+                        {
+                            "$addFields": {
+                                "imageUrl": {
+                                    "$first": "$imageURLHighRes",
+                                },
+                                "category": {
+                                    "$first": "$category",
+                                },
+                                "rating": {
+                                    "$avg": "$reviews.Rating",
+                                },
+                            },
+                        },
+                        {
+                            "$project": {
+                                "_id": 1,
+                                "title": 1,
+                                "brand": 1,
+                                "price": {"$round": ["$price", 2]},
+                                "MRP": {"$round": ["$MRP", 2]},
+                                "imageUrl": 1,
+                                "category": 1,
+                                "rating": {"$round": ["$rating", 1]},
+                            },
+                        },
+                        ]))
 
-    return data
+        return jsonify(data=products), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 @app.route('/listen')
