@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { product } from "../../assets";
 import StarRating from "../common/starRating/StarRating";
 import { FiShoppingCart } from "react-icons/fi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -51,7 +50,7 @@ const ProductCard = ({ data }) => {
 
   return (
     <div className="m-auto sm:min-h-[300px] h-full max-w-[300px] w-full">
-      <div className="group outline outline-1 outline-greyLight rounded-sm">
+      <div className="group outline outline-1 outline-greyLight rounded-sm h-full">
         <div className="h-[250px] w-full overflow-hidden relative bg-greyLight">
           <Link to={`/product/${data._id}`}>
             <img
@@ -61,7 +60,7 @@ const ProductCard = ({ data }) => {
             />
           </Link>
         </div>
-        <div className="p-4 flex flex-col gap-2 relative h-full">
+        <div className="p-4 flex flex-col gap-2 relative">
           <div className="z-10 h-[44px] w-[44px] absolute -top-5 right-6 bg-white rounded-full border border-uiGrey">
             <button className="flex items-center justify-center h-full w-full text-[20px]">
               <AiOutlineHeart />
@@ -69,11 +68,16 @@ const ProductCard = ({ data }) => {
           </div>
           <p className="text-textDim text-sm">{data.category}</p>
 
-          <p className="text-uiBlack text-[18px] font-medium ">
+          <p className="text-uiBlack font-medium ">
             <Link
               to={`/product/${data._id}`}
               className="hover:text-uiOrange transition-all duration-150"
-              dangerouslySetInnerHTML={{ __html: data.title }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  data.title.length > 100
+                    ? data.title.substring(0, 100) + "..."
+                    : data.title,
+              }}
             />
           </p>
           <div>

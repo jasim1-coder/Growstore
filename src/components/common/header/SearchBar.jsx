@@ -3,23 +3,36 @@ import { FiChevronDown, FiSearch } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
+  fetchFilteredProducts,
+  getSearchBrand,
+  getSearchCategory,
+  getSearchOrder,
+  getSearchPrice,
   getSearchQuery,
-  setsearchQuery,
 } from "../../../redux/slice/productSlice";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const oldQuery = useSelector(getSearchQuery);
   const navigate = useNavigate();
+
+  const oldQuery = useSelector(getSearchQuery);
+  const order = useSelector(getSearchOrder);
+  const priceRange = useSelector(getSearchPrice);
+  const categories = useSelector(getSearchCategory);
+  const brands = useSelector(getSearchBrand);
 
   const [query, setQuery] = useState(oldQuery);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    console.log("search Clicked");
-    // const { data } = await NODE_API.get(`/product/search?query=${query}`);
-    // console.log(data.data);
-    dispatch(setsearchQuery(query));
+    const params = {
+      query,
+      order,
+      price: priceRange.toString(),
+      categories: categories.toString(),
+      brands: brands.toString(),
+    };
+    dispatch(fetchFilteredProducts(params));
     navigate("/products");
   };
 

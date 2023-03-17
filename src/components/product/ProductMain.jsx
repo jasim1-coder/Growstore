@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { FiMinus, FiPlus, FiShoppingCart } from "react-icons/fi";
+import { FiMinus, FiPlus } from "react-icons/fi";
 import { ImSpinner2 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/slice/authSlice";

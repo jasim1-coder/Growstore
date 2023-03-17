@@ -27,6 +27,18 @@ const initialState = {
   productStatus: "idle",
 
   searchQuery: "",
+  searchCategory: [],
+  searchPrice: [],
+  priceRange: [0, 200],
+  searchBrand: [],
+  searchOrder: "",
+  searchPageLimit: 12,
+  searchResultsCount: 0,
+  searchCurrentPage: 1,
+
+  filteredResults: [],
+  filterStatus: "idle",
+  filterError: "",
 };
 
 export const fetchFeaturedProduct = createAsyncThunk(
@@ -88,11 +100,26 @@ export const fetchTopPicks = createAsyncThunk(
     }
   }
 );
+
 export const fetchProductDetails = createAsyncThunk(
   "product/fetchProductDetails",
   async (id, { rejectWithValue }) => {
     try {
       const response = await NODE_API.get(`/product/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const fetchFilteredProducts = createAsyncThunk(
+  "product/fetchFilteredProducts",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.get(`/product/search`, {
+        params,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error);
@@ -111,6 +138,14 @@ const productSlice = createSlice({
     },
     setsearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+    },
+    setOrder: (state, action) => {
+      state.searchOrder = action.payload;
+    },
+    clearSearchFilter: (state) => {
+      state.searchBrand = [];
+      state.searchCategory = [];
+      state.searchPrice = state.priceRange;
     },
   },
   extraReducers: (builder) => {
@@ -201,11 +236,41 @@ const productSlice = createSlice({
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.productStatus = "failed";
         state.productError = action.payload.message;
+      })
+      // GET Filtered ProductData
+      .addCase(fetchFilteredProducts.pending, (state) => {
+        state.filterStatus = "loading";
+        state.filterError = "";
+      })
+      .addCase(fetchFilteredProducts.fulfilled, (state, action) => {
+        state.filterStatus = "success";
+        state.filterError = "";
+        state.filteredResults = action.payload.data;
+        state.searchBrand = action.payload.brands;
+        state.searchCategory = action.payload.categories;
+        state.searchPrice = action.payload.price;
+        state.searchPageLimit = action.payload.limit;
+        state.searchCurrentPage = action.payload.page;
+        state.searchResultsCount = action.payload.totalResults;
+        if (action.payload.priceRange) {
+          state.priceRange = action.payload.priceRange;
+        }
+        state.searchOrder = action.payload.sortOrder;
+        state.searchQuery = action.payload.query;
+      })
+      .addCase(fetchFilteredProducts.rejected, (state, action) => {
+        state.filterStatus = "failed";
+        state.filterError = action.payload.message;
       });
   },
 });
 
-export const { clearProductDetails, setsearchQuery } = productSlice.actions;
+export const {
+  clearProductDetails,
+  setsearchQuery,
+  setOrder,
+  clearSearchFilter,
+} = productSlice.actions;
 
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
@@ -236,5 +301,18 @@ export const getProductStatus = (state) => state.product.productStatus;
 export const getProductError = (state) => state.product.productError;
 
 export const getSearchQuery = (state) => state.product.searchQuery;
+export const getSearchCategory = (state) => state.product.searchCategory;
+export const getSearchPrice = (state) => state.product.searchPrice;
+export const getSearchBrand = (state) => state.product.searchBrand;
+export const getSearchOrder = (state) => state.product.searchOrder;
+export const getSearchPageLimit = (state) => state.product.searchPageLimit;
+export const getsearchResultsCount = (state) =>
+  state.product.searchResultsCount;
+export const getSearchCurrentPage = (state) => state.product.searchCurrentPage;
+export const getPriceRange = (state) => state.product.priceRange;
+
+export const getFilteredProducts = (state) => state.product.filteredResults;
+export const getFilterStatus = (state) => state.product.filterStatus;
+export const getFilterError = (state) => state.product.filterError;
 
 export default productSlice.reducer;
