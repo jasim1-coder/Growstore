@@ -80,7 +80,7 @@ const ProductListing = () => {
   return (
     <Layout>
       <div className="container sm:py-12 py-6">
-        <div className="flex flex-row gap-8 relative">
+        <div className="flex sm:flex-row flex-col gap-8 relative">
           <ProductFilters />
 
           <div className="flex flex-col gap-6 flex-1 p-3">

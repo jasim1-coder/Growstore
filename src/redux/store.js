@@ -4,6 +4,7 @@ import categoriesReducer from "./slice/categoriesSlice";
 import brandReducer from "./slice/brandSlice";
 import productReducer from "./slice/productSlice";
 import cartReducer from "./slice/cartSlice";
+import wishlistReducer from "./slice/wishlistSlice";
 
 const combinedReducer = combineReducers({
   auth: authReducer,
@@ -11,6 +12,7 @@ const combinedReducer = combineReducers({
   brand: brandReducer,
   product: productReducer,
   cart: cartReducer,
+  wishlist: wishlistReducer,
 });
 
 const rootReducer = (state, action) => {

@@ -1,20 +1,16 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { AiOutlineAppstore } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 import { FiPhone } from "react-icons/fi";
 
-const SecondaryHeader = () => {
+const SecondaryHeader = ({ showMenu }) => {
   return (
-    <div className="bg-formBackground shadow-sm">
-      <nav className="container  flex flex-row py-2 gap-4 items-center justify-between flex-wrap">
-        {/* <Link
-          to="/categories"
-          className="primary-button flex flex-row gap-2 font-medium text-uiWhite items-center"
-        >
-          <AiOutlineAppstore className="text-[22px]" />
-          <span>Browse Categories</span>
-        </Link> */}
-        <div className="flex flex-row gap-[24px] flex-wrap self-end">
+    <div
+      className={`bg-formBackground shadow-sm ${
+        showMenu ? "h-[360px] opacity-100" : "h-0 opacity-0"
+      } transition-[height] duration-500 sm:h-auto sm:block sm:opacity-100`}
+    >
+      <nav className="container flex sm:flex-row flex-col py-2 gap-4 sm:items-center text-center justify-between">
+        <div className="flex sm:flex-row sm:gap-[24px] gap-4 flex-col">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -56,7 +52,7 @@ const SecondaryHeader = () => {
             Contact
           </NavLink>
         </div>
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row gap-2 items-center self-center">
           <FiPhone className="text-baseGreen" />
           <span className="text-baseGreen">+91-000000</span>
           <span className="text-uiBlack">For support</span>

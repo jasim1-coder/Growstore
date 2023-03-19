@@ -8,7 +8,7 @@ const LoginFormLayout = ({ children, heading }) => {
 
   return (
     <div className="flex justify-center items-center w-full sm:py-12 py-6">
-      <div className="sm:w-[450px] w-[300px] p-7 bg-formBackground rounded-sm border border-greyLight">
+      <div className="sm:w-[450px] w-[95%] p-7 bg-formBackground rounded-sm border border-greyLight">
         <div className="flex flex-col gap-6">
           {/* Heading section */}
           <h2 className="text-uiBlack text-[20px] font-semibold">{heading}</h2>

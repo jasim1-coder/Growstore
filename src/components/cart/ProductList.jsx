@@ -11,33 +11,15 @@ const ProductList = () => {
   const fetchStatus = useSelector(getCartItemFetchStatus);
 
   return (
-    <table className="table-auto">
-      <thead className="">
-        <tr className="p-2 border-b border-greyLight">
-          <th className="heading3 p-2 overflow-clip">Products</th>
-          <th className="heading3 p-2 overflow-clip text-center">Price</th>
-          <th className="heading3 p-2 overflow-clip text-center">Quantity</th>
-          <th className="heading3 p-2 overflow-clip text-center">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fetchStatus === "loading" ? (
-          <tr className="py-2 border-b border-greyLight">
-            <td colSpan={4} className="text-center px-2 py-4 font-medium">
-              Loading...
-            </td>
-          </tr>
-        ) : data.length === 0 ? (
-          <tr className="py-2 border-b border-greyLight">
-            <td colSpan={4} className="text-center px-2 py-4 font-medium">
-              No items found in your cart
-            </td>
-          </tr>
-        ) : (
-          data.map((entry, key) => <ProductItem data={entry} key={key} />)
-        )}
-      </tbody>
-    </table>
+    <div className="flex flex-col">
+      {fetchStatus === "loading" ? (
+        <p className="font-medium">Loading...</p>
+      ) : data.length === 0 ? (
+        <p className="font-medium">No items found in your cart</p>
+      ) : (
+        data.map((entry, key) => <ProductItem data={entry} key={key} />)
+      )}
+    </div>
   );
 };
 

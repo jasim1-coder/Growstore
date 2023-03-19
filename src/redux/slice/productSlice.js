@@ -136,12 +136,6 @@ const productSlice = createSlice({
       state.productStatus = "idle";
       state.productError = "";
     },
-    setsearchQuery: (state, action) => {
-      state.searchQuery = action.payload;
-    },
-    setOrder: (state, action) => {
-      state.searchOrder = action.payload;
-    },
     clearSearchFilter: (state) => {
       state.searchBrand = [];
       state.searchCategory = [];
@@ -265,12 +259,7 @@ const productSlice = createSlice({
   },
 });
 
-export const {
-  clearProductDetails,
-  setsearchQuery,
-  setOrder,
-  clearSearchFilter,
-} = productSlice.actions;
+export const { clearProductDetails, clearSearchFilter } = productSlice.actions;
 
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;

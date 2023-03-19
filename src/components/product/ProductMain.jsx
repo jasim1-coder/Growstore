@@ -69,7 +69,7 @@ const ProductMain = () => {
         </p>
       </div>
 
-      <div className="flex flec-row justify-between items-center border-b border-b-uiGrey pb-4">
+      <div className="flex sm:flex-row flex-col gap-3 justify-between sm:items-center border-b border-b-uiGrey pb-4">
         <p className="flex flex-row gap-3 items-baseline">
           <span className="text-baseGreen text-[24px] font-semibold">
             &#8377; {data.price}

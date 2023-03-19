@@ -32,7 +32,10 @@ const Cart = () => {
                 Need to add more items to your cart?
               </p>
               <div>
-                <Link className="text-sm border border-uiBlack py-2 px-5 font-medium hover:bg-greyLight transition-all duration-150 rounded-sm">
+                <Link
+                  to="/products"
+                  className="text-sm border border-uiBlack py-2 px-5 font-medium hover:bg-greyLight transition-all duration-150 rounded-sm"
+                >
                   Continue shopping
                 </Link>
               </div>

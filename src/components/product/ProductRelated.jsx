@@ -19,7 +19,7 @@ const ProductRelated = () => {
       }
     } catch (error) {
       console.log(error);
-      setError(error.response ? error.response.data : error);
+      setError(error.response ? error.response.data : error.message);
       setStatus("failed");
     }
   };

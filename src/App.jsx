@@ -9,6 +9,7 @@ import Product from "./pages/Product";
 import ProductListing from "./pages/ProductListing";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import Wishlist from "./pages/Wishlist";
 import {
   getAccessToken,
   getUser,
@@ -43,6 +44,7 @@ function App() {
 
         <Route path="/" element={<RequireAuth allowedRole="CUSTOMER" />}>
           <Route path="profile" element={<Profile />} />
+          <Route path="wishlist" element={<Wishlist />} />
           <Route path="checkout" element={<p>Checkout page</p>} />
         </Route>
 

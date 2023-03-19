@@ -28,11 +28,11 @@
   }
 
   .linkActive {
-    @apply text-baseGreen p-2 
+    @apply text-baseGreen p-2 sm:font-normal font-medium sm:text-base text-lg
   }
 
   .linkInactive {
-    @apply text-uiBlack p-2 hover:text-baseGreen transition-all duration-150
+    @apply text-uiBlack p-2 hover:text-baseGreen transition-all duration-150 sm:font-normal font-medium sm:text-base text-lg
   }
 
   .input-row-container {
