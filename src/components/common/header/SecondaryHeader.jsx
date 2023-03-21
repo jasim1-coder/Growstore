@@ -6,8 +6,8 @@ const SecondaryHeader = ({ showMenu }) => {
   return (
     <div
       className={`bg-formBackground shadow-sm ${
-        showMenu ? "h-[360px] opacity-100" : "h-0 opacity-0"
-      } transition-[height] duration-500 sm:h-auto sm:block sm:opacity-100`}
+        showMenu ? "h-[360px] opacity-100 z-0" : "h-0 opacity-0 -z-20"
+      } transition-[height] duration-500 sm:h-auto sm:block sm:opacity-100 sm:z-0`}
     >
       <nav className="container flex sm:flex-row flex-col py-2 gap-4 sm:items-center text-center justify-between">
         <div className="flex sm:flex-row sm:gap-[24px] gap-4 flex-col">

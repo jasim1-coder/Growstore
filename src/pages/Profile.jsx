@@ -1,24 +1,23 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import Layout from "../components/common/Layout";
-import { logout } from "../redux/slice/authSlice";
+import AccountDetails from "../components/profile/personalInfo/AccountDetails";
+import EmailDetails from "../components/profile/personalInfo/EmailDetails";
+import ProfileLayout from "../components/profile/ProfileLayout";
+import DeleteAccount from "../components/profile/personalInfo/DeleteAccount";
+import PasswordDetails from "../components/profile/personalInfo/PasswordDetails";
 
 const Profile = () => {
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
-    <Layout>
-      <div>
-        <p>Profile page</p>
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    </Layout>
+    <ProfileLayout>
+      <section className="p-4 flex-1 flex flex-col gap-4">
+        <div className="pb-4">
+          <h2 className="heading2">My Details</h2>
+        </div>
+        <AccountDetails />
+        <EmailDetails />
+        <PasswordDetails />
+        <DeleteAccount />
+      </section>
+    </ProfileLayout>
   );
 };
 
