@@ -91,6 +91,10 @@
     @apply flex flex-col gap-4 sm:py-[3rem] py-[2rem]
   }
 
+  .grid-list-2 {
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1
+  }
+  
   .grid-list-3 {
     @apply grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1
   }
@@ -101,6 +105,22 @@
 
   .grid-list-5 {
     @apply grid grid-cols-2 gap-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2
+  }
+
+  .order-placed {
+    @apply text-uiGrey border-uiGrey
+  }
+
+  .order-processing {
+    @apply text-uiOrange border-uiOrange
+  }
+
+  .order-cancelled {
+    @apply text-uiRed border-uiRed
+  }
+
+  .order-delivered {
+    @apply text-baseGreen border-baseGreen
   }
 }
 

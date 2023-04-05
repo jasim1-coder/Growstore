@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Addresses from "./pages/Addresses";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Addresses from "./pages/userProfile/Addresses";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import OrderHistory from "./pages/OrderHistory";
 import PagenotFound from "./pages/PagenotFound";
 import Product from "./pages/Product";
 import ProductListing from "./pages/ProductListing";
-import Profile from "./pages/Profile";
-import ReviewsHistory from "./pages/ReviewsHistory";
+import Profile from "./pages/userProfile/Profile";
 import Signup from "./pages/Signup";
 import Wishlist from "./pages/Wishlist";
 import {
@@ -20,6 +23,11 @@ import {
 } from "./redux/slice/authSlice";
 import ClientAuth from "./security/ClientAuth";
 import RequireAuth from "./security/RequireAuth";
+import AddAddress from "./pages/userProfile/AddAddress";
+import EditAddress from "./pages/userProfile/EditAddress";
+import ReviewsHistory from "./pages/userProfile/ReviewsHistory";
+import OrderHistory from "./pages/userProfile/OrderHistory";
+import ManageOrder from "./pages/userProfile/ManageOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,9 +56,16 @@ function App() {
         <Route path="/" element={<RequireAuth allowedRole="CUSTOMER" />}>
           <Route path="profile">
             <Route path="address" element={<Addresses />} />
+            <Route path="address/add" element={<AddAddress />} />
+            <Route path="address/edit/:id" element={<EditAddress />} />
             <Route path="orders" element={<OrderHistory />} />
+            <Route path="orders/:id" element={<ManageOrder />} />
             <Route path="reviews" element={<ReviewsHistory />} />
-            <Route path="" element={<Profile />} />
+            <Route path="my" element={<Profile />} />
+            <Route
+              path=""
+              element={<Navigate to="/profile/my" replace={true} />}
+            />
           </Route>
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="checkout" element={<p>Checkout page</p>} />

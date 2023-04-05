@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FiSave, FiXCircle } from "react-icons/fi";
+import { ImSpinner2 } from "react-icons/im";
+import { PRIVATE_API } from "../../../api/apiIndex";
 
 const PasswordDetails = () => {
   const [changeActive, setChangeActive] = useState(false);
@@ -13,12 +15,58 @@ const PasswordDetails = () => {
   const [cNewPassword, setCNewPassword] = useState("");
   const [cNewPasswordError, setCNewPasswordError] = useState("");
 
+  const [status, setStatus] = useState("idle");
+
   const handlePassword = () => {
     setChangeActive(true);
   };
 
-  const handleChangePassword = () => {
-    setChangeActive(false);
+  const handleChangePassword = async () => {
+    let err = false;
+
+    if (!oldPassword || !oldPassword.trim()) {
+      setOldPasswordError("Required");
+      err = true;
+    }
+    if (!newPassword || !newPassword.trim()) {
+      setNewPasswordError("Required");
+      err = true;
+    } else if (newPassword.length < 6) {
+      setNewPasswordError("password should contain atleast 6 characters");
+      err = true;
+    } else if (newPassword !== cNewPassword) {
+      setNewPasswordError("Passwords do not match!");
+      err = true;
+    }
+    if (!cNewPassword || !cNewPassword.trim()) {
+      setCNewPasswordError("Required");
+      err = true;
+    }
+    if (!err) {
+      setStatus("loading");
+      try {
+        const data = { oldPassword, newPassword };
+        await PRIVATE_API.put("/auth/change-password", data);
+        setStatus("idle");
+        resetData();
+        setChangeActive(false);
+      } catch (error) {
+        setOldPasswordError(
+          error.response ? error.response.data.message : error.message
+        );
+        setStatus("idle");
+        console.log(err);
+      }
+    }
+  };
+
+  const resetData = () => {
+    setNewPassword("");
+    setNewPasswordError("");
+    setOldPassword("");
+    setOldPasswordError("");
+    setCNewPassword("");
+    setCNewPasswordError("");
   };
 
   return (
@@ -100,7 +148,10 @@ const PasswordDetails = () => {
             <div className="flex flex-row gap-4 flex-1 h-min self-end">
               <button
                 type="button"
-                onClick={() => setChangeActive(false)}
+                onClick={() => {
+                  setChangeActive(false);
+                  resetData();
+                }}
                 className="text-uiBlack border-uiGrey border py-2 px-4 rounded-sm hover:bg-greyLight transition-all duration-150 flex items-center justify-center gap-2"
               >
                 <FiXCircle />
@@ -109,10 +160,17 @@ const PasswordDetails = () => {
               <button
                 type="button"
                 onClick={handleChangePassword}
-                className="text-uiWhite border-baseGreen bg-baseGreen border py-2 px-4 rounded-sm hover:bg-darkGreen transition-all duration-150 flex items-center justify-center gap-2"
+                className="text-uiWhite border-baseGreen bg-baseGreen border py-2 px-4 rounded-sm hover:bg-darkGreen transition-all duration-150 flex items-center justify-center gap-2 min-w-[100px]"
+                disabled={status === "loading"}
               >
-                <FiSave />
-                <span className="text-sm">Save</span>
+                {status == "loading" ? (
+                  <ImSpinner2 className="animate-spin" />
+                ) : (
+                  <>
+                    <FiSave />
+                    <span className="text-sm">Save</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

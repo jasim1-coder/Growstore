@@ -12,6 +12,8 @@ const initialState = {
   signupStatus: "idle",
   loginWithTokenStatus: "idle",
   loginWithTokenError: "",
+  updateStatus: "idle",
+  updateError: "",
 };
 
 export const login = createAsyncThunk(
@@ -54,6 +56,18 @@ export const loginwithtoken = createAsyncThunk(
   }
 );
 
+export const updateUserDetails = createAsyncThunk(
+  "auth/updateUserDetails",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await PRIVATE_API.put("/auth/", data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -84,6 +98,10 @@ const authSlice = createSlice({
     removeLoginWithTokenMessage: (state) => {
       state.loginWithTokenStatus = "idle";
       state.loginWithTokenError = "";
+    },
+    removeUpdateUserError: (state) => {
+      state.updateError = "";
+      state.updateStatus = "idle";
     },
     // logoutComplete: (state) => {},
   },
@@ -141,6 +159,24 @@ const authSlice = createSlice({
         // console.log(action);
       })
 
+      //Update Data
+      .addCase(updateUserDetails.pending, (state) => {
+        // console.log(action);
+        state.updateStatus = "loading";
+        state.updateError = "";
+      })
+      .addCase(updateUserDetails.fulfilled, (state, action) => {
+        // console.log(action);
+        state.updateStatus = "success";
+        state.updateError = "";
+        state.data = action.payload.data;
+      })
+      .addCase(updateUserDetails.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.updateError = action.payload.message;
+        // console.log(action);
+      })
+
       //Logout
       .addCase(logout.pending, (state) => {
         state.status = "loading";
@@ -161,7 +197,7 @@ export const {
   removeLoginMessage,
   removeSignupMessage,
   removeLoginWithTokenMessage,
-  logoutComplete,
+  removeUpdateUserError,
 } = authSlice.actions;
 
 export const getUser = (state) => state.auth.data;
@@ -181,5 +217,8 @@ export const getsignupError = (state) => state.auth.signupError;
 export const getLoginWithTokenStatus = (state) =>
   state.auth.loginWithTokenStatus;
 export const getLoginWithTokenError = (state) => state.auth.loginWithTokeEerror;
+
+export const getUserUpdateStatus = (state) => state.auth.updateStatus;
+export const getUserUpdateError = (state) => state.auth.updateError;
 
 export default authSlice.reducer;

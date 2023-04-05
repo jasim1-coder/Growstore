@@ -1,7 +1,11 @@
 import React from "react";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FiCheckCircle } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { getUserEmail } from "../../../redux/slice/authSlice";
 
 const EmailDetails = () => {
+  const userEmail = useSelector(getUserEmail);
+
   return (
     <div className="flex flex-col gap-3">
       <div className="py-2 border-b border-b-greyLight">
@@ -16,7 +20,7 @@ const EmailDetails = () => {
         <div className="flex sm:flex-row flex-col justify-between flex-1 sm:gap-6 gap-3">
           <div className="flex flex-col gap-2 flex-1">
             <p className="text-sm">E-mail Address</p>
-            <span className="font-medium text-bodyText">abc@gmail.com</span>
+            <span className="font-medium text-bodyText">{userEmail}</span>
           </div>
           <div className="flex flex-col gap-2 flex-1">
             <p className="text-sm">E-mail Verified</p>

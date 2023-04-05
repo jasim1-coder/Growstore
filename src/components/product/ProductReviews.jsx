@@ -36,7 +36,7 @@ const ProductReviews = () => {
   const [field, setField] = useState("Rating");
   const [order, setOrder] = useState("DESC");
 
-  const getReviews = async (pageNumber, limit, sortField, orderField) => {
+  const getReviews = async (page, limit, sortField, orderField) => {
     const { data } = await NODE_API.get(
       `/review/byproduct/${id}?page=${page}&limit=${limit}&field=${sortField}&order=${orderField}`
     );

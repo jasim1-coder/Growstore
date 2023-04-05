@@ -116,7 +116,7 @@ const ProductItem = ({ data }) => {
               onClick={handleDelete}
               className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
             >
-              <FiTrash2 /> <span className="text-[12px]">Delete</span>
+              <FiTrash2 /> <span className="text-[12px]">Remove</span>
             </button>
           )}
           <button

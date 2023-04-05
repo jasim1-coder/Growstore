@@ -38,7 +38,7 @@ const MainHeader = ({ handleMenu }) => {
 
           {name ? (
             <Link
-              to="/profile"
+              to="/profile/my"
               className="flex flex-row gap-2 items-center max-w-full overflow-clip"
             >
               <FaUserCircle className="text-uiBlack text-[32px] flex-none" />

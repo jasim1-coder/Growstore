@@ -1,15 +1,68 @@
 import React, { useState } from "react";
 import { FiEdit, FiSave, FiXCircle } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { ImSpinner2 } from "react-icons/im";
+
+import {
+  getUser,
+  getUserUpdateError,
+  getUserUpdateStatus,
+  removeUpdateUserError,
+  updateUserDetails,
+} from "../../../redux/slice/authSlice";
 
 const AccountDetails = () => {
+  const dispatch = useDispatch();
+
+  const userDetails = useSelector(getUser);
+  const updateStatus = useSelector(getUserUpdateStatus);
+  const updateError = useSelector(getUserUpdateError);
+
   const [edit, setEdit] = useState(false);
-  const [name, setName] = useState("Sulav Giri");
+  const [name, setName] = useState(userDetails.name);
   const [nameError, setNameError] = useState("");
 
-  const [mobile, setMobile] = useState("9800000000");
+  const [mobile, setMobile] = useState(userDetails.mobileNumber);
   const [mobileNoError, setMobileNoError] = useState("");
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
+    let err = false;
+    console.log(name);
+
+    const nameRegex = /^\w+\s\w+$/;
+    const mobileRegex = /^\d{10}$/;
+
+    if (!name || !name.trim()) {
+      setNameError("Required");
+      err = true;
+    } else if (!nameRegex.test(name)) {
+      setNameError("Enter valid full name");
+      err = true;
+    }
+
+    if (!mobileRegex.test(mobile)) {
+      setMobileNoError("Enter a valid mobile number");
+      err = true;
+    }
+
+    if (!err) {
+      const data = { name, mobileNumber: mobile };
+
+      try {
+        await dispatch(updateUserDetails(data)).unwrap();
+        setEdit(false);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleCancel = () => {
+    setMobile(userDetails.mobileNumber);
+    setName(userDetails.name);
+    setMobileNoError("");
+    setNameError("");
+    dispatch(removeUpdateUserError());
     setEdit(false);
   };
 
@@ -22,7 +75,7 @@ const AccountDetails = () => {
             <>
               <button
                 type="button"
-                onClick={() => setEdit(false)}
+                onClick={handleCancel}
                 className="text-uiBlack border-uiGrey border py-2 px-4 rounded-sm hover:bg-greyLight transition-all duration-150 flex items-center justify-center gap-2"
               >
                 <FiXCircle />
@@ -31,10 +84,17 @@ const AccountDetails = () => {
               <button
                 type="button"
                 onClick={handleEdit}
-                className="text-uiWhite border-baseGreen bg-baseGreen border py-2 px-4 rounded-sm hover:bg-darkGreen transition-all duration-150 flex items-center justify-center gap-2"
+                className="text-uiWhite border-baseGreen bg-baseGreen border py-2 px-4 rounded-sm hover:bg-darkGreen transition-all duration-150 flex items-center justify-center gap-2 min-w-[100px]"
+                disabled={updateStatus === "loading"}
               >
-                <FiSave />
-                <span className="text-sm">Save</span>
+                {updateStatus == "loading" ? (
+                  <ImSpinner2 className="animate-spin" />
+                ) : (
+                  <>
+                    <FiSave />
+                    <span className="text-sm">Save</span>
+                  </>
+                )}
               </button>
             </>
           ) : (
@@ -108,7 +168,10 @@ const AccountDetails = () => {
               )}
             </div>
           </div>
-          <div className="flex sm:flex-row flex-col justify-between flex-1 sm:gap-6 gap-3">
+          {edit && updateError ? (
+            <span className="input-error">Error: {updateError}</span>
+          ) : null}
+          {/* <div className="flex sm:flex-row flex-col justify-between flex-1 sm:gap-6 gap-3">
             <div className="flex flex-col gap-2 flex-1">
               <p className="text-sm">Customer Since</p>
               <p className="font-medium text-bodyText">2023-01-01</p>
@@ -127,7 +190,7 @@ const AccountDetails = () => {
               <p className="text-sm">Total Expense</p>
               <p className="font-medium text-bodyText">10,000</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

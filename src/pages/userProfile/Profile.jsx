@@ -1,9 +1,9 @@
 import React from "react";
-import AccountDetails from "../components/profile/personalInfo/AccountDetails";
-import EmailDetails from "../components/profile/personalInfo/EmailDetails";
-import ProfileLayout from "../components/profile/ProfileLayout";
-import DeleteAccount from "../components/profile/personalInfo/DeleteAccount";
-import PasswordDetails from "../components/profile/personalInfo/PasswordDetails";
+import AccountDetails from "../../components/profile/personalInfo/AccountDetails";
+import EmailDetails from "../../components/profile/personalInfo/EmailDetails";
+import ProfileLayout from "../../components/profile/ProfileLayout";
+import DeleteAccount from "../../components/profile/personalInfo/DeleteAccount";
+import PasswordDetails from "../../components/profile/personalInfo/PasswordDetails";
 
 const Profile = () => {
   return (

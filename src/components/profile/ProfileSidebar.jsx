@@ -19,7 +19,7 @@ const ProfileSidebar = () => {
   return (
     <section className="flex sm:flex-col flex-row sm:justify-start justify-between sm:gap-2 sm:w-[250px]">
       <NavLink
-        to="/profile"
+        to="/profile/my"
         className={({ isActive }) =>
           isActive ? "linkActiveProfile" : "linkInactiveProfile"
         }

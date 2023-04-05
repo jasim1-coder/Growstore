@@ -1,11 +1,26 @@
 import React, { useState } from "react";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { PRIVATE_API } from "../../../api/apiIndex";
+import { ImSpinner2 } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/slice/authSlice";
 
 const DeleteAccount = () => {
   const [deactivateActive, setDeactivateActive] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const dispatch = useDispatch();
 
-  const handleDeactivate = () => {
-    setDeactivateActive(false);
+  const handleDeactivate = async () => {
+    setStatus("loading");
+    try {
+      await PRIVATE_API.delete("/auth");
+      setStatus("idle");
+      dispatch(logout());
+      setDeactivateActive(false);
+    } catch (error) {
+      setStatus("idle");
+      console.log(error);
+    }
   };
 
   return (
@@ -37,10 +52,17 @@ const DeleteAccount = () => {
               <button
                 type="button"
                 onClick={handleDeactivate}
-                className="text-uiWhite border-uiRed bg-uiRed border py-2 px-4 rounded-sm transition-all duration-150 flex items-center justify-center gap-2"
+                className="text-uiWhite border-uiRed bg-uiRed border py-2 px-4 rounded-sm transition-all duration-150 flex items-center justify-center gap-2 min-w-[100px]"
+                disabled={status === "loading"}
               >
-                <FiCheckCircle />
-                <span className="text-sm">Confirm</span>
+                {status == "loading" ? (
+                  <ImSpinner2 className="animate-spin" />
+                ) : (
+                  <>
+                    <FiCheckCircle />
+                    <span className="text-sm">Confirm</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
