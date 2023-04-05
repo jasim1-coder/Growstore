@@ -17,7 +17,7 @@ const ProductList = () => {
       ) : data.length === 0 ? (
         <p className="font-medium">No items found in your cart</p>
       ) : (
-        data.map((entry, key) => <ProductItem data={entry} key={key} />)
+        data.map((entry) => <ProductItem data={entry} key={entry.id} />)
       )}
     </div>
   );

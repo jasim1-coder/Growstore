@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Poppins', 'sans-serif';
+    font-family: 'Poppins', 'sans-serif' !important;
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
 }
@@ -122,6 +122,10 @@
   .order-delivered {
     @apply text-baseGreen border-baseGreen
   }
+
+  .StripeElement {
+    @apply my-3 py-2 px-4 w-full text-uiBlack focus:outline-none border border-uiGrey rounded-sm;
+  }
 }
 
 
@@ -210,3 +214,17 @@
 .track.track-0, .track.track-2 {
   background-color: #ADADAD;
 }
+
+
+.StripeElement {
+  display: block;
+  margin: 10px 0 20px 0;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1em;
+  border: 1px solid #ADADAD;
+  outline: 0;
+  border-radius: 2px;
+  background: white;
+}
+

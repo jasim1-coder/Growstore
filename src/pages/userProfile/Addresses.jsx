@@ -38,24 +38,20 @@ const Addresses = () => {
         {status === "failed" ? (
           <p className="text-uiRed">Error: {error}</p>
         ) : null}
-        {status === "success" ? (
-          addressData.length > 0 ? (
-            <div className="grid-list-3">
-              {addressData.map((entry, key) => (
+        <div className="grid-list-3">
+          {status === "success"
+            ? addressData.map((entry, key) => (
                 <AddressCard key={key} data={entry} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-bodyText font-medium">No address found</p>
-          )
-        ) : null}
-        <div className="mt-4">
-          <Link
-            to="/profile/address/add"
-            className="primary-button font-normal mt-2"
-          >
-            Add New Address
-          </Link>
+              ))
+            : null}
+          <div className="flex items-center justify-center border border-greyLight">
+            <Link
+              to="/profile/address/add"
+              className="primary-button font-normal mt-2"
+            >
+              Add New Address
+            </Link>
+          </div>
         </div>
       </section>
     </ProfileLayout>

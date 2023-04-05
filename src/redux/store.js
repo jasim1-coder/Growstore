@@ -6,6 +6,7 @@ import productReducer from "./slice/productSlice";
 import cartReducer from "./slice/cartSlice";
 import wishlistReducer from "./slice/wishlistSlice";
 import addressReducer from "./slice/addressSlice";
+import orderReducer from "./slice/orderSlice";
 
 const combinedReducer = combineReducers({
   auth: authReducer,
@@ -15,6 +16,7 @@ const combinedReducer = combineReducers({
   cart: cartReducer,
   wishlist: wishlistReducer,
   address: addressReducer,
+  order: orderReducer,
 });
 
 const rootReducer = (state, action) => {

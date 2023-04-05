@@ -54,6 +54,7 @@ const ProductCard = ({ data }) => {
         imageUrl: data.imageUrl,
         quantity,
         total,
+        stock: data.quantity,
       };
       dispatch(addToCartNOUSER(_data));
     }

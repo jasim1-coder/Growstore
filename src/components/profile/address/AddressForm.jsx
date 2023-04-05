@@ -69,7 +69,13 @@ const addressSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const AddressForm = ({ initialValues, buttonName, handleSubmit, status }) => {
+const AddressForm = ({
+  initialValues,
+  buttonName,
+  handleSubmit,
+  handleCancel,
+  status,
+}) => {
   return (
     <Formik
       onSubmit={handleSubmit}
@@ -189,11 +195,19 @@ const AddressForm = ({ initialValues, buttonName, handleSubmit, status }) => {
             ) : null}
           </div>
 
-          <div className="self-end">
+          <div className="self-end flex flex-row gap-4">
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="border border-uiGrey text-bodyText h-[34px] px-6 font-normal min-w-[100px]"
+              disabled={status === "loading"}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="submit-button h-[34px] px-8 font-normal min-w-[100px]"
-              disabled={states === "loading"}
+              disabled={status === "loading"}
             >
               {status == "loading" ? (
                 <ImSpinner2 className="animate-spin" />

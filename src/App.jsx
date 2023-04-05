@@ -28,6 +28,7 @@ import EditAddress from "./pages/userProfile/EditAddress";
 import ReviewsHistory from "./pages/userProfile/ReviewsHistory";
 import OrderHistory from "./pages/userProfile/OrderHistory";
 import ManageOrder from "./pages/userProfile/ManageOrder";
+import Checkout from "./pages/checkout/Checkout";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ function App() {
             />
           </Route>
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="checkout" element={<p>Checkout page</p>} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
 
         <Route path="/admin" element={<RequireAuth allowedRole="ADMIN" />}>

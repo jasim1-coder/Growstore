@@ -68,7 +68,7 @@ const AccountDetails = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-row justify-between items-center py-2 border-b border-b-greyLight">
+      <div className="flex flex-row flex-wrap gap-3 justify-between items-center py-2 border-b border-b-greyLight">
         <h3 className="heading4">Account Information</h3>
         <div className="flex flex-row gap-4 items-center">
           {edit ? (

@@ -1,16 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { crypto, stripe } from "../../assets";
 import { getCartTotal } from "../../redux/slice/cartSlice";
 
-const CheckoutCard = () => {
+const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
   const total = useSelector(getCartTotal);
-  const navigate = useNavigate();
-
-  const handleCheckout = () => {
-    navigate("/checkout");
-  };
 
   return (
     <div className="md:w-[420px] max-w-[350px] bg-greyLight p-8 rounded-sm flex flex-col h-max">
@@ -48,10 +42,10 @@ const CheckoutCard = () => {
         <button
           type="button"
           onClick={handleCheckout}
-          disabled={total <= 0}
           className="primary-button flex justify-center items-center disabled:bg-baseGreen/60 disabled:border-baseGreen/30 w-full"
+          disabled={buttonDisabled}
         >
-          Proceed to Checkout
+          {buttonName}
         </button>
       </div>
 

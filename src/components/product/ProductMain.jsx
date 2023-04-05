@@ -42,6 +42,7 @@ const ProductMain = () => {
         imageUrl: data.imageURLHighRes[0],
         quantity,
         total,
+        stock: data.quantity,
       };
       dispatch(addToCartNOUSER(_data));
     }

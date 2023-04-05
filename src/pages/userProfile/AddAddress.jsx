@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileLayout from "../../components/profile/ProfileLayout";
-import AddAddressForm from "../../components/profile/address/AddressForm";
+import AddressForm from "../../components/profile/address/AddressForm";
 import { FiChevronLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,16 +11,7 @@ import {
   removeAddErrorMessage,
 } from "../../redux/slice/addressSlice";
 import AlertBox from "../../components/common/AlertBox";
-
-const initialValues = {
-  title: "",
-  street: "",
-  city: "",
-  state: "",
-  country: "India",
-  zipCode: "",
-  mobileNumber: "",
-};
+import { initialAddressValues } from "../../utils/DefaultValues";
 
 const AddAddress = () => {
   const dispatch = useDispatch();
@@ -59,10 +50,11 @@ const AddAddress = () => {
           </Link>
           <h2 className="heading2">Add new address</h2>
         </div>
-        <AddAddressForm
-          initialValues={initialValues}
+        <AddressForm
+          initialValues={initialAddressValues}
           buttonName="Add"
           handleSubmit={handleAddAddress}
+          handleCancel={() => navigate("/profile/address")}
           status={status}
         />
       </section>

@@ -6,7 +6,7 @@ import OrderActions from "../../components/profile/orders/OrderActions";
 import OrderSummary from "../../components/profile/orders/OrderSummary";
 import AddressSummary from "../../components/profile/orders/AddressSummary";
 import OrderProducts from "../../components/profile/orders/OrderProducts";
-import { colorCodes } from "../../utils/StyleConsts";
+import { colorCodes } from "../../utils/DefaultValues";
 
 const ManageOrder = () => {
   const id = useParams().id;

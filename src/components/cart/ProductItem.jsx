@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { getUser } from "../../redux/slice/authSlice";
 import {
+  addToCart,
+  addToCartNOUSER,
   removeFromCart,
   removeFromCartNOUSER,
 } from "../../redux/slice/cartSlice";
@@ -17,6 +19,8 @@ const ProductItem = ({ data }) => {
 
   const [existsInWishlist, setExistsInWishlist] = useState(false);
   const [deleteStatus, setDeleteStatus] = useState("idle");
+
+  const [quantity, setQuantity] = useState(data.quantity);
 
   const handleDelete = async () => {
     setDeleteStatus("loading");
@@ -37,6 +41,41 @@ const ProductItem = ({ data }) => {
     }
   };
 
+  const handlePlus = () => {
+    if (quantity <= data.stock) {
+      setQuantity((prev) => prev + 1);
+    }
+  };
+
+  const handleMinus = () => {
+    if (quantity > 0) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
+
+  const handleQuantityChange = async () => {
+    if (user) {
+      const _data = { id: data.id, quantity };
+      await dispatch(addToCart({ productData: [_data] })).unwrap();
+    } else {
+      const _total = data.price * quantity;
+      const total = _total.toFixed(2);
+
+      const _data = {
+        ...data,
+        total,
+        quantity,
+      };
+      dispatch(addToCartNOUSER(_data));
+    }
+  };
+
+  useEffect(() => {
+    if (quantity > 0 && quantity < data.stock && quantity !== data.quantity) {
+      handleQuantityChange();
+    }
+  }, [quantity]);
+
   useEffect(() => {
     const exists = wishlistItems.find((item) => item.productId === data.id);
     setExistsInWishlist(!!exists);
@@ -54,7 +93,7 @@ const ProductItem = ({ data }) => {
       <div className="flex flex-col">
         <Link to={`/product/${data.id}`}>
           <span
-            className="text-sm hover:text-uiOrange"
+            className="hover:text-uiOrange"
             dangerouslySetInnerHTML={{ __html: data.title }}
           />
         </Link>
@@ -71,29 +110,29 @@ const ProductItem = ({ data }) => {
           <div className="flex flex-row bg-greyLight rounded-[30px] px-4">
             <button
               type="button"
-              // onClick={handleMinus}
-              className="text-textDim"
-              // disabled={quantity <= 1}
+              onClick={handleMinus}
+              className="text-uiBlack disabled:text-textDim"
+              disabled={quantity <= 1}
             >
               <FiMinus />
             </button>
             <input
               type="number"
               className="w-[40px] p-2 bg-greyLight text-sm font-medium text-center"
-              value={data.quantity}
-              // onChange={(e) => {
-              //   if (e.target.value <= data.quantity) {
-              //     setQuantity(e.target.value);
-              //   } else {
-              //     setQuantity(data.quantity);
-              //   }
-              // }}
+              value={quantity}
+              onChange={(e) => {
+                if (e.target.value <= data.stock) {
+                  setQuantity(e.target.value);
+                } else {
+                  setQuantity(data.stock);
+                }
+              }}
             />
             <button
               type="button"
-              // onClick={handlePlus}
-              className="text-textDim"
-              // disabled={quantity >= data.quantity}
+              onClick={handlePlus}
+              className="disabled:text-textDim text-uiBlack"
+              disabled={quantity >= data.stock}
             >
               <FiPlus />
             </button>

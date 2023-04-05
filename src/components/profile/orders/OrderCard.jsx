@@ -1,7 +1,7 @@
 import moment from "moment/moment";
 import React from "react";
 import { Link } from "react-router-dom";
-import { colorCodes } from "../../../utils/StyleConsts";
+import { colorCodes } from "../../../utils/DefaultValues";
 
 const OrderCard = ({ data }) => {
   const date = moment(data.orderDate).format("DD MMM YYYY, HH:mm");

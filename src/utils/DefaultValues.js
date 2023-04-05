@@ -4,3 +4,13 @@ export const colorCodes = {
   Cancelled: "order-cancelled",
   Delivered: "order-delivered",
 };
+
+export const initialAddressValues = {
+  title: "",
+  street: "",
+  city: "",
+  state: "",
+  country: "India",
+  zipCode: "",
+  mobileNumber: "",
+};
