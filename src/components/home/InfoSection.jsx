@@ -28,7 +28,7 @@ const InfoSection = () => {
               </p>
             </div>
             <div className="mt-auto w-max">
-              <Link to="/shop">
+              <Link to="/products">
                 <div className="primary-button flex items-center justify-center gap-3">
                   <span>Shop Now</span>
                   <FiArrowRight />
@@ -64,7 +64,7 @@ const InfoSection = () => {
             </p>
           </div>
           <div className="mt-auto w-max">
-            <Link to="/shop">
+            <Link to="/products">
               <div className="primary-button flex items-center justify-center gap-3">
                 <span>Shop Now</span>
                 <FiArrowRight />

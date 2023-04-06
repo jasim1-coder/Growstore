@@ -23,7 +23,7 @@ const Hero = () => {
             <br />
             most flavorful groceries in our store.
           </p>
-          <Link to="/shop">
+          <Link to="/products">
             <button className="primary-button mt-4">
               Explore our products
             </button>

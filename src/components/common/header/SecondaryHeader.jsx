@@ -43,14 +43,14 @@ const SecondaryHeader = ({ showMenu }) => {
           >
             Brands
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/contact-us"
             className={({ isActive }) =>
               isActive ? "linkActive" : "linkInactive"
             }
           >
             Contact
-          </NavLink>
+          </NavLink> */}
         </div>
         <div className="flex flex-row gap-2 items-center self-center">
           <FiPhone className="text-baseGreen" />
