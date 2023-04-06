@@ -215,16 +215,14 @@
   background-color: #ADADAD;
 }
 
+.StripeElement--focus {
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
+    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
 
-.StripeElement {
-  display: block;
-  margin: 10px 0 20px 0;
-  max-width: 500px;
-  padding: 10px 14px;
-  font-size: 1em;
-  border: 1px solid #ADADAD;
-  outline: 0;
-  border-radius: 2px;
-  background: white;
+.StripeElement--complete {
+  background-color: #F3F3F3;
 }
 

@@ -8,6 +8,7 @@ import {
   getCartItemsLength,
   getCartTotal,
 } from "../../../redux/slice/cartSlice";
+import { formatCurrency } from "../../../utils/FormatCurrency";
 
 const CartButton = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const CartButton = () => {
       <div className="flex-col sm:flex hidden">
         <span className="text-uiBlack text-[14px]">My Cart</span>
         <span className="text-baseGreen text-[12px]">
-          &#8377; {parseFloat(total).toFixed(2)}
+          {formatCurrency(total)}
         </span>
       </div>
     </Link>

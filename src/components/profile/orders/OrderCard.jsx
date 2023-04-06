@@ -2,6 +2,7 @@ import moment from "moment/moment";
 import React from "react";
 import { Link } from "react-router-dom";
 import { colorCodes } from "../../../utils/DefaultValues";
+import { formatCurrency } from "../../../utils/FormatCurrency";
 
 const OrderCard = ({ data }) => {
   const date = moment(data.orderDate).format("DD MMM YYYY, HH:mm");
@@ -9,7 +10,7 @@ const OrderCard = ({ data }) => {
     <div className="flex flex-col p-4 border border-greyLight rounded-sm">
       <div className="flex flex-row gap-4 justify-between border-b-greyLight pb-2 border-b ">
         <div className="flex flex-col gap-1">
-          <h4 className="heading4">{data._id}</h4>
+          <h4 className="heading4 text-base">{data.orderId}</h4>
           <span className="text-sm text-textDim">{date}</span>
         </div>
 
@@ -42,7 +43,7 @@ const OrderCard = ({ data }) => {
               />
               <div className="flex flex-row justify-between items-center w-full">
                 <span className="text-sm text-bodyText">
-                  &#8377; {entry.price}
+                  {formatCurrency(entry.price)}
                 </span>
                 <span className="text-sm text-bodyText">
                   Qty: {entry.quantity}
@@ -56,7 +57,9 @@ const OrderCard = ({ data }) => {
       <div className="flex flex-row justify-between items-center w-full gap-4 pt-2">
         <div className="flex flex-col gap-1">
           <span className="text-sm text-textDim">{data.totalItems} items</span>
-          <span className="font-medium">&#8377; {data.totalAmount}</span>
+          <span className="font-medium">
+            {formatCurrency(data.totalAmount)}
+          </span>
         </div>
 
         <Link to={`/profile/orders/${data._id}`} className="">

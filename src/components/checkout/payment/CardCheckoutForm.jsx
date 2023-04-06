@@ -2,68 +2,152 @@ import {
   CardNumberElement,
   CardCvcElement,
   CardExpiryElement,
-  useElements,
-  useStripe,
 } from "@stripe/react-stripe-js";
-import React from "react";
-import { useSelector } from "react-redux";
-import { getUserName } from "../../../redux/slice/authSlice";
-import { PRIVATE_API } from "../../../api/apiIndex";
-import { getCartTotal } from "../../../redux/slice/cartSlice";
+import React, { useState } from "react";
 
-const CardCheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const userName = useSelector(getUserName);
-  const totalAmount = useSelector(getCartTotal);
+const cardStyle = {
+  base: {
+    fontSize: "16px",
+    color: "#32325d",
+    "::placeholder": {
+      color: "#ADADAD",
+    },
+  },
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { data } = await PRIVATE_API.post("/payment/stripe", {
-      totalAmount,
-    });
+const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
+  const [cardNumber, setCardNumber] = useState({
+    error: null,
+    completed: false,
+  });
+  const [cardExpiry, setCardExpiry] = useState({
+    error: null,
+    completed: false,
+  });
+  const [cardCVC, setCardCVC] = useState({
+    error: null,
+    completed: false,
+  });
 
-    if (!stripe || !elements) {
-      return;
+  const handleCardNumberChange = (event) => {
+    setValidated(false);
+    if (event.error) {
+      setCardNumber({ completed: false, error: event.error.message });
+    } else if (event.empty) {
+      setCardNumber({
+        completed: false,
+        error: "Your card number is incomplete.",
+      });
+    } else if (event.complete) {
+      setCardNumber({ completed: true, error: null });
     }
+  };
 
-    const result = await stripe.confirmCardPayment(data.clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardNumberElement),
-        billing_details: {
-          name: userName,
-        },
-      },
-    });
+  const handleCardExpiryChange = (event) => {
+    setValidated(false);
+    if (event.error) {
+      setCardExpiry({ completed: false, error: event.error.message });
+    } else if (event.empty) {
+      setCardExpiry({
+        completed: false,
+        error: "Your card's expiry date is incomplete.",
+      });
+    } else if (event.complete) {
+      setCardExpiry({ completed: true, error: null });
+    }
+  };
 
-    if (result.error) {
-      console.log(result.error.message);
+  const handleCardCVCChange = (event) => {
+    setValidated(false);
+    console.log(event);
+    if (event.error) {
+      setCardCVC({ completed: false, error: event.error.message });
+    } else if (event.empty) {
+      setCardCVC({
+        completed: false,
+        error: "Your card's security code is incomplete.",
+      });
+    } else if (event.complete) {
+      setCardCVC({ completed: true, error: null });
+    }
+  };
+
+  const validateCard = (e) => {
+    e.preventDefault();
+    if (cardCVC.completed && cardExpiry.completed && cardNumber.completed) {
+      setValidated(true);
     } else {
-      if (result.paymentIntent.status === "succeeded") {
-        console.log(result);
-      }
+      setValidated(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="grid-list-2">
-        <label className="text-sm">
-          Card Number
-          <CardNumberElement />
-        </label>
-        <label className="text-sm">
-          Expiration Date
-          <CardExpiryElement />
-        </label>
+    <form
+      onSubmit={handleSubmit}
+      className="flex justify-center items-center w-full"
+    >
+      <div className="flex flex-col gap-4 sm:w-[500px] p-6 border rounded-sm border-greyLight w-full">
+        <div className="flex flex-col gap-1">
+          <label className="text-uiBlack" htmlFor="cardNumber">
+            Card Number
+          </label>
+          <CardNumberElement
+            id="cardNumber"
+            options={{
+              showIcon: true,
+              iconStyle: "solid",
+              style: cardStyle,
+              disabled: validated,
+            }}
+            onChange={handleCardNumberChange}
+            className="border border-greyLight p-3 block"
+          />
+          {cardNumber.error && (
+            <div className="text-red-500 text-[12px]">{cardNumber.error}</div>
+          )}
+        </div>
+
+        <div className="grid-list-2">
+          <div className="flex flex-col gap-1">
+            <label className="text-uiBlack" htmlFor="cardExpiry">
+              Expiration Date
+            </label>
+            <CardExpiryElement
+              id="cardExpiry"
+              options={{ style: cardStyle, disabled: validated }}
+              onChange={handleCardExpiryChange}
+              className="border border-greyLight p-3 block"
+            />
+            {cardExpiry.error && (
+              <div className="text-red-500 text-[12px]">{cardExpiry.error}</div>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-uiBlack" htmlFor="cardCvc">
+              CVC
+            </label>
+            <CardCvcElement
+              id="cardCvc"
+              options={{ style: cardStyle, disabled: validated }}
+              onChange={handleCardCVCChange}
+              className="border border-greyLight p-3 block"
+            />
+            {cardCVC.error && (
+              <div className="text-red-500 text-[12px]">{cardCVC.error}</div>
+            )}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={validateCard}
+          disabled={validated}
+          className="border-baseGreen text-baseGreen border py-2 rounded-sm disabled:bg-greyLight disabled:border-greyLight hover:bg-lightGreen"
+        >
+          {validated ? "Validated" : "Validate Card"}
+        </button>
       </div>
-      <div className="grid-list-2">
-        <label className="text-sm">
-          CVC
-          <CardCvcElement />
-        </label>
-      </div>
-      {/* <button disabled={!stripe}>Confirm order</button> */}
     </form>
   );
 };

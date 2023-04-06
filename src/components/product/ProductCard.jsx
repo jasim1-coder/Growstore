@@ -12,6 +12,7 @@ import {
 import { getUser } from "../../redux/slice/authSlice";
 import { ImSpinner2 } from "react-icons/im";
 import { addWishlistItem, getWishlist } from "../../redux/slice/wishlistSlice";
+import { formatCurrency } from "../../utils/FormatCurrency";
 
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
@@ -119,11 +120,11 @@ const ProductCard = ({ data }) => {
           <div className="flex flex-col gap-3 mt-auto">
             <p className="">
               <span className="text-baseGreen text-[22px] font-semibold">
-                &#8377; {data.price}
+                {formatCurrency(data.price)}
               </span>
               &nbsp;
               <span className="text-textDim line-through">
-                &#8377; {data.MRP}
+                {formatCurrency(data.MRP)}
               </span>
             </p>
             <button

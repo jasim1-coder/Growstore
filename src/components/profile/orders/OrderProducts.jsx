@@ -1,41 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const products = [
-  {
-    id: "abcde",
-    imageUrl:
-      "https://images-na.ssl-images-amazon.com/images/I/31V3NfjNACL.jpg",
-    title: "Product Title",
-    price: "500.15",
-    quantity: "2",
-  },
-  {
-    id: "abcde",
-    imageUrl:
-      "https://images-na.ssl-images-amazon.com/images/I/31V3NfjNACL.jpg",
-    title: "Product Title",
-    price: "500.15",
-    quantity: "2",
-  },
-  {
-    id: "abcde",
-    imageUrl:
-      "https://images-na.ssl-images-amazon.com/images/I/31V3NfjNACL.jpg",
-    title: "Product Title",
-    price: "500.15",
-    quantity: "2",
-  },
-  {
-    id: "abcde",
-    imageUrl:
-      "https://images-na.ssl-images-amazon.com/images/I/31V3NfjNACL.jpg",
-    title: "Product Title",
-    price: "500.15",
-    quantity: "2",
-  },
-];
+import { formatCurrency } from "../../../utils/FormatCurrency";
 
-const OrderProducts = () => {
+const OrderProducts = ({ data }) => {
   return (
     <div className="flex flex-col gap-3">
       <div className="py-2 border-b border-b-greyLight">
@@ -43,7 +10,7 @@ const OrderProducts = () => {
       </div>
 
       <div className="grid-list-2">
-        {products.map((entry, key) => (
+        {data.map((entry, key) => (
           <div className="flex sm:flex-row flex-col sm:gap-8 gap-5" key={key}>
             <div className="h-[100px] w-[100px] flex-none">
               <img
@@ -61,13 +28,13 @@ const OrderProducts = () => {
               </Link>
               <div className="flex flex-col gap-1 pt-2">
                 <span className="text-baseGreen font-semibold">
-                  &#8377; {entry.price}
+                  {formatCurrency(entry.price)}
                 </span>
                 <span className="text-sm">Qty: {entry.quantity}</span>
                 <p className="">
                   <span className="text-sm">Amount: </span>
                   <span className="font-medium text-baseGreen">
-                    &#8377; {entry.price * entry.quantity}
+                    {formatCurrency(entry.subTotal)}
                   </span>
                 </p>
               </div>

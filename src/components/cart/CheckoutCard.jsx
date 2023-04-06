@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { crypto, stripe } from "../../assets";
 import { getCartTotal } from "../../redux/slice/cartSlice";
+import { formatCurrency } from "../../utils/FormatCurrency";
 
 const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
   const total = useSelector(getCartTotal);
@@ -12,16 +13,20 @@ const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
         <div className="flex flex-row justify-between items-center">
           <span className="text-textDim text-sm">Subtotal</span>
           <span className="text-baseGreen font-medium">
-            &#8377; {parseFloat(total).toFixed(2)}
+            {formatCurrency(total)}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center">
           <span className="text-textDim text-sm">Discount</span>
-          <span className="text-baseGreen font-medium">&#8377; 0.00</span>
+          <span className="text-baseGreen font-medium">
+            {formatCurrency("0.00")}
+          </span>
         </div>
         <div className="flex flex-row justify-between items-center">
           <span className="text-textDim text-sm">Shipping Costs</span>
-          <span className="text-baseGreen font-medium">&#8377; 0.00</span>
+          <span className="text-baseGreen font-medium">
+            {formatCurrency("0.00")}
+          </span>
         </div>
       </div>
 
@@ -29,12 +34,14 @@ const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
         <div className="flex flex-row justify-between items-center">
           <span className="text-uiBlack text-[20px] font-medium">Total</span>
           <span className="text-uiBlack text-[20px] font-medium">
-            &#8377; {parseFloat(total).toFixed(2)}
+            {formatCurrency(total)}
           </span>
         </div>
         <div className="flex flex-row justify-between items-center">
           <span className="text-textDim text-sm">You save</span>
-          <span className="text-textDim font-medium">&#8377; 0.00</span>
+          <span className="text-textDim font-medium">
+            {formatCurrency("0.00")}
+          </span>
         </div>
       </div>
 

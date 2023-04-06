@@ -7,8 +7,14 @@ import CartMain from "../../components/cart/CartMain";
 import { getCartItemsLength } from "../../redux/slice/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAddressId } from "../../redux/slice/orderSlice";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const steps = ["Cart", "Shipping", "Payment", "Confirmation"];
+
+const stripePromise = loadStripe(
+  "pk_test_51MtbcoSFTB0iFfwzKI856s72h3EJ36wDX63z2aERFrldMqpKgNyPMLkrtj0ZiqSYiEVAZ5IdMGZ46lcj0Cdvs6ES00RjeRuQQt"
+);
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -39,7 +45,11 @@ const Checkout = () => {
       case 1:
         return <Shipping onNextStep={handleNextStep} />;
       case 2:
-        return <Payment onNextStep={handleNextStep} />;
+        return (
+          <Elements stripe={stripePromise}>
+            <Payment onNextStep={handleNextStep} />
+          </Elements>
+        );
       case 3:
         return <Confirmation />;
       default:

@@ -1,6 +1,5 @@
 import React from "react";
 import { FiChevronLeft } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import SecondaryFooter from "../common/footer/SecondaryFooter";
 import { logoBig } from "../../assets";
 
@@ -9,13 +8,13 @@ const CheckoutLayout = ({ children }) => {
     <div className="flex flex-col min-h-screen container">
       <div className="py-6 flex flex-row w-full items-center justify-between border-b border-b-greyLight">
         <div className="font-medium">
-          <Link
-            to="/cart"
+          <a
+            href="/cart"
             className="flex flex-row items-center gap-2 text-uiBlack"
           >
             <FiChevronLeft />
             <span className="">Back to store</span>
-          </Link>
+          </a>
         </div>
         <div className="">
           <img src={logoBig} alt="Logo" className="sm:h-[48px] h-[32px]" />

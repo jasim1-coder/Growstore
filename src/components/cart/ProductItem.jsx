@@ -11,6 +11,7 @@ import {
   removeFromCartNOUSER,
 } from "../../redux/slice/cartSlice";
 import { addWishlistItem, getWishlist } from "../../redux/slice/wishlistSlice";
+import { formatCurrency } from "../../utils/FormatCurrency";
 
 const ProductItem = ({ data }) => {
   const dispatch = useDispatch();
@@ -99,10 +100,10 @@ const ProductItem = ({ data }) => {
         </Link>
         <div className="flex flex-col pt-2">
           <span className="text-textDim line-through text-[12px]">
-            &#8377; 1222.22
+            {formatCurrency("1222.22")}
           </span>
           <span className="text-baseGreen font-semibold">
-            &#8377; {data.price}
+            {formatCurrency(data.price)}
           </span>
         </div>
         <div className="flex flex-row gap-3 items-center pt-4">
@@ -141,7 +142,7 @@ const ProductItem = ({ data }) => {
         <p className="pt-4">
           <span className="text-sm">Amount: </span>
           <span className="font-medium text-baseGreen">
-            &#8377; {data.total}
+            {formatCurrency(data.total)}
           </span>
         </p>
         <div className="flex flex-row pt-6">

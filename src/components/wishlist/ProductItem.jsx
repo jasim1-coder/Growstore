@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, getCartItems } from "../../redux/slice/cartSlice";
 import { removeWishlistItem } from "../../redux/slice/wishlistSlice";
+import { formatCurrency } from "../../utils/FormatCurrency";
 
 const ProductItem = ({ data }) => {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const ProductItem = ({ data }) => {
         </div>
       </td>
       <td className="px-2 py-4 overflow-clip text-center">
-        <span className="">&#8377; {data.price}</span>
+        <span className="">{formatCurrency(data.price)}</span>
       </td>
       <td className="px-2 py-4 overflow-clip text-center">
         <select

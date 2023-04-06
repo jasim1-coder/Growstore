@@ -10,6 +10,7 @@ import {
   getCartItems,
 } from "../../redux/slice/cartSlice";
 import { getProductDetails } from "../../redux/slice/productSlice";
+import { formatCurrency } from "../../utils/FormatCurrency";
 
 const ProductMain = () => {
   const data = useSelector(getProductDetails);
@@ -73,9 +74,11 @@ const ProductMain = () => {
       <div className="flex sm:flex-row flex-col gap-3 justify-between sm:items-center border-b border-b-uiGrey pb-4">
         <p className="flex flex-row gap-3 items-baseline">
           <span className="text-baseGreen text-[24px] font-semibold">
-            &#8377; {data.price}
+            {formatCurrency(data.price)}
           </span>
-          <span className="text-textDim line-through">&#8377; {data.MRP}</span>
+          <span className="text-textDim line-through">
+            {formatCurrency(data.MRP)}
+          </span>
         </p>
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-row gap-2 items-center pr-4 border-r-[2px] border-r-uiGrey/80">
