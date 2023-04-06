@@ -44,7 +44,7 @@ const Shipping = ({ onNextStep }) => {
   }, []);
 
   return (
-    <div className="container py-[2rem] sm:px-[4rem]">
+    <div className="sm:container py-[2rem] sm:px-[4rem]">
       {addStatus === "failed" ? (
         <AlertBox
           type={addStatus}

@@ -21,8 +21,6 @@ const OrderHistory = () => {
     }
   }, []);
 
-  console.log(myOrders);
-
   return (
     <ProfileLayout>
       <section className="p-4 flex-1 flex flex-col gap-4">

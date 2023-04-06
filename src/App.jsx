@@ -29,6 +29,10 @@ import ReviewsHistory from "./pages/userProfile/ReviewsHistory";
 import OrderHistory from "./pages/userProfile/OrderHistory";
 import ManageOrder from "./pages/userProfile/ManageOrder";
 import Checkout from "./pages/checkout/Checkout";
+import Categories from "./pages/Categories";
+import Brands from "./pages/Brands";
+import SingleBrand from "./pages/SingleBrand";
+import SingleCategory from "./pages/SingleCategory";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +55,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="cart" element={<Cart />} />
           <Route path="products" element={<ProductListing />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="categories/:id" element={<SingleCategory />} />
+          <Route path="brands" element={<Brands />} />
+          <Route path="brands/:id" element={<SingleBrand />} />
           <Route path="product/:id" element={<Product />} />
         </Route>
 

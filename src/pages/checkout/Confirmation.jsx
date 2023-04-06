@@ -7,7 +7,7 @@ const Confirmation = () => {
   const orderId = useSelector(getOrderId);
 
   return (
-    <div className="container py-[2rem] sm:px-[4rem] flex-1 flex flex-col gap-5 justify-center items-center">
+    <div className="sm:container py-[2rem] sm:px-[4rem] flex-1 flex flex-col gap-5 justify-center items-center">
       <div className="py-2">
         <FiCheckCircle className="text-[108px] text-green-500" />
       </div>

@@ -12,7 +12,6 @@ const ReviewsList = () => {
     const { data } = await PRIVATE_API.get(
       `/review/byuser/?page=${page}&limit=${limit}`
     );
-    console.log(data);
     setReviewsData(data.data);
     setPageCount(data.count);
   };

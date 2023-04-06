@@ -21,7 +21,7 @@ const CartMain = ({ handleCheckout }) => {
   }, []);
 
   return (
-    <div className="container py-[2rem] sm:px-[4rem]">
+    <div className="sm:container py-[2rem] sm:px-[4rem]">
       <div className="flex md:flex-row flex-col justify-between gap-16">
         <div className="flex-1 flex flex-col gap-3">
           <div className="flex flex-row justify-between items-center border-b border-textDim py-4">

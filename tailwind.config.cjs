@@ -16,6 +16,7 @@ module.exports = {
         uiRed: "#DE3A3A",
         textDim: "#908F8F",
         uiOrange: "#F4845E",
+        uiBlue: "#29BAED",
         bodyText: "#2e2e2e",
       },
     },

@@ -12,7 +12,9 @@ const Cart = () => {
   };
   return (
     <Layout>
-      <CartMain handleCheckout={handleCheckout} />
+      <div className="container">
+        <CartMain handleCheckout={handleCheckout} />
+      </div>
     </Layout>
   );
 };

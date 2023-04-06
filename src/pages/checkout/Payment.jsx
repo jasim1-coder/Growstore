@@ -88,7 +88,7 @@ const Payment = ({ onNextStep }) => {
   };
 
   return (
-    <div className="container py-[2rem] sm:px-[4rem]">
+    <div className="sm:container py-[2rem] sm:px-[4rem]">
       {orderStatus === "failed" ? (
         <AlertBox type={orderStatus} message={orderError} />
       ) : null}

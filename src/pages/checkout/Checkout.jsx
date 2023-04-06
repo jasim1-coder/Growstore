@@ -9,8 +9,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeAddressId } from "../../redux/slice/orderSlice";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import {
+  FiCheckCircle,
+  FiCreditCard,
+  FiShoppingCart,
+  FiTruck,
+} from "react-icons/fi";
 
-const steps = ["Cart", "Shipping", "Payment", "Confirmation"];
+const steps = [
+  { title: "Cart", icon: <FiShoppingCart /> },
+  { title: "Shipping", icon: <FiTruck /> },
+  { title: "Payment", icon: <FiCreditCard /> },
+  { title: "Confirmation", icon: <FiCheckCircle /> },
+];
+// const steps = ["Cart", "Shipping", "Payment", "Confirmation"];
 
 const stripePromise = loadStripe(
   "pk_test_51MtbcoSFTB0iFfwzKI856s72h3EJ36wDX63z2aERFrldMqpKgNyPMLkrtj0ZiqSYiEVAZ5IdMGZ46lcj0Cdvs6ES00RjeRuQQt"
@@ -59,9 +71,12 @@ const Checkout = () => {
 
   return (
     <CheckoutLayout>
-      <div className="flex flex-row items-center py-4 sm:w-max w-full mx-auto font-medium">
+      <div className="flex flex-row items-center py-4 sm:w-max w-full sm:mx-auto font-medium">
         {steps.map((step, index) => (
-          <div key={step} className="flex flex-row items-center">
+          <div
+            key={step.title}
+            className="flex flex-row items-center flex-grow"
+          >
             <div
               className={`${
                 index <= maxStep ? "text-uiBlack" : "text-textDim"
@@ -69,18 +84,27 @@ const Checkout = () => {
             >
               <button
                 type="button"
-                className={`${index === activeStep ? "text-baseGreen" : null}`}
+                className={`${
+                  index === activeStep ? "text-baseGreen" : null
+                } flex flex-row gap-1 items-center`}
                 onClick={() => setActiveStep(index)}
                 disabled={index > maxStep || activeStep === steps.length - 1}
               >
-                {step}
+                <div
+                  className={`p-2 ${
+                    index === activeStep ? "bg-baseGreen/30" : null
+                  } rounded-full`}
+                >
+                  {step.icon}
+                </div>
+                <span className="hidden sm:block">{step.title}</span>
               </button>
             </div>
             {index < steps.length - 1 ? (
               <div
                 className={`h-[2px] ${
                   index <= maxStep ? "bg-uiBlack" : "bg-textDim"
-                } sm:w-[50px] flex-1 mx-3`}
+                } sm:w-[50px] min-w-[25px] flex-grow mx-3`}
               />
             ) : null}
           </div>
