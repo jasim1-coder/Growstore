@@ -2,10 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { crypto, stripe } from "../../assets";
 import { getCartTotal } from "../../redux/slice/cartSlice";
-import { formatCurrency } from "../../utils/FormatCurrency";
+import {
+  formatCryptoCurrency,
+  formatCurrency,
+} from "../../utils/FormatCurrency";
+import { getINRvalue } from "../../redux/slice/daiSlice";
 
 const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
   const total = useSelector(getCartTotal);
+  const inrValue = useSelector(getINRvalue);
 
   return (
     <div className="md:w-[420px] max-w-[350px] bg-greyLight sm:p-8 p-4 rounded-sm flex flex-col h-max">
@@ -34,7 +39,10 @@ const CheckoutCard = ({ handleCheckout, buttonName, buttonDisabled }) => {
         <div className="flex flex-row justify-between items-center">
           <span className="text-uiBlack text-[20px] font-medium">Total</span>
           <span className="text-uiBlack text-[20px] font-medium">
-            {formatCurrency(total)}
+            {formatCurrency(total)}{" "}
+            <span className="text-textDim text-sm font-normal">
+              ({formatCryptoCurrency(total / inrValue)})
+            </span>
           </span>
         </div>
         <div className="flex flex-row justify-between items-center">

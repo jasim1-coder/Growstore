@@ -33,6 +33,7 @@ import Categories from "./pages/Categories";
 import Brands from "./pages/Brands";
 import SingleBrand from "./pages/SingleBrand";
 import SingleCategory from "./pages/SingleCategory";
+import { fetchINRvalue } from "./redux/slice/daiSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
     if (token && !user) {
       dispatch(loginwithtoken(token));
     }
+    dispatch(fetchINRvalue());
   }, []);
 
   return (

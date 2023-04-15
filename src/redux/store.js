@@ -8,6 +8,7 @@ import wishlistReducer from "./slice/wishlistSlice";
 import addressReducer from "./slice/addressSlice";
 import orderReducer from "./slice/orderSlice";
 import myOrderReducer from "./slice/myOrderSlice";
+import daiReducer from "./slice/daiSlice";
 
 const combinedReducer = combineReducers({
   auth: authReducer,
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
   address: addressReducer,
   order: orderReducer,
   myOrder: myOrderReducer,
+  dai: daiReducer,
 });
 
 const rootReducer = (state, action) => {

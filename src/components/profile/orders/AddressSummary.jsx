@@ -13,40 +13,40 @@ const AddressSummary = ({ data }) => {
       </div>
       <div className="grid-list-3">
         <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">Name</p>
-          <p className="font-medium text-bodyText">{name}</p>
+          <p className="text-sm text-textDim">Name</p>
+          <p className="text-bodyText">{name}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">Email</p>
-          <p className="font-medium text-bodyText">{email}</p>
+          <p className="text-sm text-textDim">Email</p>
+          <p className="text-bodyText">{email}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">Mobile Number</p>
-          <p className="font-medium text-bodyText">{data.mobileNumber}</p>
-        </div>
-      </div>
-      <div className="grid-list-3">
-        <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">Street</p>
-          <p className="font-medium text-bodyText">{data.street}</p>
-        </div>
-        <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">City</p>
-          <p className="font-medium text-bodyText">{data.city}</p>
-        </div>
-        <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">State</p>
-          <p className="font-medium text-bodyText">{data.state}</p>
+          <p className="text-sm text-textDim">Mobile Number</p>
+          <p className="text-bodyText">{data.mobileNumber}</p>
         </div>
       </div>
       <div className="grid-list-3">
         <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">ZIP Code</p>
-          <p className="font-medium text-bodyText">{data.zipCode}</p>
+          <p className="text-sm text-textDim">Street</p>
+          <p className="text-bodyText">{data.street}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
-          <p className="text-sm">Country</p>
-          <p className="font-medium text-bodyText">{data.country}</p>
+          <p className="text-sm text-textDim">City</p>
+          <p className="text-bodyText">{data.city}</p>
+        </div>
+        <div className="flex flex-col gap-1 flex-1">
+          <p className="text-sm text-textDim">State</p>
+          <p className="text-bodyText">{data.state}</p>
+        </div>
+      </div>
+      <div className="grid-list-3">
+        <div className="flex flex-col gap-1 flex-1">
+          <p className="text-sm text-textDim">ZIP Code</p>
+          <p className="text-bodyText">{data.zipCode}</p>
+        </div>
+        <div className="flex flex-col gap-1 flex-1">
+          <p className="text-sm text-textDim">Country</p>
+          <p className="text-bodyText">{data.country}</p>
         </div>
       </div>
     </div>

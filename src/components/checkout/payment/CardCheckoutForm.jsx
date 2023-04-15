@@ -15,7 +15,7 @@ const cardStyle = {
   },
 };
 
-const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
+const CardCheckoutForm = ({ validated, setValidated }) => {
   const [cardNumber, setCardNumber] = useState({
     error: null,
     completed: false,
@@ -83,10 +83,10 @@ const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
       className="flex justify-center items-center w-full"
     >
-      <div className="flex flex-col gap-4 sm:w-[500px] p-6 border rounded-sm border-greyLight w-full">
+      <div className="flex flex-col gap-4 p-6 rounded-sm w-full">
         <div className="flex flex-col gap-1">
           <label className="text-uiBlack" htmlFor="cardNumber">
             Card Number
@@ -100,7 +100,7 @@ const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
               disabled: validated,
             }}
             onChange={handleCardNumberChange}
-            className="border border-greyLight p-3 block"
+            className="border border-greyLight p-3 block bg-white input-shadow"
           />
           {cardNumber.error && (
             <div className="text-red-500 text-[12px]">{cardNumber.error}</div>
@@ -116,7 +116,7 @@ const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
               id="cardExpiry"
               options={{ style: cardStyle, disabled: validated }}
               onChange={handleCardExpiryChange}
-              className="border border-greyLight p-3 block"
+              className="border border-greyLight p-3 block bg-white input-shadow"
             />
             {cardExpiry.error && (
               <div className="text-red-500 text-[12px]">{cardExpiry.error}</div>
@@ -131,7 +131,7 @@ const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
               id="cardCvc"
               options={{ style: cardStyle, disabled: validated }}
               onChange={handleCardCVCChange}
-              className="border border-greyLight p-3 block"
+              className="border border-greyLight p-3 block bg-white input-shadow"
             />
             {cardCVC.error && (
               <div className="text-red-500 text-[12px]">{cardCVC.error}</div>
@@ -143,7 +143,7 @@ const CardCheckoutForm = ({ validated, setValidated, handleSubmit }) => {
           type="button"
           onClick={validateCard}
           disabled={validated}
-          className="border-baseGreen text-baseGreen border py-2 rounded-sm disabled:bg-greyLight disabled:border-greyLight hover:bg-lightGreen"
+          className="border-baseGreen text-baseGreen border py-2 bg-white rounded-sm disabled:bg-greyLight disabled:border-greyLight hover:bg-lightGreen input-shadow"
         >
           {validated ? "Validated" : "Validate Card"}
         </button>

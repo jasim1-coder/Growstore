@@ -21,7 +21,7 @@ const OrderCard = ({ data }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 border-b border-b-greyLight pb-2 pt-2">
+      <div className="flex flex-col gap-4 border-b border-b-greyLight pb-2 pt-2">
         {data.products.map((entry, key) => (
           <div className="flex flex-row gap-4 items-center" key={key}>
             <div className="h-[80px] w-[80px]">
@@ -33,7 +33,7 @@ const OrderCard = ({ data }) => {
             </div>
             <div className="flex flex-col gap-1 flex-1">
               <span
-                className="text-sm text-bodyText font-medium"
+                className="text-sm text-bodyText"
                 dangerouslySetInnerHTML={{
                   __html:
                     entry.title.length > 50
@@ -42,7 +42,7 @@ const OrderCard = ({ data }) => {
                 }}
               />
               <div className="flex flex-row justify-between items-center w-full">
-                <span className="text-sm text-bodyText">
+                <span className="text-sm text-base">
                   {formatCurrency(entry.price)}
                 </span>
                 <span className="text-sm text-bodyText">

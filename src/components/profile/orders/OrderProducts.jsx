@@ -33,7 +33,7 @@ const OrderProducts = ({ data }) => {
                 <span className="text-sm">Qty: {entry.quantity}</span>
                 <p className="">
                   <span className="text-sm">Amount: </span>
-                  <span className="font-medium text-baseGreen">
+                  <span className="text-sm text-baseGreen">
                     {formatCurrency(entry.subTotal)}
                   </span>
                 </p>

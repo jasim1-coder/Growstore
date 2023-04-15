@@ -12,6 +12,7 @@ import crypto from "./crypto.png";
 import offer1 from "./offer1.png";
 import offer2 from "./offer2.png";
 import pattern from "./pattern.png";
+import metamask from "./metamask.png";
 
 export {
   logoBig,
@@ -28,4 +29,5 @@ export {
   offer1,
   offer2,
   pattern,
+  metamask,
 };
