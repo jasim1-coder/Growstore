@@ -34,11 +34,16 @@ import Brands from "./pages/shop/Brands";
 import SingleBrand from "./pages/shop/SingleBrand";
 import SingleCategory from "./pages/shop/SingleCategory";
 import { fetchINRvalue } from "./redux/slice/daiSlice";
-import Users from "./pages/admin/Users";
-import Orders from "./pages/admin/Orders";
-import BrandAll from "./pages/admin/BrandAll";
-import CategoriesAll from "./pages/admin/CategoriesAll";
-import Products from "./pages/admin/Products";
+import AdminUsers from "./pages/admin/Users";
+import AdminOrders from "./pages/admin/Orders";
+import AdminBrands from "./pages/admin/BrandAll";
+import AdminCategories from "./pages/admin/CategoriesAll";
+import AdminProducts from "./pages/admin/Products";
+import AdminManageOrder from "./pages/admin/ManageOrder";
+import AdminManageUsers from "./pages/admin/ManageUsers";
+import AdminManageProducts from "./pages/admin/ManageProducts";
+import AdminManageBrands from "./pages/admin/ManageBrands";
+import AdminManageCategories from "./pages/admin/ManageCategories";
 
 function App() {
   const dispatch = useDispatch();
@@ -79,7 +84,7 @@ function App() {
             <Route path="reviews" element={<ReviewsHistory />} />
             <Route path="my" element={<Profile />} />
             <Route
-              path=""
+              index
               element={<Navigate to="/profile/my" replace={true} />}
             />
           </Route>
@@ -88,12 +93,20 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<RequireAuth allowedRole="ADMIN" />}>
-          <Route index element={<Orders />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="users" element={<Users />} />
-          <Route path="products" element={<Products />} />
-          <Route path="categories" element={<CategoriesAll />} />
-          <Route path="brands" element={<BrandAll />} />
+          <Route
+            index
+            element={<Navigate to="/admin/orders" replace={true} />}
+          />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id" element={<AdminManageOrder />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="users/:id" element={<AdminManageUsers />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="products/:id" element={<AdminManageProducts />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="categories/:id" element={<AdminManageCategories />} />
+          <Route path="brands" element={<AdminBrands />} />
+          <Route path="brands/:id" element={<AdminManageBrands />} />
           <Route path="dashboard" element={<p>Admin dashboard</p>} />
           <Route path="*" element={<p>Admin side pages</p>} />
         </Route>

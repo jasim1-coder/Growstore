@@ -1,7 +1,7 @@
 import React from "react";
 
 const AdminPageHeader = ({ title }) => {
-  return <h1 className="heading1 uppercase">{title}</h1>;
+  return <h2 className="heading2">{title}</h2>;
 };
 
 export default AdminPageHeader;

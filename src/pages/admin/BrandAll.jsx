@@ -1,8 +1,9 @@
 import React from "react";
 import AdminLayout from "../../components/common/AdminLayout";
-import AdminPageHeader from "../../components/admin/pageHeaders";
+import AdminPageHeader from "../../components/admin/commons/AdminPageHeader";
+import BrandsList from "../../components/admin/brands/BrandsList";
 
-const BrandAll = () => {
+const AdminBrands = () => {
   return (
     <AdminLayout>
       <div className="adminContainer">
@@ -10,12 +11,13 @@ const BrandAll = () => {
 
         <section className="adminMainContainer">
           <div className="flex flex-row w-full justify-between items-center">
-            <h3 className="heading3">Brands List</h3>
+            <h4 className="heading4">Brands List</h4>
           </div>
+          <BrandsList />
         </section>
       </div>
     </AdminLayout>
   );
 };
 
-export default BrandAll;
+export default AdminBrands;

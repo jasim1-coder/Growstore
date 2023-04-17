@@ -174,7 +174,7 @@ export const getCartTotal = (state) => {
     const price = parseFloat(item.total);
     total += price;
   });
-  return parseFloat(total).toFixed(2);
+  return total;
 };
 export const getCartItemsLength = (state) => state.cart.cartItems.length;
 

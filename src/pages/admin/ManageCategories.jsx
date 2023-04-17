@@ -1,23 +1,23 @@
 import React from "react";
 import AdminLayout from "../../components/common/AdminLayout";
 import AdminPageHeader from "../../components/admin/commons/AdminPageHeader";
-import UsersList from "../../components/admin/users/UsersList";
+import AdminBackButton from "../../components/admin/commons/AdminBackButton";
 
-const AdminUsers = () => {
+const AdminManageCategories = () => {
   return (
     <AdminLayout>
       <div className="adminContainer">
-        <AdminPageHeader title="Users" />
+        <AdminPageHeader title="Manage Categories" />
 
         <section className="adminMainContainer">
           <div className="flex flex-row w-full justify-between items-center">
-            <h4 className="heading4">User List</h4>
+            <AdminBackButton to="/admin/categories" />
           </div>
-          <UsersList />
+          {/* <OrderList /> */}
         </section>
       </div>
     </AdminLayout>
   );
 };
 
-export default AdminUsers;
+export default AdminManageCategories;
