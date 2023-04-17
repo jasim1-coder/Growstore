@@ -32,4 +32,5 @@ const rootReducer = (state, action) => {
 
 export const store = configureStore({
   reducer: rootReducer,
+  // devTools: false,
 });

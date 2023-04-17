@@ -30,7 +30,7 @@ const RequireAuth = ({ allowedRole }) => {
     ) : user.role === "CUSTOMER" ? (
       <Navigate to="/" />
     ) : (
-      <Navigate to="/admin/dashboard" />
+      <Navigate to="/admin/orders" />
     )
   ) : (
     <Navigate to="/login" state={{ from: location }} />

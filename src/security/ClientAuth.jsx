@@ -17,7 +17,7 @@ const ClientAuth = () => {
   }
 
   return userRole === "ADMIN" ? (
-    <Navigate to="/admin/dashboard" replace />
+    <Navigate to="/admin/orders" replace />
   ) : (
     <Outlet />
   );

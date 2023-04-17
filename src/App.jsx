@@ -6,16 +6,16 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Addresses from "./pages/userProfile/Addresses";
-import Cart from "./pages/Cart";
-import Home from "./pages/Home";
+import Addresses from "./pages/shop/userProfile/Addresses";
+import Cart from "./pages/shop/Cart";
+import Home from "./pages/shop/Home";
 import Login from "./pages/Login";
 import PagenotFound from "./pages/PagenotFound";
-import Product from "./pages/Product";
-import ProductListing from "./pages/ProductListing";
-import Profile from "./pages/userProfile/Profile";
+import Product from "./pages/shop/Product";
+import ProductListing from "./pages/shop/ProductListing";
+import Profile from "./pages/shop/userProfile/Profile";
 import Signup from "./pages/Signup";
-import Wishlist from "./pages/Wishlist";
+import Wishlist from "./pages/shop/Wishlist";
 import {
   getAccessToken,
   getUser,
@@ -23,17 +23,22 @@ import {
 } from "./redux/slice/authSlice";
 import ClientAuth from "./security/ClientAuth";
 import RequireAuth from "./security/RequireAuth";
-import AddAddress from "./pages/userProfile/AddAddress";
-import EditAddress from "./pages/userProfile/EditAddress";
-import ReviewsHistory from "./pages/userProfile/ReviewsHistory";
-import OrderHistory from "./pages/userProfile/OrderHistory";
-import ManageOrder from "./pages/userProfile/ManageOrder";
-import Checkout from "./pages/checkout/Checkout";
-import Categories from "./pages/Categories";
-import Brands from "./pages/Brands";
-import SingleBrand from "./pages/SingleBrand";
-import SingleCategory from "./pages/SingleCategory";
+import AddAddress from "./pages/shop/userProfile/AddAddress";
+import EditAddress from "./pages/shop/userProfile/EditAddress";
+import ReviewsHistory from "./pages/shop/userProfile/ReviewsHistory";
+import OrderHistory from "./pages/shop/userProfile/OrderHistory";
+import ManageOrder from "./pages/shop/userProfile/ManageOrder";
+import Checkout from "./pages/shop/checkout/Checkout";
+import Categories from "./pages/shop/Categories";
+import Brands from "./pages/shop/Brands";
+import SingleBrand from "./pages/shop/SingleBrand";
+import SingleCategory from "./pages/shop/SingleCategory";
 import { fetchINRvalue } from "./redux/slice/daiSlice";
+import Users from "./pages/admin/Users";
+import Orders from "./pages/admin/Orders";
+import BrandAll from "./pages/admin/BrandAll";
+import CategoriesAll from "./pages/admin/CategoriesAll";
+import Products from "./pages/admin/Products";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,7 +59,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
         <Route path="/" element={<ClientAuth />}>
-          <Route path="/" element={<Home />} />
+          <Route index element={<Home />} />
           <Route path="cart" element={<Cart />} />
           <Route path="products" element={<ProductListing />} />
           <Route path="categories" element={<Categories />} />
@@ -83,6 +88,12 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<RequireAuth allowedRole="ADMIN" />}>
+          <Route index element={<Orders />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="users" element={<Users />} />
+          <Route path="products" element={<Products />} />
+          <Route path="categories" element={<CategoriesAll />} />
+          <Route path="brands" element={<BrandAll />} />
           <Route path="dashboard" element={<p>Admin dashboard</p>} />
           <Route path="*" element={<p>Admin side pages</p>} />
         </Route>

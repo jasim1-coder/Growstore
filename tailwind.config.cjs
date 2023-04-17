@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        formBackground: "#f7fafc",
+        formBackground: "#f7f8fc",
         baseGreen: "#3BB77E",
         lightGreen: "#DEF9EC",
         darkGreen: "#339C6C",
@@ -16,7 +16,10 @@ module.exports = {
         uiRed: "#DE3A3A",
         textDim: "#908F8F",
         uiOrange: "#F4845E",
+        uiOrangeDark: "#EF3F23",
         uiBlue: "#29BAED",
+        uiBlueDark: "#193057",
+        textSidebar: "#CCCCCC",
         bodyText: "#2e2e2e",
       },
     },

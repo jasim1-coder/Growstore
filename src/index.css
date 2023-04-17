@@ -43,6 +43,14 @@
     @apply h-14 flex flex-row sm:gap-6 gap-3 px-5 text-sm items-center text-uiBlack hover:bg-baseGreen/20 hover:ease-in transition duration-150 sm:w-full
   }
 
+  .linkActiveAdmin {
+    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-[18px] items-center text-uiWhite bg-uiBlue/30 border-uiBlue border-l-2
+  }
+
+  .linkInactiveAdmin {
+    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-5 items-center text-textSidebar hover:bg-uiBlue/20 hover:ease-in transition duration-150 w-full
+  }
+
   .input-row-container {
     @apply flex sm:flex-row flex-col gap-3 sm:items-start justify-between;
   }
@@ -125,6 +133,14 @@
 
   .StripeElement {
     @apply my-3 py-2 px-4 w-full text-uiBlack focus:outline-none border border-uiGrey rounded-sm;
+  }
+
+  .adminContainer {
+    @apply flex flex-col gap-12 w-full
+  }
+
+  .adminMainContainer {
+    @apply bg-[#ffffff] flex flex-col gap-10 w-full sm:p-7 p-3 rounded-[4px] border border-greyLight
   }
 }
 
