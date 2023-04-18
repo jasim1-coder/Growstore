@@ -1,67 +1,89 @@
-import React, { useMemo, useState } from "react";
-import useSortableData from "../../../utils/SortData";
+import React, { useEffect, useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import OrderItem from "./OrderItem";
 import Pagination from "../../common/pagination/Pagination";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAdminOrders,
+  getAdminOrderCurrentPage,
+  getAdminOrderFetchError,
+  getAdminOrderFetchStatus,
+  getAdminOrderIdQuery,
+  getAdminOrderLimit,
+  getAdminOrderSortOrder,
+  getAdminOrderTotalOrders,
+  getAdminOrdersData,
+  removeAdminOrdersError,
+} from "../../../redux/adminSlice/ordersSlice";
+import { ImSpinner8 } from "react-icons/im";
+import AlertBox from "../../common/AlertBox";
 
-const data = [
-  {
-    _id: "abcde",
-    orderId: "Order-1",
-    userName: "Sulav Giri",
-    date: new Date(),
-    totalAmount: "1000.00",
-    status: "Placed",
-  },
-  {
-    _id: "abcdef",
-    orderId: "Order-2",
-    userName: "Sulav Giri",
-    date: new Date(),
-    totalAmount: "1000.00",
-    status: "Processing",
-  },
-  {
-    _id: "abcdeg",
-    orderId: "Order-3",
-    userName: "Sulav Giri",
-    date: new Date(),
-    totalAmount: "1000.00",
-    status: "Cancelled",
-  },
-  {
-    _id: "abcdeh",
-    orderId: "Order-4",
-    userName: "Sulav Giri",
-    date: new Date(),
-    totalAmount: "1000.00",
-    status: "Cancelled",
-  },
-];
 const OrderList = () => {
-  const pageSize = 5;
+  const dispatch = useDispatch();
+  const data = useSelector(getAdminOrdersData);
+  const status = useSelector(getAdminOrderFetchStatus);
+  const error = useSelector(getAdminOrderFetchError);
 
-  const { items, requestSort, sortConfig } = useSortableData(data);
+  const _currentPage = useSelector(getAdminOrderCurrentPage);
+  const limit = useSelector(getAdminOrderLimit);
+  const sortOrder = useSelector(getAdminOrderSortOrder);
+  const totalOrders = useSelector(getAdminOrderTotalOrders);
+  const orderIdQuery = useSelector(getAdminOrderIdQuery);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(_currentPage);
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return items?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, items]);
-
-  const len = data?.length;
-
-  const [sortKey, setSortKey] = useState("");
+  const [sortKey, setSortKey] = useState(sortOrder);
 
   const handleSort = (key) => {
-    requestSort(key);
-    setSortKey(key);
+    let newSortOrder;
+    if (!sortKey[key] || sortKey[key] === 1) {
+      newSortOrder = { [key]: -1 };
+    } else {
+      newSortOrder = { [key]: 1 };
+    }
+    const _newSortOrder = JSON.stringify(newSortOrder);
+    const params = {
+      orderIdQuery: orderIdQuery,
+      sortOrder: _newSortOrder,
+    };
+    dispatch(fetchAdminOrders(params));
   };
+
+  const handlePageChange = () => {
+    const params = {
+      orderIdQuery: orderIdQuery,
+      sortOrder: JSON.stringify(sortKey),
+      page: currentPage,
+      limit,
+    };
+    dispatch(fetchAdminOrders(params));
+  };
+
+  useEffect(() => {
+    if (_currentPage !== currentPage) {
+      handlePageChange();
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(_currentPage);
+  }, [_currentPage]);
+
+  useEffect(() => {
+    if (sortOrder) {
+      setSortKey(JSON.parse(sortOrder));
+    }
+  }, [sortOrder]);
 
   return (
     <div className="flex flex-col gap-3">
+      {status == "failed" ? (
+        <AlertBox
+          message={error}
+          type={status}
+          toDispatch={removeAdminOrdersError}
+        />
+      ) : null}
       {/* Table Section */}
       <div className="sm:w-full w-[calc(100vw-120px)] overflow-x-auto">
         {/* Table Header */}
@@ -74,8 +96,8 @@ const OrderList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Order ID</span>
-                  {sortConfig && sortKey === "orderId" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.orderId ? (
+                    sortKey.orderId === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -91,8 +113,8 @@ const OrderList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>User</span>
-                  {sortConfig && sortKey === "userName" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.userName ? (
+                    sortKey.userName === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -104,12 +126,12 @@ const OrderList = () => {
               </th>
               <th className="p-2">
                 <button
-                  onClick={() => handleSort("date")}
+                  onClick={() => handleSort("orderDate")}
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Date</span>
-                  {sortConfig && sortKey === "date" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.orderDate ? (
+                    sortKey.orderDate === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -125,8 +147,8 @@ const OrderList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Amount</span>
-                  {sortConfig && sortKey === "totalAmount" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.totalAmount ? (
+                    sortKey.totalAmount === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -142,8 +164,8 @@ const OrderList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Status</span>
-                  {sortConfig && sortKey === "status" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.status ? (
+                    sortKey.status === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -155,26 +177,35 @@ const OrderList = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="relative h-full w-full">
+            {status === "loading" ? (
+              <tr>
+                <td colSpan={5}>
+                  <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
+                    <div className="flex w-full h-full justify-center items-center">
+                      <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ) : null}
             {data?.length === 0 ? (
               <tr className="text-center">
-                <td colSpan="7" className="text-center px-2 py-4">
+                <td colSpan="5" className="text-center px-2 py-4">
                   No Orders found
                 </td>
               </tr>
             ) : (
-              currentTableData.map((entry) => (
-                <OrderItem key={entry._id} data={entry} />
-              ))
+              data.map((entry) => <OrderItem key={entry._id} data={entry} />)
             )}
           </tbody>
         </table>
       </div>
       <Pagination
-        currentPage={currentPage}
-        totalCount={len}
-        pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
+        page={currentPage}
+        limit={limit}
+        total={totalOrders}
+        setPage={setCurrentPage}
       />
     </div>
   );

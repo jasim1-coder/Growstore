@@ -1,63 +1,89 @@
-import React, { useMemo, useState } from "react";
-import useSortableData from "../../../utils/SortData";
+import React, { useEffect, useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
-import { product } from "../../../assets";
 import ProductItem from "./ProductItem";
 import Pagination from "../../common/pagination/Pagination";
-
-const data = [
-  {
-    _id: "abcde",
-    imageUrl: product,
-    title: "Product Name",
-    brand: "amazon",
-    category: "veggies",
-    stock: "100",
-    price: "1000.34",
-  },
-  {
-    _id: "abcdd",
-    imageUrl: product,
-    title: "Product Name",
-    brand: "amazon",
-    category: "veggies",
-    stock: "100",
-    price: "1000.34",
-  },
-  {
-    _id: "abcf",
-    imageUrl: product,
-    title: "Product Name",
-    brand: "amazon",
-    category: "veggies",
-    stock: "100",
-    price: "1000.34",
-  },
-];
+import AlertBox from "../../common/AlertBox";
+import {
+  fetchAdminProducts,
+  getAdminProductsCurrentPage,
+  getAdminProductsData,
+  getAdminProductsFetchError,
+  getAdminProductsFetchStatus,
+  getAdminProductsLimit,
+  getAdminProductsNameQuery,
+  getAdminProductsSortOrder,
+  getAdminProductsTotalProducts,
+  removeAdminProductsError,
+} from "../../../redux/adminSlice/productsSlice";
+import { ImSpinner8 } from "react-icons/im";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductsList = () => {
-  const pageSize = 5;
+  const dispatch = useDispatch();
+  const data = useSelector(getAdminProductsData);
+  const status = useSelector(getAdminProductsFetchStatus);
+  const error = useSelector(getAdminProductsFetchError);
 
-  const { items, requestSort, sortConfig } = useSortableData(data);
+  const _currentPage = useSelector(getAdminProductsCurrentPage);
+  const limit = useSelector(getAdminProductsLimit);
+  const sortOrder = useSelector(getAdminProductsSortOrder);
+  const totalProducts = useSelector(getAdminProductsTotalProducts);
+  const nameQuery = useSelector(getAdminProductsNameQuery);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(_currentPage);
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return items?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, items]);
-
-  const len = data?.length;
-
-  const [sortKey, setSortKey] = useState("");
+  const [sortKey, setSortKey] = useState(sortOrder);
 
   const handleSort = (key) => {
-    requestSort(key);
-    setSortKey(key);
+    let newSortOrder;
+    if (!sortKey[key] || sortKey[key] === 1) {
+      newSortOrder = { [key]: -1 };
+    } else {
+      newSortOrder = { [key]: 1 };
+    }
+    const _newSortOrder = JSON.stringify(newSortOrder);
+    const params = {
+      nameQuery: nameQuery,
+      sortOrder: _newSortOrder,
+    };
+    dispatch(fetchAdminProducts(params));
   };
+
+  const handlePageChange = () => {
+    const params = {
+      nameQuery: nameQuery,
+      sortOrder: JSON.stringify(sortKey),
+      page: currentPage,
+      limit,
+    };
+    dispatch(fetchAdminProducts(params));
+  };
+
+  useEffect(() => {
+    if (_currentPage !== currentPage) {
+      handlePageChange();
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(_currentPage);
+  }, [_currentPage]);
+
+  useEffect(() => {
+    if (sortOrder) {
+      setSortKey(JSON.parse(sortOrder));
+    }
+  }, [sortOrder]);
+
   return (
     <div className="flex flex-col gap-3">
+      {status == "failed" ? (
+        <AlertBox
+          message={error}
+          type={status}
+          toDispatch={removeAdminProductsError}
+        />
+      ) : null}
       {/* Table Section */}
       <div className="sm:w-full w-[calc(100vw-120px)] overflow-x-auto">
         {/* Table Header */}
@@ -71,8 +97,8 @@ const ProductsList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Title</span>
-                  {sortConfig && sortKey === "title" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.title ? (
+                    sortKey.title === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -88,8 +114,8 @@ const ProductsList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Category</span>
-                  {sortConfig && sortKey === "category" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.category ? (
+                    sortKey.category === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -105,8 +131,8 @@ const ProductsList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Brand</span>
-                  {sortConfig && sortKey === "brand" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.brand ? (
+                    sortKey.brand === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -122,8 +148,8 @@ const ProductsList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Price</span>
-                  {sortConfig && sortKey === "price" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.price ? (
+                    sortKey.price === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -135,12 +161,12 @@ const ProductsList = () => {
               </th>
               <th className="p-2">
                 <button
-                  onClick={() => handleSort("stock")}
+                  onClick={() => handleSort("quantity")}
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>Stock</span>
-                  {sortConfig && sortKey === "stock" ? (
-                    sortConfig.direction === "ascending" ? (
+                  {sortKey?.quantity ? (
+                    sortKey.quantity === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />
@@ -152,7 +178,18 @@ const ProductsList = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="relative h-full w-full">
+            {status === "loading" ? (
+              <tr>
+                <td colSpan={4}>
+                  <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
+                    <div className="flex w-full h-full justify-center items-center">
+                      <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ) : null}
             {data?.length === 0 ? (
               <tr className="text-center">
                 <td colSpan="7" className="text-center px-2 py-4">
@@ -160,23 +197,19 @@ const ProductsList = () => {
                 </td>
               </tr>
             ) : (
-              currentTableData.map((entry) => (
-                <ProductItem key={entry._id} data={entry} />
-              ))
+              data.map((entry) => <ProductItem key={entry._id} data={entry} />)
             )}
           </tbody>
         </table>
       </div>
       <Pagination
-        currentPage={currentPage}
-        totalCount={len}
-        pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
+        page={currentPage}
+        limit={limit}
+        total={totalProducts}
+        setPage={setCurrentPage}
       />
     </div>
   );
 };
 
 export default ProductsList;
-
-// image, title, category brand, price, stock

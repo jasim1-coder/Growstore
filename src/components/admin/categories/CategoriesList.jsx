@@ -1,39 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../../common/pagination/Pagination";
 import CategoriesItem from "./CategoriesItem";
-import { product } from "../../../assets";
-
-const data = [
-  {
-    _id: "anbc",
-    imageUrl: product,
-    title: "Category 1",
-    count: "20",
-  },
-  {
-    _id: "anbcd",
-    imageUrl: product,
-    title: "Category 2",
-    count: "20",
-  },
-  {
-    _id: "dfa",
-    imageUrl: product,
-    title: "Category 3",
-    count: "20",
-  },
-];
+import {
+  fetchAdminCategories,
+  getAdminCategoriesCurrentPage,
+  getAdminCategoriesData,
+  getAdminCategoriesFetchError,
+  getAdminCategoriesFetchStatus,
+  getAdminCategoriesLimit,
+  getAdminCategoriesSearchQuery,
+  getAdminCategoriesSortOrder,
+  getAdminCategoriesTotalCategories,
+  removeAdminCategoriesError,
+} from "../../../redux/adminSlice/categoriesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { ImSpinner8 } from "react-icons/im";
+import AlertBox from "../../common/AlertBox";
 
 const CategoriesList = () => {
-  const pageSize = 5;
+  const dispatch = useDispatch();
+  const data = useSelector(getAdminCategoriesData);
+  const status = useSelector(getAdminCategoriesFetchStatus);
+  const error = useSelector(getAdminCategoriesFetchError);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const _currentPage = useSelector(getAdminCategoriesCurrentPage);
+  const limit = useSelector(getAdminCategoriesLimit);
+  const sortOrder = useSelector(getAdminCategoriesSortOrder);
+  const totalCategories = useSelector(getAdminCategoriesTotalCategories);
+  const searchQuery = useSelector(getAdminCategoriesSearchQuery);
 
-  const len = data?.length;
+  const [currentPage, setCurrentPage] = useState(_currentPage);
+
+  const handlePageChange = () => {
+    const params = {
+      searchQuery: searchQuery,
+      sortOrder: JSON.stringify(sortOrder),
+      page: currentPage,
+      limit,
+    };
+    dispatch(fetchAdminCategories(params));
+  };
+
+  useEffect(() => {
+    if (_currentPage !== currentPage) {
+      handlePageChange();
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(_currentPage);
+  }, [_currentPage]);
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="grid-list-5 w-full">
+      {status == "failed" ? (
+        <AlertBox
+          message={error}
+          type={status}
+          toDispatch={removeAdminCategoriesError}
+        />
+      ) : null}
+      <div className="grid-list-5 w-full relative">
+        {status === "loading" ? (
+          <div className="col-span-5">
+            <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
+              <div className="flex w-full h-full justify-center items-center">
+                <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
+              </div>
+            </div>
+          </div>
+        ) : null}
         {data.length === 0 ? (
           <p>No Categories found</p>
         ) : (
@@ -41,10 +77,10 @@ const CategoriesList = () => {
         )}
       </div>
       <Pagination
-        currentPage={currentPage}
-        totalCount={len}
-        pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
+        page={currentPage}
+        limit={limit}
+        total={totalCategories}
+        setPage={setCurrentPage}
       />
     </div>
   );

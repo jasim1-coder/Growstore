@@ -10,6 +10,12 @@ import orderReducer from "./slice/orderSlice";
 import myOrderReducer from "./slice/myOrderSlice";
 import daiReducer from "./slice/daiSlice";
 
+import adminOrderReducer from "./adminSlice/ordersSlice";
+import adminUsersReducer from "./adminSlice/usersSlice";
+import adminProductsReducer from "./adminSlice/productsSlice";
+import adminCategoriesReducer from "./adminSlice/categoriesSlice";
+import adminBrandsReducer from "./adminSlice/brandsSlice";
+
 const combinedReducer = combineReducers({
   auth: authReducer,
   categories: categoriesReducer,
@@ -21,6 +27,11 @@ const combinedReducer = combineReducers({
   order: orderReducer,
   myOrder: myOrderReducer,
   dai: daiReducer,
+  adminOrder: adminOrderReducer,
+  adminUsers: adminUsersReducer,
+  adminProducts: adminProductsReducer,
+  adminCategories: adminCategoriesReducer,
+  adminBrands: adminBrandsReducer,
 });
 
 const rootReducer = (state, action) => {

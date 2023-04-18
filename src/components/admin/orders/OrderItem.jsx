@@ -6,7 +6,7 @@ import { colorCodes } from "../../../utils/DefaultValues";
 
 const OrderItem = ({ data }) => {
   const navigate = useNavigate();
-  const date = moment(data.date).format("DD MMM YY, HH:MM");
+  const date = moment(data.orderDate).format("DD MMM YY, HH:MM");
 
   const handleOrderNavigation = () => {
     navigate(`/admin/orders/${data._id}`);

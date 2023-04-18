@@ -17,7 +17,7 @@ const ProductItem = ({ data }) => {
         <img className="h-[52px] object-contain" src={data.imageUrl} />
       </td>
       <td className="px-2 py-4 overflow-clip">
-        <span>{data.title}</span>
+        <span dangerouslySetInnerHTML={{ __html: data.title }}></span>
       </td>
       <td className="px-2 py-4 overflow-clip">
         <span>{data.category}</span>
@@ -29,7 +29,7 @@ const ProductItem = ({ data }) => {
         <span>{formatCurrency(data.price)}</span>
       </td>
       <td className="px-2 py-4 overflow-clip">
-        <span>{data.stock}</span>
+        <span>{data.quantity}</span>
       </td>
     </tr>
   );
