@@ -15,6 +15,8 @@ import {
   getSingleMyOrderStatus,
   removeSingleOrderData,
 } from "../../../redux/slice/myOrderSlice";
+import { BsCalendarCheck, BsCalendarX } from "react-icons/bs";
+import moment from "moment";
 
 const ManageOrder = () => {
   const dispatch = useDispatch();
@@ -58,14 +60,35 @@ const ManageOrder = () => {
                 <h3 className="heading4">Order Status</h3>
               </div>
 
-              <div className="w-max">
-                <div
-                  className={`py-1 px-4 border ${
-                    colorCodes[orderData.status]
-                  } rounded-sm`}
-                >
-                  <span className={`font-medium `}>{orderData.status}</span>
+              <div className="flex flex-col gap-5">
+                <div className="w-max">
+                  <div
+                    className={`py-1 px-4 border ${
+                      colorCodes[orderData.status]
+                    } rounded-sm`}
+                  >
+                    <span className={`font-medium `}>{orderData.status}</span>
+                  </div>
                 </div>
+                {orderData.status === "Delivered" ? (
+                  <div className="flex flex-row gap-2">
+                    <BsCalendarCheck className="text-[20px]" />
+                    <span className="font-semibold text-uiBlack">
+                      {moment(orderData.deliveredDate).format(
+                        "ddd, MMM DD YYYY, HH:mm"
+                      )}
+                    </span>
+                  </div>
+                ) : orderData.status === "Cancelled" ? (
+                  <div className="flex flex-row gap-2">
+                    <BsCalendarX className="text-[20px]" />
+                    <span className="font-semibold text-uiBlack">
+                      {moment(orderData.cancelledDate).format(
+                        "ddd, MMM DD YYYY, HH:mm"
+                      )}
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </div>
             <OrderSummary

@@ -40,7 +40,7 @@ const AdminProducts = () => {
         <AdminPageHeader title="Products" />
 
         <section className="adminMainContainer">
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex sm:flex-row flex-col w-full justify-between sm:items-center gap-4">
             <h4 className="heading4">Product List</h4>
             <AdminSearchBar
               value={nameQuery}

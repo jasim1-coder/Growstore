@@ -88,8 +88,8 @@ const OrderList = () => {
       <div className="sm:w-full w-[calc(100vw-120px)] overflow-x-auto">
         {/* Table Header */}
         <table className="w-full text-left">
-          <thead className="text-sm uppercase">
-            <tr className="border-b p-2 text-textSecondary tracking-wider">
+          <thead className="text-sm">
+            <tr className="border-b p-2 tracking-wider">
               <th className="p-2">
                 <button
                   onClick={() => handleSort("orderId")}

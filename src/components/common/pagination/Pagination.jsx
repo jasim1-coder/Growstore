@@ -35,7 +35,7 @@ const Pagination = ({ page, total, limit, setPage }) => {
         {/* Previous button */}
         <button
           onClick={handlePrevious}
-          className="disabled:text-textSecondary/50 disabled:hover:bg-transparent text-textSecondary bg-transparent hover:bg-gray-300 duration-150 transition-all hover:ease-linear h-[2em] w-[2em] rounded-full p-2"
+          className="disabled:text-uiGrey/50 disabled:hover:bg-transparent text-uiBlack bg-transparent hover:bg-gray-300 duration-150 transition-all hover:ease-linear h-[2em] w-[2em] rounded-full p-2"
           disabled={page > 1 ? false : true}
         >
           <FaAngleLeft />
@@ -49,7 +49,7 @@ const Pagination = ({ page, total, limit, setPage }) => {
         {/* Next button */}
         <button
           onClick={handleNext}
-          className="disabled:text-textSecondary/50 disabled:hover:bg-transparent text-textSecondary bg-transparent hover:bg-gray-300 duration-150 transition-all hover:ease-linear h-[2em] w-[2em] rounded-full p-2"
+          className="disabled:text-uiGrey/50 disabled:hover:bg-transparent text-uiBlack bg-transparent hover:bg-gray-300 duration-150 transition-all hover:ease-linear h-[2em] w-[2em] rounded-full p-2"
           disabled={page < totalPages ? false : true}
         >
           <FaAngleRight />

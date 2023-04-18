@@ -34,7 +34,7 @@ const CategoriesList = () => {
   const handlePageChange = () => {
     const params = {
       searchQuery: searchQuery,
-      sortOrder: JSON.stringify(sortOrder),
+      sortOrder: sortOrder,
       page: currentPage,
       limit,
     };

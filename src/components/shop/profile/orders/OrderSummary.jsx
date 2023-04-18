@@ -17,7 +17,7 @@ const OrderSummary = ({ data }) => {
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Order Date</p>
           <p className="text-bodyText">
-            {moment(data.orderDate).format("MMMM DD YYYY, HH:MM")}
+            {moment(data.orderDate).format("MMMM DD YYYY, HH:mm")}
           </p>
         </div>
         <div className="flex flex-col gap-1 flex-1">

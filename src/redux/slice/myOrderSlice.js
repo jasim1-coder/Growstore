@@ -97,6 +97,7 @@ const myOrderSlice = createSlice({
         state.singleOrder = {
           ...state.singleOrder,
           status: action.payload.status,
+          cancelledDate: action.payload.cancelledDate,
         };
         state.ordersData = state.ordersData.map((entry) =>
           entry._id === action.payload.id

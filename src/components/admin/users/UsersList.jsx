@@ -88,8 +88,8 @@ const UsersList = () => {
       <div className="sm:w-full w-[calc(100vw-120px)] overflow-x-auto">
         {/* Table Header */}
         <table className="w-full text-left">
-          <thead className="text-sm uppercase">
-            <tr className="border-b p-2 text-textSecondary tracking-wider">
+          <thead className="text-sm">
+            <tr className="border-b p-2  tracking-wider">
               <th className="p-2">
                 <button
                   onClick={() => handleSort("name")}
@@ -126,12 +126,13 @@ const UsersList = () => {
                   )}
                 </button>
               </th>
+              <th className="p-2">Status</th>
             </tr>
           </thead>
           <tbody className="relative h-full w-full">
             {status === "loading" ? (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={5}>
                   <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
                     <div className="flex w-full h-full justify-center items-center">
                       <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
@@ -142,7 +143,7 @@ const UsersList = () => {
             ) : null}
             {data?.length === 0 ? (
               <tr className="text-center">
-                <td colSpan="4" className="text-center px-2 py-4">
+                <td colSpan="5" className="text-center px-2 py-4">
                   No Users found
                 </td>
               </tr>

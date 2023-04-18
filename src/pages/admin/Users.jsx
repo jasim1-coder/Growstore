@@ -40,7 +40,7 @@ const AdminUsers = () => {
         <AdminPageHeader title="Users" />
 
         <section className="adminMainContainer">
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex sm:flex-row flex-col w-full justify-between sm:items-center gap-4">
             <h4 className="heading4">User List</h4>
             <AdminSearchBar
               value={nameQuery}

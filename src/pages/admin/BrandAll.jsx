@@ -78,9 +78,9 @@ const AdminBrands = () => {
         <AdminPageHeader title="Brands" />
 
         <section className="adminMainContainer">
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex sm:flex-row flex-col w-full justify-between sm:items-center gap-4">
             <h4 className="heading4">Brands List</h4>
-            <div className="flex flex-row items-center gap-4">
+            <div className="flex sm:flex-row sm:items-center flex-col gap-4">
               <select
                 value={sortOrder}
                 onChange={handleSort}
