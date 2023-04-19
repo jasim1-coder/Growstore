@@ -142,6 +142,14 @@
   .adminMainContainer {
     @apply bg-[#ffffff] flex flex-col gap-10 w-full sm:p-7 p-3 rounded-[4px] border border-greyLight
   }
+  
+  .overlayContainer {
+    @apply fixed overflow-y-scroll inset-0 z-10 bg-uiBlack/20 backdrop-blur-[1px]
+  }
+
+  .overlayBackdrop {
+    @apply fixed w-full h-full inset-0
+  }
 }
 
 

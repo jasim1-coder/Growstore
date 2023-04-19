@@ -44,6 +44,7 @@ import AdminManageUsers from "./pages/admin/ManageUsers";
 import AdminManageProducts from "./pages/admin/ManageProducts";
 import AdminManageBrands from "./pages/admin/ManageBrands";
 import AdminManageCategories from "./pages/admin/ManageCategories";
+import AdminAddProduct from "./pages/admin/AddProduct";
 
 function App() {
   const dispatch = useDispatch();
@@ -103,6 +104,7 @@ function App() {
           <Route path="users/:id" element={<AdminManageUsers />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="products/:id" element={<AdminManageProducts />} />
+          <Route path="products/add" element={<AdminAddProduct />} />
           <Route path="categories" element={<AdminCategories />} />
           <Route path="categories/:id" element={<AdminManageCategories />} />
           <Route path="brands" element={<AdminBrands />} />

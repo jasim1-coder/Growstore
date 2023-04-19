@@ -5,28 +5,10 @@ import Pagination from "../../common/pagination/Pagination";
 import AddReviewCard from "./AddReviewCard";
 import RatingCard from "./RatingCard";
 import ReviewCard from "./ReviewCard";
-
-const fieldData = [
-  {
-    value: "Rating",
-    title: "Rating",
-  },
-  {
-    value: "Time",
-    title: "Date",
-  },
-];
-
-const orderData = [
-  {
-    title: "High to low",
-    value: "DESC",
-  },
-  {
-    title: "Low to high",
-    value: "ASC",
-  },
-];
+import {
+  reviewsFieldData,
+  reviewsSortOrderData,
+} from "../../../utils/DefaultValues";
 
 const ProductReviews = () => {
   const id = useParams().id;
@@ -69,7 +51,7 @@ const ProductReviews = () => {
                   onChange={(e) => setField(e.target.value)}
                   className="cursor-pointer bg-greyLight border border-uiGrey text-uiBlack px-2 rounded-sm"
                 >
-                  {fieldData.map(({ title, value }) => (
+                  {reviewsFieldData.map(({ title, value }) => (
                     <option value={value} key={value}>
                       {title}
                     </option>
@@ -81,7 +63,7 @@ const ProductReviews = () => {
                   onChange={(e) => setOrder(e.target.value)}
                   className="cursor-pointer bg-greyLight border border-uiGrey text-uiBlack px-2 rounded-sm"
                 >
-                  {orderData.map(({ title, value }) => (
+                  {reviewsSortOrderData.map(({ title, value }) => (
                     <option value={value} key={value}>
                       {title}
                     </option>

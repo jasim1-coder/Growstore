@@ -14,3 +14,25 @@ export const initialAddressValues = {
   zipCode: "",
   mobileNumber: "",
 };
+
+export const reviewsFieldData = [
+  {
+    value: "Rating",
+    title: "Rating",
+  },
+  {
+    value: "Time",
+    title: "Date",
+  },
+];
+
+export const reviewsSortOrderData = [
+  {
+    title: "High to low",
+    value: "DESC",
+  },
+  {
+    title: "Low to high",
+    value: "ASC",
+  },
+];

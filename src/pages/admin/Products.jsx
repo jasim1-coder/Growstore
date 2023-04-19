@@ -9,6 +9,8 @@ import {
   getAdminProductsNameQuery,
 } from "../../redux/adminSlice/productsSlice";
 import AdminSearchBar from "../../components/admin/commons/AdminSearchBar";
+import { FiPlus } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
@@ -37,7 +39,16 @@ const AdminProducts = () => {
   return (
     <AdminLayout>
       <div className="adminContainer">
-        <AdminPageHeader title="Products" />
+        <div className="flex flex-row items-center justify-between">
+          <AdminPageHeader title="Products" />
+          <Link
+            to="/admin/products/add"
+            className="pl-4 pr-6 py-2 flex flex-row items-center gap-2 border border-baseGreen bg-baseGreen hover:bg-darkGreen text-uiWhite duration-150 transition-all font-medium rounded-sm"
+          >
+            <FiPlus className="text-[18px]" />
+            <span className="">New Product</span>
+          </Link>
+        </div>
 
         <section className="adminMainContainer">
           <div className="flex sm:flex-row flex-col w-full justify-between sm:items-center gap-4">

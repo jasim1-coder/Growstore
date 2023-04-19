@@ -1,8 +1,21 @@
 import React from "react";
+import { useEffect } from "react";
 
 const ConfirmBox = ({ setShowBox, onConfirm, message }) => {
+  useEffect(() => {
+    let element = document.querySelector("#edit-product");
+    if (!element) {
+      element = document.querySelector("body");
+    }
+    element.style.overflow = "hidden";
+
+    return () => {
+      element.style.overflow = "auto";
+    };
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-10 bg-uiBlack/20 backdrop-blur-[1px]">
+    <div className="fixed inset-0 z-10 bg-uiBlack/20 backdrop-blur-[1px] h-full w-full">
       <div
         onClick={() => setShowBox(false)}
         className="fixed w-full h-full inset-0"

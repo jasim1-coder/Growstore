@@ -59,6 +59,7 @@ const AdminManageUsers = () => {
                   name: userData.name,
                   email: userData.email,
                   mobileNumber: userData.mobileNumber,
+                  password: "",
                 }}
                 createdAt={userData.createdAt}
                 active={userData.active}

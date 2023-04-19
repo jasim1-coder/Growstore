@@ -30,7 +30,9 @@ const RatingCard = () => {
           </div>
           <RatingSummary data={data.ratings} total={data.total} />
         </>
-      ) : null}
+      ) : (
+        "No Rating Available"
+      )}
     </div>
   );
 };

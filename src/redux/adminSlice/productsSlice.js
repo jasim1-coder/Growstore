@@ -11,6 +11,16 @@ const initialState = {
   totalProducts: 0,
   currentPage: 1,
   sortOrder: "",
+
+  singleData: "",
+  singleStatus: "idle",
+  singleError: "",
+
+  deleteStatus: "idle",
+  deleteError: "",
+
+  updateStatus: "idle",
+  updateError: "",
 };
 
 export const fetchAdminProducts = createAsyncThunk(
@@ -25,6 +35,46 @@ export const fetchAdminProducts = createAsyncThunk(
   }
 );
 
+export const fetchAdminSingleProduct = createAsyncThunk(
+  "adminProducts/fetchAdminSingleProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await PRIVATE_API.get(`/product/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const deleteProductAdmin = createAsyncThunk(
+  "adminProducts/deleteProductAdmin",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await PRIVATE_API.delete(`/product/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const updateProductAdmin = createAsyncThunk(
+  "adminProducts/updateProductAdmin",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await PRIVATE_API.put(`/product/${data.id}`, data.data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
 const productsSlice = createSlice({
   name: "adminProducts",
   initialState,
@@ -32,6 +82,15 @@ const productsSlice = createSlice({
     removeAdminProductsError: (state) => {
       state.fetchError = "";
       state.fetchStatus = "idle";
+    },
+    removeAdminSingleProduct: (state) => {
+      state.singleData = "";
+      state.singleStatus = "idle";
+      state.singleError = "";
+    },
+    removeAdminDeleteProductStatus: (state) => {
+      state.deleteStatus = "idle";
+      state.deleteError = "";
     },
   },
   extraReducers: (builder) => {
@@ -53,11 +112,62 @@ const productsSlice = createSlice({
       .addCase(fetchAdminProducts.rejected, (state, action) => {
         state.fetchStatus = "failed";
         state.fetchError = action.payload.message;
+      })
+
+      .addCase(deleteProductAdmin.pending, (state) => {
+        state.deleteStatus = "loading";
+        state.deleteError = "";
+      })
+      .addCase(deleteProductAdmin.fulfilled, (state, action) => {
+        state.deleteStatus = "success";
+        state.deleteError = "";
+        state.singleData = "";
+        state.singleStatus = "idle";
+        state.singleError = "";
+        state.data = state.data.filter(
+          (entry) => entry._id !== action.payload.id
+        );
+      })
+      .addCase(deleteProductAdmin.rejected, (state, action) => {
+        state.deleteStatus = "failed";
+        state.deleteError = action.payload.message;
+      })
+
+      .addCase(fetchAdminSingleProduct.pending, (state) => {
+        state.singleStatus = "loading";
+        state.singleError = "";
+      })
+      .addCase(fetchAdminSingleProduct.fulfilled, (state, action) => {
+        state.singleStatus = "success";
+        state.singleError = "";
+        state.singleData = action.payload.data;
+      })
+      .addCase(fetchAdminSingleProduct.rejected, (state, action) => {
+        state.singleStatus = "failed";
+        state.singleError = action.payload.message;
+      })
+
+      .addCase(updateProductAdmin.pending, (state) => {
+        state.updateStatus = "loading";
+        state.updateError = "";
+      })
+      .addCase(updateProductAdmin.fulfilled, (state, action) => {
+        state.updateStatus = "success";
+        state.updateError = "";
+        state.singleData = { ...state.singleData, ...action.payload.data };
+      })
+      .addCase(updateProductAdmin.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.updateError = action.payload.message;
       });
   },
 });
 
-export const { removeAdminProductsError } = productsSlice.actions;
+export const {
+  removeAdminProductsError,
+  removeAdminSingleProduct,
+  removeAdminDeleteProductStatus,
+} = productsSlice.actions;
 
 export const getAdminProductsData = (state) => state.adminProducts.data;
 export const getAdminProductsFetchStatus = (state) =>
@@ -74,5 +184,22 @@ export const getAdminProductsSortOrder = (state) =>
   state.adminProducts.sortOrder;
 export const getAdminProductsTotalProducts = (state) =>
   state.adminProducts.totalProducts;
+
+export const getAdminSingleProductData = (state) =>
+  state.adminProducts.singleData;
+export const getAdminSingleProductFetchStatus = (state) =>
+  state.adminProducts.singleStatus;
+export const getAdminSingleProductFetchError = (state) =>
+  state.adminProducts.singleError;
+
+export const getAdminDeleteProductStatus = (state) =>
+  state.adminProducts.deleteStatus;
+export const getAdminDeleteProductError = (state) =>
+  state.adminProducts.deleteError;
+
+export const getAdminUpdateProductStatus = (state) =>
+  state.adminProducts.updateStatus;
+export const getAdminUpdateProductError = (state) =>
+  state.adminProducts.updateError;
 
 export default productsSlice.reducer;

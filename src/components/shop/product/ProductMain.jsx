@@ -60,7 +60,6 @@ const ProductMain = () => {
   return (
     <div className="flex flex-col gap-4 max-w-[600px]">
       <div className="">
-        <p className="text-textDim">{data.mainCategory}</p>
         <h1
           className="heading2"
           dangerouslySetInnerHTML={{ __html: data.title }}
