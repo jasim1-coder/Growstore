@@ -137,7 +137,7 @@ const ProductForm = ({ handleCancel, initialValues, handleSubmit }) => {
             <div className="grid-list-5 pt-2">
               {values?.images?.map((entry) => (
                 <div
-                  className="w-full max-h-[130px] bg-greyLight flex justify-center items-center relative"
+                  className="w-full bg-greyLight flex justify-center items-center relative"
                   key={entry.name}
                 >
                   <div className="absolute top-0 right-0">
@@ -156,7 +156,7 @@ const ProductForm = ({ handleCancel, initialValues, handleSubmit }) => {
                   <img
                     src={URL.createObjectURL(entry)}
                     alt=""
-                    className="object-contain w-full max-h-full min-h-[150px]"
+                    className="object-contain max-w-full max-h-full min-h-[150px]"
                   />
                 </div>
               ))}
