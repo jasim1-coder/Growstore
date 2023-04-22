@@ -58,7 +58,7 @@ const AdminManageProducts = () => {
               </span>
             )}
           </div>
-          <div className="flex flex-col relative gap-6">
+          <div className="flex flex-col relative">
             {status === "loading" ? (
               <div className="w-full">
                 <SimpleLoading />

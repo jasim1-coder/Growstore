@@ -50,7 +50,7 @@ const BrandMetadata = ({ id }) => {
   }, [brandData]);
 
   return (
-    <form onSubmit={handleEdit} className="flex flex-col gap-4">
+    <form onSubmit={handleEdit} className="flex flex-col gap-4 mb-6">
       <div className="pb-3 border-b border-b-greyLight flex flex-row justify-between items-center">
         <h4 className="heading4">Brand Information</h4>
         <div className="flex flex-row gap-4 items-center">

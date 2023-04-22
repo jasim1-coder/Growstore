@@ -34,7 +34,7 @@ const OrderItem = ({ entry }) => {
 
 const UserOrderHistory = ({ data }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight">
         <h4 className="heading4">Orders</h4>
       </div>

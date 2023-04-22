@@ -1,75 +1,34 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllCategories,
-  getAllCategories,
-} from "../../../redux/slice/categoriesSlice";
+import React from "react";
+import AsyncSelect from "react-select/async";
+import { NODE_API } from "../../../api/apiIndex";
 
-// const data = [
-//   {
-//     title: "Veggies",
-//   },
-//   {
-//     title: "Veggies1",
-//   },
-//   {
-//     title: "Veggies2",
-//   },
-//   {
-//     title: "Veggies3",
-//   },
-// ];
 const CategoryFilter = ({ categories, setCategories }) => {
-  const dispatch = useDispatch();
-
-  const data = useSelector(getAllCategories);
-
-  const handleCategories = (value) => {
-    const check = categories.find((entry) => entry === value);
-
-    if (check) {
-      setCategories((categories) =>
-        categories.filter((entry) => entry !== value)
+  const loadCategories = async (searchQuery) => {
+    try {
+      const { data } = await NODE_API.get(
+        `/category/select-search?searchQuery=${searchQuery}`
       );
-    } else {
-      setCategories((categories) => [...categories, value]);
+      return data.data;
+    } catch (error) {
+      console.error(error);
+      return [];
     }
   };
-
-  const handleChecked = (value) => {
-    const check = categories.find((entry) => entry === value);
-    if (check) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    if (data.length === 0) {
-      dispatch(fetchAllCategories());
-    }
-  }, []);
 
   return (
     <div className="flex flex-col gap-4">
-      <span className="text-textDim">Category</span>
-      <div className="flex flex-col gap-3 max-h-[200px] overflow-auto">
-        {data.map((entry, key) => (
-          <label key={key} className="flex flex-row gap-2 items-center pr-12">
-            <input
-              type="checkbox"
-              id={entry.title}
-              name={entry.title}
-              value={entry.title}
-              checked={handleChecked(entry.title)}
-              onChange={() => handleCategories(entry.title)}
-              className="accent-baseGreen"
-            />
-            <span className="text-sm text-uiBlack">{entry.title}</span>
-          </label>
-        ))}
-      </div>
+      <label htmlFor="category" className="text-textDim text-sm">
+        Category
+      </label>
+      <AsyncSelect
+        cacheOptions
+        loadOptions={loadCategories}
+        defaultOptions
+        name="category"
+        onChange={setCategories}
+        value={categories}
+        placeholder="Select Category"
+      />
     </div>
   );
 };

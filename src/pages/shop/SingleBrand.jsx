@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/common/Layout";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchBrandProduct,
@@ -10,9 +10,9 @@ import {
   getBrandProductStatus,
   removeBrandProductData,
 } from "../../redux/slice/brandSlice";
-import { FiChevronLeft } from "react-icons/fi";
 import BrandSearch from "../../components/shop/brands/BrandSearch";
 import ProductCard from "../../components/shop/product/ProductCard";
+import BackButton from "../../components/common/BackButton";
 
 const SingleBrand = () => {
   const id = useParams().id;
@@ -34,13 +34,7 @@ const SingleBrand = () => {
     <Layout>
       <div className="container flex flex-col sm:gap-6 gap-4 sm:pt-6 sm:pb-12 py-6">
         <div className="flex items-center justify-between">
-          <Link
-            to="/brands"
-            className="flex flex-row items-center gap-2 text-uiBlack"
-          >
-            <FiChevronLeft />
-            <span className="">Back</span>
-          </Link>
+          <BackButton />
           <BrandSearch />
         </div>
         <div className="">

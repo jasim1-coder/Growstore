@@ -37,7 +37,7 @@ const ProductItem = ({ entry }) => {
 
 const UserWishlistInfo = ({ data }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight">
         <h4 className="heading4">Wishlist</h4>
       </div>

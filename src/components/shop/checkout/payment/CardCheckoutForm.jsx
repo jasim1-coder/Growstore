@@ -103,7 +103,7 @@ const CardCheckoutForm = ({ validated, setValidated }) => {
             className="border border-greyLight p-3 block bg-white input-shadow"
           />
           {cardNumber.error && (
-            <div className="text-red-500 text-[12px]">{cardNumber.error}</div>
+            <div className="text-red-500 text-xs">{cardNumber.error}</div>
           )}
         </div>
 
@@ -119,7 +119,7 @@ const CardCheckoutForm = ({ validated, setValidated }) => {
               className="border border-greyLight p-3 block bg-white input-shadow"
             />
             {cardExpiry.error && (
-              <div className="text-red-500 text-[12px]">{cardExpiry.error}</div>
+              <div className="text-red-500 text-xs">{cardExpiry.error}</div>
             )}
           </div>
 
@@ -134,7 +134,7 @@ const CardCheckoutForm = ({ validated, setValidated }) => {
               className="border border-greyLight p-3 block bg-white input-shadow"
             />
             {cardCVC.error && (
-              <div className="text-red-500 text-[12px]">{cardCVC.error}</div>
+              <div className="text-red-500 text-xs">{cardCVC.error}</div>
             )}
           </div>
         </div>

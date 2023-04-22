@@ -49,7 +49,7 @@ const UserInfo = ({ data, createdAt, active }) => {
       className=""
     >
       {({ errors, touched }) => (
-        <Form className="flex flex-col gap-4">
+        <Form className="flex flex-col gap-4 mb-6">
           <div className="pb-3 border-b border-b-greyLight flex flex-row justify-between items-center">
             <h4 className="heading4">Account Information</h4>
             <div className="flex flex-row gap-4 items-center">

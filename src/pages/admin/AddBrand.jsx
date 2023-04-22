@@ -81,9 +81,9 @@ const AdminAddBrand = () => {
       <div className="adminContainer">
         <AdminPageHeader title="Add Brand" />
 
-        <section className="adminMainContainer relative">
+        <section className="adminMainContainer relative gap-0">
           {status == "loading" ? <SimpleLoading /> : null}
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex flex-row w-full justify-between items-center mb-10">
             <AdminBackButton />
           </div>
           <form onSubmit={handleAddBrand} className="flex flex-col gap-4">
@@ -144,7 +144,7 @@ const AdminAddBrand = () => {
               <label className="text-sm text-textDim" htmlFor="products">
                 Products
               </label>
-              <span className="text-[12px] text-uiRed">
+              <span className="text-xs text-uiRed">
                 The products existing brand will be replaced by new brand
               </span>
               <AsyncSelect

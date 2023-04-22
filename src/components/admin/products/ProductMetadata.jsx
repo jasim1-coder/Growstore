@@ -13,7 +13,7 @@ const ProductMetadata = () => {
   const [editActive, setEditActive] = useState(false);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight flex flex-row justify-between items-center">
         <h4 className="heading4">Product Metadata</h4>
         <button

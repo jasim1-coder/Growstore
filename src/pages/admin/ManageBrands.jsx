@@ -53,7 +53,7 @@ const AdminManageBrands = () => {
           <div className="flex flex-row w-full justify-between items-center">
             <AdminBackButton to="/admin/categories" />
           </div>
-          <div className="flex flex-col relative gap-6">
+          <div className="flex flex-col relative">
             {status === "loading" || editStatus === "loading" ? (
               <div className="w-full">
                 <SimpleLoading />

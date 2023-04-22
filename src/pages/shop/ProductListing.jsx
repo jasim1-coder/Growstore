@@ -37,24 +37,28 @@ const ProductListing = () => {
   const [sortOrder, setSortOrder] = useState(order);
 
   const handleOrderChange = (e) => {
+    const _categories = categories.value;
+    const _brands = brands.map((entry) => entry.value);
     const params = {
       query,
       order: e.target.value,
       price: priceRange.toString(),
-      categories: categories.toString(),
-      brands: brands.toString(),
+      categories: _categories,
+      brands: _brands.toString(),
     };
     setSortOrder(e.target.value);
     dispatch(fetchFilteredProducts(params));
   };
 
   const handlePageChange = () => {
+    const _categories = categories.value;
+    const _brands = brands.map((entry) => entry.value);
     const params = {
       query,
       order: sortOrder,
       price: priceRange.toString(),
-      categories: categories.toString(),
-      brands: brands.toString(),
+      categories: _categories,
+      brands: _brands.toString(),
       page,
       limit,
     };
@@ -72,7 +76,7 @@ const ProductListing = () => {
   }, [_page]);
 
   useEffect(() => {
-    if (data.length === 0 && status !== "loading") {
+    if (data.length === 0 && status === "idle") {
       dispatch(fetchFilteredProducts({}));
     }
   }, []);

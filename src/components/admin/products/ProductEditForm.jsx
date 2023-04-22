@@ -98,11 +98,11 @@ const ProductEditForm = ({ data, showForm }) => {
         ) : null}
 
         <div className="flex items-center justify-center w-full min-h-full sm:p-12 p-4">
-          <div className="flex flex-col gap-4 bg-white z-20 sm:w-[70%] h-full p-8 rounded-sm shadow-md sm:ml-[220px] relative">
+          <div className="flex flex-col bg-white z-20 sm:w-[70%] h-full p-8 rounded-sm shadow-md sm:ml-[220px] relative">
             {deleteStatus == "loading" || updateStatus === "loading" ? (
               <SimpleLoading />
             ) : null}
-            <div className="flex flex-row items-center justify-between pb-2">
+            <div className="flex flex-row items-center justify-between pb-2 mb-4">
               <h2 className="heading2">Edit product</h2>
               <button
                 type="button"

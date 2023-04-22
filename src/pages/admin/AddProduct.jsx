@@ -73,9 +73,9 @@ const AdminAddProduct = () => {
       <div className="adminContainer">
         <AdminPageHeader title="Add Product" />
 
-        <section className="adminMainContainer relative">
+        <section className="adminMainContainer relative gap-0">
           {status == "loading" ? <SimpleLoading /> : null}
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex flex-row w-full justify-between items-center mb-10">
             <AdminBackButton to="/admin/products" />
           </div>
           <ProductForm

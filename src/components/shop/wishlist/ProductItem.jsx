@@ -55,7 +55,7 @@ const ProductItem = ({ data }) => {
         </div>
         <div className="flex flex-row">
           {deleteStatus === "loading" ? (
-            <span className="text-uiRed text-[12px] pr-3 border-r-[2px] border-textDim/60">
+            <span className="text-uiRed text-xs pr-3 border-r-[2px] border-textDim/60">
               Removing...
             </span>
           ) : (
@@ -64,10 +64,10 @@ const ProductItem = ({ data }) => {
               onClick={handleDelete}
               className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
             >
-              <FiTrash2 /> <span className="text-[12px]">Remove</span>
+              <FiTrash2 /> <span className="text-xs">Remove</span>
             </button>
           )}
-          <p className="pl-3 text-textDim text-[12px]">Added on: {addedOn}</p>
+          <p className="pl-3 text-textDim text-xs">Added on: {addedOn}</p>
         </div>
       </td>
       <td className="px-2 py-4 overflow-clip text-center">
@@ -90,7 +90,7 @@ const ProductItem = ({ data }) => {
         <button
           type="button"
           onClick={handleAddtoCart}
-          className="text-[12px] p-3 w-full rounded-sm text-uiWhite bg-baseGreen items-center justify-center hover:bg-darkGreen hover:text-uiWhite transition-all duration-150 disabled:bg-greyLight disabled:text-uiGrey text-center"
+          className="text-xs p-3 w-full rounded-sm text-uiWhite bg-baseGreen items-center justify-center hover:bg-darkGreen hover:text-uiWhite transition-all duration-150 disabled:bg-greyLight disabled:text-uiGrey text-center"
           disabled={existsInCart || addStatus !== "idle"}
         >
           {addStatus === "loading" ? (

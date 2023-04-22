@@ -37,9 +37,7 @@ const CartButton = () => {
       </div>
       <div className="flex-col sm:flex hidden">
         <span className="text-uiBlack text-[14px]">My Cart</span>
-        <span className="text-baseGreen text-[12px]">
-          {formatCurrency(total)}
-        </span>
+        <span className="text-baseGreen text-xs">{formatCurrency(total)}</span>
       </div>
     </Link>
   );

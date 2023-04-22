@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Poppins', 'sans-serif' !important;
-    scroll-behavior: smooth;
-    -webkit-tap-highlight-color: transparent;
+  font-family: "Poppins", "sans-serif" !important;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @layer base {
@@ -24,31 +24,31 @@
   }
 
   .footer-item {
-    @apply text-uiBlack text-[14px] hover:text-baseGreen transition-all duration-150
+    @apply text-uiBlack text-[14px] hover:text-baseGreen transition-all duration-150;
   }
 
   .linkActive {
-    @apply text-baseGreen p-2 sm:font-normal font-medium sm:text-base text-lg
+    @apply text-baseGreen p-2 sm:font-normal font-medium sm:text-base text-lg;
   }
 
   .linkInactive {
-    @apply text-uiBlack p-2 hover:text-baseGreen transition-all duration-150 sm:font-normal font-medium sm:text-base text-lg
+    @apply text-uiBlack p-2 hover:text-baseGreen transition-all duration-150 sm:font-normal font-medium sm:text-base text-lg;
   }
 
   .linkActiveProfile {
-    @apply h-14 flex flex-row sm:gap-6 gap-3 px-5 text-sm items-center text-baseGreen bg-baseGreen/20 border-baseGreen
+    @apply h-14 flex flex-row sm:gap-6 gap-3 px-5 text-sm items-center text-baseGreen bg-baseGreen/20 border-baseGreen;
   }
 
   .linkInactiveProfile {
-    @apply h-14 flex flex-row sm:gap-6 gap-3 px-5 text-sm items-center text-uiBlack hover:bg-baseGreen/20 hover:ease-in transition duration-150 sm:w-full
+    @apply h-14 flex flex-row sm:gap-6 gap-3 px-5 text-sm items-center text-uiBlack hover:bg-baseGreen/20 hover:ease-in transition duration-150 sm:w-full;
   }
 
   .linkActiveAdmin {
-    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-[18px] items-center text-uiWhite bg-uiBlue/30 border-uiBlue border-l-2
+    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-[18px] items-center text-uiWhite bg-uiBlue/30 border-uiBlue border-l-2;
   }
 
   .linkInactiveAdmin {
-    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-5 items-center text-textSidebar hover:bg-uiBlue/20 hover:ease-in transition duration-150 w-full
+    @apply h-14 tracking-wide flex flex-row sm:gap-6 gap-3 pl-5 items-center text-textSidebar hover:bg-uiBlue/20 hover:ease-in transition duration-150 w-full;
   }
 
   .input-row-container {
@@ -68,7 +68,7 @@
   }
 
   .input-error {
-    @apply text-[12px] text-uiRed;
+    @apply text-xs text-uiRed;
   }
 
   .submit-button {
@@ -76,7 +76,7 @@
   }
 
   .primary-button {
-    @apply py-[10px] px-4 text-uiWhite bg-baseGreen rounded-sm font-medium hover:bg-darkGreen transition-all duration-150
+    @apply py-[10px] px-4 text-uiWhite bg-baseGreen rounded-sm font-medium hover:bg-darkGreen transition-all duration-150;
   }
 
   .heading1 {
@@ -90,45 +90,45 @@
   .heading3 {
     @apply font-medium text-left sm:text-[22px] text-[18px] text-uiBlack;
   }
-  
+
   .heading4 {
     @apply font-medium text-left sm:text-[18px] text-base text-uiBlack;
   }
 
   .main-container {
-    @apply flex flex-col gap-4 sm:py-[3rem] py-[2rem]
+    @apply flex flex-col gap-4 sm:py-[3rem] py-[2rem];
   }
 
   .grid-list-2 {
-    @apply grid grid-cols-1 gap-6 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1;
   }
-  
+
   .grid-list-3 {
-    @apply grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1;
   }
 
   .grid-list-4 {
-    @apply grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1
+    @apply grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1;
   }
 
   .grid-list-5 {
-    @apply grid grid-cols-2 gap-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2
+    @apply grid grid-cols-2 gap-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2;
   }
 
   .order-placed {
-    @apply text-uiGrey border-uiGrey
+    @apply text-uiGrey border-uiGrey;
   }
 
   .order-processing {
-    @apply text-uiOrange border-uiOrange
+    @apply text-uiOrange border-uiOrange;
   }
 
   .order-cancelled {
-    @apply text-uiRed border-uiRed
+    @apply text-uiRed border-uiRed;
   }
 
   .order-delivered {
-    @apply text-baseGreen border-baseGreen
+    @apply text-baseGreen border-baseGreen;
   }
 
   .StripeElement {
@@ -136,22 +136,21 @@
   }
 
   .adminContainer {
-    @apply flex flex-col gap-10 w-full
+    @apply flex flex-col gap-10 w-full;
   }
 
   .adminMainContainer {
-    @apply bg-[#ffffff] flex flex-col gap-10 w-full sm:p-7 p-3 rounded-[4px] border border-greyLight
+    @apply bg-[#ffffff] flex flex-col gap-10 w-full sm:p-7 p-3 rounded-[4px] border border-greyLight;
   }
-  
+
   .overlayContainer {
-    @apply fixed overflow-y-scroll inset-0 z-10 bg-uiBlack/20 backdrop-blur-[1px]
+    @apply fixed overflow-y-scroll inset-0 z-10 bg-uiBlack/20 backdrop-blur-[1px];
   }
 
   .overlayBackdrop {
-    @apply fixed w-full h-full inset-0
+    @apply fixed w-full h-full inset-0;
   }
 }
-
 
 .alertbox {
   display: flex;
@@ -220,7 +219,7 @@
   border-color: #b6effb;
 }
 
-.info p{
+.info p {
   background-color: #055160;
 }
 .alertbox-close-btn {
@@ -231,12 +230,13 @@
 
 .track {
   height: 5px;
-  background: #3BB77E;
+  background: #3bb77e;
   border-radius: 4px;
 }
 
-.track.track-0, .track.track-2 {
-  background-color: #ADADAD;
+.track.track-0,
+.track.track-2 {
+  background-color: #adadad;
 }
 
 .StripeElement--focus {
@@ -247,10 +247,17 @@
 }
 
 .StripeElement--complete {
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
 }
 
 .input-shadow {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02);
 }
 
+.zeh-0 {
+  z-index: 0 !important;
+}
+
+.zeh-max {
+  z-index: 999;
+}

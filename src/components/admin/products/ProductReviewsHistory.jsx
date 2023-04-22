@@ -22,7 +22,7 @@ const ReviewCard = ({ data }) => {
           <FaRegUserCircle className="text-[22px] text-textDim" />
           <span className="text-sm text-uiBlack">{data.reviewerName}</span>
         </div>
-        <span className="text-[12px] text-textDim">{date}</span>
+        <span className="text-xs text-textDim">{date}</span>
       </div>
       <div className="pt-2 flex flex-col gap-2">
         <StarRating rating={data.Rating} />

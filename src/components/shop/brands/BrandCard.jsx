@@ -12,7 +12,6 @@ const BrandCard = ({ data }) => {
         />
         <div className="text-center mt-auto p-4">
           <p className="text-uiBlack text-[18px] font-medium">{data.title}</p>
-          <p className="text-textDim text-sm">{data.count} items</p>
         </div>
       </div>
     </Link>

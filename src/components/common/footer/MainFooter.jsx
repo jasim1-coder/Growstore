@@ -32,16 +32,16 @@ const MainFooter = () => {
         <span className="footerHeading">Account</span>
         <ul className="list-none text-[14px] flex flex-col gap-2">
           <li className="footer-item">
-            <Link to="/">Profile</Link>
+            <Link to="/profile/my">Profile</Link>
           </li>
           <li className="footer-item">
-            <Link to="/">Wishlist</Link>
+            <Link to="/wishlist">Wishlist</Link>
           </li>
           <li className="footer-item">
-            <Link to="/">Cart</Link>
+            <Link to="/cart">Cart</Link>
           </li>
           <li className="footer-item">
-            <Link to="/">Purchase history</Link>
+            <Link to="/profile/orders">Purchase history</Link>
           </li>
         </ul>
       </div>
@@ -69,7 +69,7 @@ const MainFooter = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your email"
           />
-          <button className="bg-baseGreen text-white sm:text-sm px-3 rounded-sm text-[12px]">
+          <button className="bg-baseGreen text-white sm:text-sm px-3 rounded-sm text-xs">
             Subscribe
           </button>
         </div>

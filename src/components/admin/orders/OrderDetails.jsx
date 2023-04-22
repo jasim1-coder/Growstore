@@ -117,17 +117,15 @@ const OrderDetails = () => {
             <p className="font-semibold text-uiBlack">Payment Info</p>
             <div className="text-bodyText text-sm">
               <p>
-                <span className="text-textDim text-[12px]">Payment ID: </span>
+                <span className="text-textDim text-xs">Payment ID: </span>
                 {data?.paymentId}
               </p>
               <p>
-                <span className="text-textDim text-[12px]">
-                  Payment Method:{" "}
-                </span>
+                <span className="text-textDim text-xs">Payment Method: </span>
                 {data?.paymentMethod}
               </p>
               <p>
-                <span className="text-textDim text-[12px]">Status: </span>
+                <span className="text-textDim text-xs">Status: </span>
                 Paid
               </p>
             </div>
@@ -142,15 +140,15 @@ const OrderDetails = () => {
             <p className="font-semibold text-uiBlack">Shipping Address</p>
             <div className="text-bodyText text-sm">
               <p>
-                <span className="text-textDim text-[12px]">Mobile No.: </span>
+                <span className="text-textDim text-xs">Mobile No.: </span>
                 {data?.address?.mobileNumber}
               </p>
               <p>
-                <span className="text-textDim text-[12px]">Street: </span>
+                <span className="text-textDim text-xs">Street: </span>
                 {data?.address?.street}
               </p>
               <p>
-                <span className="text-textDim text-[12px]">City: </span>
+                <span className="text-textDim text-xs">City: </span>
                 {data?.address?.city} {data?.address?.zipCode}
               </p>
               <p>

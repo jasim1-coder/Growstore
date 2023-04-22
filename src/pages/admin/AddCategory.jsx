@@ -81,9 +81,9 @@ const AdminAddCategory = () => {
       <div className="adminContainer">
         <AdminPageHeader title="Add Category" />
 
-        <section className="adminMainContainer relative">
+        <section className="adminMainContainer relative gap-0">
           {status == "loading" ? <SimpleLoading /> : null}
-          <div className="flex flex-row w-full justify-between items-center">
+          <div className="flex flex-row w-full justify-between items-center mb-10">
             <AdminBackButton />
           </div>
           <form onSubmit={handleAddCategory} className="flex flex-col gap-4">

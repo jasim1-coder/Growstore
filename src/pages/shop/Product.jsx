@@ -13,6 +13,7 @@ import {
   getProductError,
   getProductStatus,
 } from "../../redux/slice/productSlice";
+import BackButton from "../../components/common/BackButton";
 
 const Product = () => {
   const id = useParams().id;
@@ -31,11 +32,12 @@ const Product = () => {
 
   return (
     <Layout>
-      <div className="container sm:py-12 py-6">
+      <div className="container sm:pb-12 pt-6 pb-6">
         {status === "loading" ? <p>Loading...</p> : null}
         {status === "failed" ? <p>{error}</p> : null}
         {status === "success" ? (
           <div className="flex flex-col gap-[3rem]">
+            <BackButton />
             <div className="flex sm:flex-row flex-col gap-8 justify-between">
               <ImageSection
                 imageURL={productData.imageURL}

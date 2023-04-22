@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/common/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   fetchCategoriesProduct,
   getCategoriesProduct,
@@ -12,7 +12,7 @@ import {
 } from "../../redux/slice/categoriesSlice";
 import ProductCard from "../../components/shop/product/ProductCard";
 import CategorySearch from "../../components/shop/categories/CategorySearch";
-import { FiChevronLeft } from "react-icons/fi";
+import BackButton from "../../components/common/BackButton";
 
 const SingleCategory = () => {
   const id = useParams().id;
@@ -34,13 +34,7 @@ const SingleCategory = () => {
     <Layout>
       <div className="container flex flex-col sm:gap-6 gap-4 sm:pt-6 sm:pb-12 py-6">
         <div className="flex items-center justify-between">
-          <Link
-            to="/categories"
-            className="flex flex-row items-center gap-2 text-uiBlack"
-          >
-            <FiChevronLeft />
-            <span className="">Back</span>
-          </Link>
+          <BackButton />
           <CategorySearch />
         </div>
         <div className="">

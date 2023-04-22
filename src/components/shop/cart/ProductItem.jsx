@@ -102,7 +102,7 @@ const ProductItem = ({ data }) => {
           />
         </Link>
         <div className="flex flex-col pt-2">
-          <span className="text-textDim line-through text-[12px]">
+          <span className="text-textDim line-through text-xs">
             {formatCurrency("1222.22")}
           </span>
           <span className="text-baseGreen font-semibold">
@@ -150,7 +150,7 @@ const ProductItem = ({ data }) => {
         </p>
         <div className="flex flex-row pt-6">
           {deleteStatus === "loading" ? (
-            <span className="text-uiRed text-[12px] pr-3 border-r-[2px] border-textDim/60">
+            <span className="text-uiRed text-xs pr-3 border-r-[2px] border-textDim/60">
               Deleting...
             </span>
           ) : (
@@ -159,7 +159,7 @@ const ProductItem = ({ data }) => {
               onClick={handleDelete}
               className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
             >
-              <FiTrash2 /> <span className="text-[12px]">Remove</span>
+              <FiTrash2 /> <span className="text-xs">Remove</span>
             </button>
           )}
           <button
@@ -171,12 +171,12 @@ const ProductItem = ({ data }) => {
             {existsInWishlist ? (
               <>
                 <RiHeartFill className="text-uiRed" />
-                <span className="text-[12px]">Added to wishlist</span>
+                <span className="text-xs">Added to wishlist</span>
               </>
             ) : (
               <>
                 <RiHeartLine />
-                <span className="text-[12px]">Add to my wishlist</span>
+                <span className="text-xs">Add to my wishlist</span>
               </>
             )}
           </button>

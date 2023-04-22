@@ -29,7 +29,7 @@ const MainHeader = ({ handleMenu }) => {
             <img src={logoBig} alt="Logo" className="sm:h-[48px] h-[32px]" />
           </Link>
         </div>
-        <div className="sm:block hidden">
+        <div className="sm:flex hidden">
           <SearchBar />
         </div>
         <div className="flex flex-row sm:gap-10 gap-6 justify-between items-center sm:flex-none">

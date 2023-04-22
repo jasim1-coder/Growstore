@@ -27,7 +27,7 @@ const initialState = {
   productStatus: "idle",
 
   searchQuery: "",
-  searchCategory: [],
+  searchCategory: null,
   searchPrice: [],
   priceRange: [0, 200],
   searchBrand: [],

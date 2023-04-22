@@ -188,7 +188,7 @@ const ProductMain = () => {
               )}
             </button>
             {existsInCart ? (
-              <span className="text-[12px] italic text-uiBlack text-right">
+              <span className="text-xs italic text-uiBlack text-right">
                 Available Quantity in cart: {existsInCart.quantity}
               </span>
             ) : null}

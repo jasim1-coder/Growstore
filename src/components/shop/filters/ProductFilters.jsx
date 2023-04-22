@@ -25,16 +25,18 @@ const ProductFilters = () => {
   const prevBrands = useSelector(getSearchBrand);
 
   const [range, setRange] = useState(selectedPriceRange);
-  const [categories, setCategories] = useState(prevCategories);
-  const [brand, setBrand] = useState(prevBrands);
+  const [categories, setCategories] = useState(null);
+  const [brand, setBrand] = useState([]);
 
   const handleFilter = async () => {
+    const _categories = categories.value;
+    const _brands = brand.map((entry) => entry.value);
     const params = {
       query,
       order,
       price: range.toString(),
-      categories: categories.toString(),
-      brands: brand.toString(),
+      categories: _categories,
+      brands: _brands.toString(),
     };
     dispatch(fetchFilteredProducts(params));
   };
@@ -42,7 +44,7 @@ const ProductFilters = () => {
   const clearFilter = () => {
     dispatch(clearSearchFilter());
     setBrand([]);
-    setCategories([]);
+    setCategories(null);
     setRange(priceRange);
   };
 
@@ -50,8 +52,18 @@ const ProductFilters = () => {
     setRange(selectedPriceRange);
   }, [selectedPriceRange]);
 
+  useEffect(() => {
+    setBrand(prevBrands);
+  }, [prevBrands]);
+
+  useEffect(() => {
+    if (prevCategories) {
+      setCategories(prevCategories);
+    }
+  }, [prevCategories]);
+
   return (
-    <div className="flex flex-col gap-5 p-4 h-max sm:w-[300px]">
+    <div className="sm:sticky sm:top-24 flex flex-col gap-5 p-4 h-max sm:w-[300px]">
       <h3 className="text-uiBlack font-medium text-[18px]">Filters</h3>
 
       <CategoryFilter categories={categories} setCategories={setCategories} />

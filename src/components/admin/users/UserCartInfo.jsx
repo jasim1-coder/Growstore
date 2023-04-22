@@ -36,7 +36,7 @@ const ProductItem = ({ entry }) => {
 
 const UserCartInfo = ({ data }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight">
         <h4 className="heading4">Cart</h4>
       </div>
