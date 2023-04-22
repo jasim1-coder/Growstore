@@ -228,7 +228,6 @@ def related_products():
         productDetails = list(productsModel.find(
             {"_id": product_id}, {'title': 1, 'description': 1}))
         product_data = productDetails[0]
-        print(product_data)
 
         if not product_data or product_data == "undefined":
             return jsonify({"message": "No product found"}), 400
