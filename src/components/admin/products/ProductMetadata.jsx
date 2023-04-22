@@ -33,7 +33,7 @@ const ProductMetadata = () => {
       <div className="p-3 flex flex-row justify-between flex-wrap border border-greyLight">
         <div className="flex flex-col">
           <span className="text-sm text-textDim">Brand</span>
-          <span className="">{data.brand}</span>
+          <span className="">{data.brand?.label}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-textDim">Categories</span>
@@ -45,9 +45,9 @@ const ProductMetadata = () => {
                     ? "border-r border-r-bodyText"
                     : null
                 }  first:px-0 first:pr-2 px-2`}
-                key={entry}
+                key={entry.value}
               >
-                {entry}
+                {entry.label}
               </span>
             ))}
           </div>
@@ -104,7 +104,7 @@ const ProductMetadata = () => {
               <img
                 src={imageUrl}
                 alt=""
-                className="object-contain w-full max-h-full"
+                className="object-contain w-full max-h-full min-h-[150px]"
               />
             </div>
           ))}

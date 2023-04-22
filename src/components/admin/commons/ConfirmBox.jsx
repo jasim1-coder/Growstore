@@ -30,7 +30,7 @@ const ConfirmBox = ({ setShowBox, onConfirm, message }) => {
             </p>
           </div>
 
-          <div className="flex sm:flex-row gap-y-5 flex-col sm:justify-between justify-center sm:w-full">
+          <div className="flex sm:flex-row gap-y-5 flex-col sm:justify-between justify-center sm:w-full gap-6">
             <button
               type="button"
               className="py-2 w-[140px] border border-green-500 text-green-500 hover:bg-green-200 text-sm rounded-sm transition-all duration-150"

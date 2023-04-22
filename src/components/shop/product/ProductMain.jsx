@@ -66,7 +66,7 @@ const ProductMain = () => {
         />
         <p>
           <span className="text-textDim">By</span>&nbsp;
-          <span className="text-baseGreen">{data.brand}</span>
+          <span className="text-baseGreen">{data.brand.label}</span>
         </p>
       </div>
 
@@ -102,7 +102,7 @@ const ProductMain = () => {
               key={key}
               className="py-2 px-4 bg-lightGreen border border-baseGreen/40 rounded-sm"
             >
-              <span className="text-uiBlack">{entry}</span>
+              <span className="text-uiBlack">{entry.label}</span>
             </div>
           ))}
         </div>

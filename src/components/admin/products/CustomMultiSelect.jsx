@@ -10,10 +10,7 @@ const CustomMultiSelect = ({
   loadData,
 }) => {
   const onChange = (option) => {
-    form.setFieldValue(
-      field.name,
-      isMulti ? option.map((item) => item.value) : option.value
-    );
+    form.setFieldValue(field.name, option);
   };
 
   return (
@@ -21,14 +18,7 @@ const CustomMultiSelect = ({
       cacheOptions
       loadOptions={loadData}
       defaultOptions
-      defaultValue={
-        isMulti
-          ? field.value?.map((entry) => ({
-              label: entry,
-              value: entry,
-            }))
-          : { label: field.value, value: field.value }
-      }
+      defaultValue={field.value}
       className={className}
       name={field.name}
       onChange={onChange}

@@ -7,8 +7,18 @@ import { NODE_API } from "../../../api/apiIndex";
 
 const productSchema = Yup.object().shape({
   title: Yup.string().min(6, "Too Short!").required("Required"),
-  brand: Yup.string().required("Required"),
-  category: Yup.array().of(Yup.string()).min(1, "Required"),
+  brand: Yup.object().shape({
+    label: Yup.string().required(),
+    value: Yup.string().required(),
+  }),
+  category: Yup.array()
+    .of(
+      Yup.object().shape({
+        label: Yup.string(),
+        value: Yup.string(),
+      })
+    )
+    .min(1, "Required"),
   price: Yup.number().required("Required").positive("Enter valid number"),
   MRP: Yup.number().required("Required").positive("Enter valid number"),
   quantity: Yup.number()
@@ -95,7 +105,7 @@ const ProductForm = ({ handleCancel, initialValues, handleSubmit }) => {
                     <img
                       src={imageUrl}
                       alt=""
-                      className="object-contain w-full max-h-full"
+                      className="object-contain w-full max-h-full min-h-[150px]"
                     />
                   </div>
                 ))}
@@ -146,7 +156,7 @@ const ProductForm = ({ handleCancel, initialValues, handleSubmit }) => {
                   <img
                     src={URL.createObjectURL(entry)}
                     alt=""
-                    className="object-contain w-full max-h-full"
+                    className="object-contain w-full max-h-full min-h-[150px]"
                   />
                 </div>
               ))}

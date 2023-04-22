@@ -72,7 +72,7 @@ const Brands = () => {
           {status === "loading" ? (
             <p>Loading...</p>
           ) : data.length === 0 ? (
-            <p>No Categories found</p>
+            <p>No Brands found</p>
           ) : (
             data.map((entry) => <BrandCard key={entry._id} data={entry} />)
           )}

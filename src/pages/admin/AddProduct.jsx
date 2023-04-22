@@ -34,7 +34,13 @@ const AdminAddProduct = () => {
       setStatus("loading");
       const formData = new FormData();
       for (let value in values) {
-        if (value === "images" || value === "category") {
+        if (value === "category") {
+          for (let _entry of values[value]) {
+            formData.append(value, _entry.value);
+          }
+        } else if (value === "brand") {
+          formData.append(value, values[value].value);
+        } else if (value === "images") {
           for (let _entry of values[value]) {
             formData.append(value, _entry);
           }

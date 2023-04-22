@@ -52,7 +52,7 @@ const ProductsList = () => {
   const handlePageChange = () => {
     const params = {
       nameQuery: nameQuery,
-      sortOrder: JSON.stringify(sortKey),
+      sortOrder: sortKey ? JSON.stringify(sortKey) : null,
       page: currentPage,
       limit,
     };

@@ -44,11 +44,13 @@ const ProductEditForm = ({ data, showForm }) => {
     try {
       const formData = new FormData();
       for (let value in values) {
-        if (
-          value === "images" ||
-          value === "imageURLHighRes" ||
-          value === "category"
-        ) {
+        if (value === "category") {
+          for (let _entry of values[value]) {
+            formData.append(value, _entry.value);
+          }
+        } else if (value === "brand") {
+          formData.append(value, values[value].value);
+        } else if (value === "images" || value === "imageURLHighRes") {
           for (let _entry of values[value]) {
             formData.append(value, _entry);
           }
