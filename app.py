@@ -151,6 +151,29 @@ def get_popular_products():
                             },
                         },
                         {
+                            "$addFields": {
+                                "firstCategory": {
+                                    "$first": "$categoryId",
+                                },
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "brands",
+                                "localField": "brandId",
+                                "foreignField": "_id",
+                                "as": "brandData",
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "categories",
+                                "localField": "firstCategory",
+                                "foreignField": "_id",
+                                "as": "categoryData",
+                            },
+                        },
+                        {
                             "$lookup": {
                                 "from": "reviews",
                                 "localField": "_id",
@@ -163,8 +186,11 @@ def get_popular_products():
                                 "imageUrl": {
                                     "$first": "$imageURLHighRes",
                                 },
+                                "brand": {
+                                    "$first": "$brandData.title",
+                                },
                                 "category": {
-                                    "$first": "$category",
+                                    "$first": "$categoryData.title",
                                 },
                                 "rating": {
                                     "$avg": "$reviews.Rating",
@@ -235,6 +261,29 @@ def related_products():
                             },
                         },
                         {
+                            "$addFields": {
+                                "firstCategory": {
+                                    "$first": "$categoryId",
+                                },
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "brands",
+                                "localField": "brandId",
+                                "foreignField": "_id",
+                                "as": "brandData",
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "categories",
+                                "localField": "firstCategory",
+                                "foreignField": "_id",
+                                "as": "categoryData",
+                            },
+                        },
+                        {
                             "$lookup": {
                                 "from": "reviews",
                                 "localField": "_id",
@@ -247,8 +296,11 @@ def related_products():
                                 "imageUrl": {
                                     "$first": "$imageURLHighRes",
                                 },
+                                "brand": {
+                                    "$first": "$brandData.title",
+                                },
                                 "category": {
-                                    "$first": "$category",
+                                    "$first": "$categoryData.title",
                                 },
                                 "rating": {
                                     "$avg": "$reviews.Rating",
@@ -308,6 +360,29 @@ def recommend():
                         #     "$sample": {"size": 4},
                         # },
                         {
+                            "$addFields": {
+                                "firstCategory": {
+                                    "$first": "$categoryId",
+                                },
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "brands",
+                                "localField": "brandId",
+                                "foreignField": "_id",
+                                "as": "brandData",
+                            },
+                        },
+                        {
+                            "$lookup": {
+                                "from": "categories",
+                                "localField": "firstCategory",
+                                "foreignField": "_id",
+                                "as": "categoryData",
+                            },
+                        },
+                        {
                             "$lookup": {
                                 "from": "reviews",
                                 "localField": "_id",
@@ -320,8 +395,11 @@ def recommend():
                                 "imageUrl": {
                                     "$first": "$imageURLHighRes",
                                 },
+                                "brand": {
+                                    "$first": "$brandData.title",
+                                },
                                 "category": {
-                                    "$first": "$category",
+                                    "$first": "$categoryData.title",
                                 },
                                 "rating": {
                                     "$avg": "$reviews.Rating",
