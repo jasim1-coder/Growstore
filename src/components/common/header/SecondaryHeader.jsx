@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiPhone } from "react-icons/fi";
 
 const SecondaryHeader = ({ showMenu }) => {
   return (
@@ -53,9 +52,8 @@ const SecondaryHeader = ({ showMenu }) => {
           </NavLink> */}
         </div>
         <div className="flex flex-row gap-2 items-center self-center">
-          <FiPhone className="text-baseGreen" />
-          <span className="text-baseGreen">+91-000000</span>
-          <span className="text-uiBlack">For support</span>
+          <span className="text-baseGreen">Welcome</span>
+          <span className="text-uiBlack">to Growcomers</span>
         </div>
       </nav>
     </div>

@@ -73,14 +73,14 @@ const ProductFilters = () => {
         <button
           type="button"
           onClick={clearFilter}
-          className="bg-transparent border border-uiGrey text-textDim rounded-sm py-1 text-sm transition-all duration-150 hover:bg-greyLight flex-1"
+          className="bg-transparent border border-uiGrey text-textDim rounded-sm py-2 text-sm transition-all duration-150 hover:bg-greyLight flex-1"
         >
           Clear Filters
         </button>
         <button
           type="button"
           onClick={handleFilter}
-          className="border border-baseGreen text-uiWhite rounded-sm py-1 text-sm transition-all duration-150 bg-baseGreen hover:bg-darkGreen flex-1"
+          className="border border-baseGreen text-uiWhite rounded-sm py-2 text-sm transition-all duration-150 bg-baseGreen hover:bg-darkGreen flex-1"
         >
           Apply
         </button>

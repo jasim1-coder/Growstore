@@ -47,6 +47,10 @@ import AdminManageCategories from "./pages/admin/ManageCategories";
 import AdminAddProduct from "./pages/admin/AddProduct";
 import AdminAddCategory from "./pages/admin/AddCategory";
 import AdminAddBrand from "./pages/admin/AddBrand";
+import GoogleLogin from "./pages/GoogleLogin";
+import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +69,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/google-login" element={<GoogleLogin />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify" element={<VerifyEmail />} />
 
         <Route path="/" element={<ClientAuth />}>
           <Route index element={<Home />} />

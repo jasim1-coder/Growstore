@@ -75,7 +75,7 @@ const SignupForm = () => {
       if (res) {
         navigate("/login", {
           replace: true,
-          state: { message: "Please login to continue!" },
+          state: { message: "Please check your email to verify your account!" },
         });
       }
     }

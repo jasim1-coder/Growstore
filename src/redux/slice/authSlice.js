@@ -6,14 +6,27 @@ const _accessToken = JSON.parse(localStorage.getItem("accessToken"));
 const initialState = {
   accessToken: _accessToken ? _accessToken : null,
   data: null,
+
   loginError: "",
   loginStatus: "idle",
+
   signupError: "",
   signupStatus: "idle",
+
   loginWithTokenStatus: "idle",
   loginWithTokenError: "",
+
   updateStatus: "idle",
   updateError: "",
+
+  verifyStatus: "idle",
+  verifyError: "",
+
+  forgotPasswordStatus: "idle",
+  forgotPasswordError: "",
+
+  resetPasswordStatus: "idle",
+  resetPasswordError: "",
 };
 
 export const login = createAsyncThunk(
@@ -68,6 +81,69 @@ export const updateUserDetails = createAsyncThunk(
   }
 );
 
+export const loginWithGoogle = createAsyncThunk(
+  "auth/loginWithGoogle",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.get("/google/success", {
+        withCredentials: true,
+      });
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(response.data.user.accessToken)
+      );
+      return response.data.user;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.post("/auth/password/forgot", data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.put(
+        `/auth/password/reset/${data.token}`,
+        data.data
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
+export const verifyUser = createAsyncThunk(
+  "auth/verifyUser",
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await NODE_API.put(`/auth/verify/${token}`);
+
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(response.data.accessToken)
+      );
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response ? error.response.data : error);
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -103,18 +179,28 @@ const authSlice = createSlice({
       state.updateError = "";
       state.updateStatus = "idle";
     },
+    removeForgotPasswordMessage: (state) => {
+      state.forgotPasswordError = "";
+      state.forgotPasswordStatus = "idle";
+    },
+    removeResetPasswordError: (state) => {
+      state.resetPasswordError = "";
+      state.resetPasswordStatus = "idle";
+    },
+    removeVerifyUserError: (state) => {
+      state.verifyError = "";
+      state.verifyStatus = "idle";
+    },
     // logoutComplete: (state) => {},
   },
   extraReducers: (builder) => {
     //Login
     builder
       .addCase(login.pending, (state) => {
-        // console.log(action);
         state.loginStatus = "loading";
         state.loginError = "";
       })
       .addCase(login.fulfilled, (state, action) => {
-        // console.log(action);
         state.loginStatus = "success";
         state.loginError = "";
         state.accessToken = action.payload.accessToken;
@@ -140,12 +226,10 @@ const authSlice = createSlice({
       })
       //Login with token
       .addCase(loginwithtoken.pending, (state) => {
-        // console.log(action);
         state.loginWithTokenStatus = "loading";
         state.loginWithTokenError = "";
       })
       .addCase(loginwithtoken.fulfilled, (state, action) => {
-        // console.log(action);
         state.loginWithTokenStatus = "success";
         state.loginWithTokenError = "";
         state.data = action.payload.data;
@@ -156,17 +240,30 @@ const authSlice = createSlice({
         localStorage.removeItem("accessToken");
         state.loginWithTokenStatus = "failed";
         state.loginWithTokenError = action.payload.message;
-        // console.log(action);
+      })
+
+      // Google login
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loginStatus = "loading";
+        state.loginError = "";
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loginStatus = "success";
+        state.loginError = "";
+        state.accessToken = action.payload.accessToken;
+        state.data = action.payload.data;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loginStatus = "failed";
+        state.loginError = action.payload.message;
       })
 
       //Update Data
       .addCase(updateUserDetails.pending, (state) => {
-        // console.log(action);
         state.updateStatus = "loading";
         state.updateError = "";
       })
       .addCase(updateUserDetails.fulfilled, (state, action) => {
-        // console.log(action);
         state.updateStatus = "success";
         state.updateError = "";
         state.data = action.payload.data;
@@ -174,7 +271,50 @@ const authSlice = createSlice({
       .addCase(updateUserDetails.rejected, (state, action) => {
         state.updateStatus = "failed";
         state.updateError = action.payload.message;
-        // console.log(action);
+      })
+
+      // Forgot password
+      .addCase(forgotPassword.pending, (state) => {
+        state.forgotPasswordStatus = "loading";
+        state.forgotPasswordError = "";
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.forgotPasswordStatus = "success";
+        state.forgotPasswordError = "";
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.forgotPasswordStatus = "failed";
+        state.forgotPasswordError = action.payload.message;
+      })
+
+      // Reset password
+      .addCase(resetPassword.pending, (state) => {
+        state.resetPasswordStatus = "loading";
+        state.resetPasswordError = "";
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.resetPasswordStatus = "success";
+        state.resetPasswordError = "";
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.resetPasswordStatus = "failed";
+        state.resetPasswordError = action.payload.message;
+      })
+
+      // Verify user
+      .addCase(verifyUser.pending, (state) => {
+        state.verifyStatus = "loading";
+        state.verifyError = "";
+      })
+      .addCase(verifyUser.fulfilled, (state, action) => {
+        state.verifyStatus = "success";
+        state.verifyError = "";
+        state.accessToken = action.payload.accessToken;
+        state.data = action.payload.data;
+      })
+      .addCase(verifyUser.rejected, (state, action) => {
+        state.verifyStatus = "failed";
+        state.verifyError = action.payload.message;
       })
 
       //Logout
@@ -198,6 +338,9 @@ export const {
   removeSignupMessage,
   removeLoginWithTokenMessage,
   removeUpdateUserError,
+  removeVerifyUserError,
+  removeForgotPasswordMessage,
+  removeResetPasswordError,
 } = authSlice.actions;
 
 export const getUser = (state) => state.auth.data;
@@ -217,6 +360,16 @@ export const getsignupError = (state) => state.auth.signupError;
 export const getLoginWithTokenStatus = (state) =>
   state.auth.loginWithTokenStatus;
 export const getLoginWithTokenError = (state) => state.auth.loginWithTokeEerror;
+
+export const getForgotPasswordStatus = (state) =>
+  state.auth.forgotPasswordStatus;
+export const getForgotPasswordError = (state) => state.auth.forgotPasswordError;
+
+export const getResetPasswordStatus = (state) => state.auth.resetPasswordStatus;
+export const getResetPasswordError = (state) => state.auth.resetPasswordError;
+
+export const getUserVerifyStatus = (state) => state.auth.verifyStatus;
+export const getUserVerifyError = (state) => state.auth.verifyError;
 
 export const getUserUpdateStatus = (state) => state.auth.updateStatus;
 export const getUserUpdateError = (state) => state.auth.updateError;

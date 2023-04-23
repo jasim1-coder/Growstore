@@ -117,11 +117,15 @@ const ProductMain = () => {
         <div className="flex flex-col gap-3">
           <div className="flex flex-row px-6 justify-between items-center">
             <span className="text-textDim">MRP:</span>
-            <span className="text-uiBlack font-medium">{data.MRP}</span>
+            <span className="text-uiBlack font-medium">
+              {formatCurrency(data.MRP)}
+            </span>
           </div>
           <div className="flex flex-row px-6 justify-between items-center">
             <span className="text-textDim">Price:</span>
-            <span className="text-uiBlack font-medium">{data.price}</span>
+            <span className="text-uiBlack font-medium">
+              {formatCurrency(data.price)}
+            </span>
           </div>
           <div className="flex flex-row px-6 justify-between items-center">
             <span className="text-textDim">Quantity:</span>
@@ -130,7 +134,7 @@ const ProductMain = () => {
           <div className="flex flex-row px-6 justify-between items-center">
             <span className="text-uiBlack font-medium text-[20px]">Total:</span>
             <span className="text-baseGreen font-medium text-[20px]">
-              {parseFloat(parseFloat(data.price) * quantity).toFixed(2)}
+              {formatCurrency(data.price * quantity)}
             </span>
           </div>
         </div>

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { logoBig } from "../../../assets";
 import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
 const MainFooter = () => {
-  const [email, setEmail] = useState("");
   return (
     <div className="flex flex-row justify-between flex-wrap gap-6 sm:py-[4rem] py-[3rem] border-uiGrey border-b">
       <div className="flex flex-col gap-4">
@@ -46,33 +45,32 @@ const MainFooter = () => {
         </ul>
       </div>
       <div className="flex flex-col gap-4">
-        <span className="footerHeading">Info</span>
+        <span className="footerHeading">Shop</span>
         <ul className="list-none text-[14px] flex flex-col gap-2">
           <li className="footer-item">
-            <Link to="/">Delivery and returns</Link>
+            <Link to="/products">Browse Products</Link>
           </li>
           <li className="footer-item">
-            <Link to="/">FAQ</Link>
+            <Link to="/categories">Browse Categories</Link>
           </li>
           <li className="footer-item">
-            <Link to="/">Contact us</Link>
+            <Link to="/brands">Browse Brands</Link>
           </li>
         </ul>
       </div>
       <div className="flex flex-col gap-4">
-        <span className="footerHeading">Subscribe to our newsletter</span>
-        <div className="flex flex-row gap-3">
-          <input
-            type="text"
-            className="bg-uiGrey/20 p-3 focus:outline-none text-sm rounded-sm sm:w-full w-[200px]"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email"
-          />
-          <button className="bg-baseGreen text-white sm:text-sm px-3 rounded-sm text-xs">
-            Subscribe
-          </button>
-        </div>
+        <span className="footerHeading">Links</span>
+        <ul className="list-none text-[14px] flex flex-col gap-2">
+          <li className="footer-item">
+            <Link to="/login">Login</Link>
+          </li>
+          <li className="footer-item">
+            <Link to="/signup">Create Account</Link>
+          </li>
+          <li className="footer-item">
+            <Link to="/forgot-password">Forgot your password?</Link>
+          </li>
+        </ul>
       </div>
     </div>
   );

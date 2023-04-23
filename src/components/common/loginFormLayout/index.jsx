@@ -1,9 +1,10 @@
 import React from "react";
 import { google } from "../../../assets";
+import { NODE_BASE_URL } from "../../../api/apiIndex";
 
 const LoginFormLayout = ({ children, heading }) => {
   const handleGoogleLogin = () => {
-    console.log("google Login");
+    window.open(`${NODE_BASE_URL}/google`, "_self");
   };
 
   return (

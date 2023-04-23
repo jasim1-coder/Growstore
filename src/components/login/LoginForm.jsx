@@ -104,7 +104,7 @@ const LoginForm = () => {
             flex-col justify-between items-center gap-2"
             >
               <div className="">
-                <Link to="#" className="text-uiRed text-sm">
+                <Link to="/forgot-password" className="text-uiRed text-sm">
                   Forgot Password?
                 </Link>
               </div>

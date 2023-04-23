@@ -1,5 +1,5 @@
 import React from "react";
-import { crypto, mastercard, stripe, visa } from "../../../assets";
+import { crypto, stripe } from "../../../assets";
 
 const SecondaryFooter = () => {
   return (

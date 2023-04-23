@@ -18,6 +18,10 @@ const customStyles = {
   option: (defaultStyles) => ({
     ...defaultStyles,
   }),
+  container: (defaultStyles) => ({
+    ...defaultStyles,
+    height: "100%",
+  }),
   control: (defaultStyles) => ({
     ...defaultStyles,
     padding: "0 4px",
@@ -25,6 +29,7 @@ const customStyles = {
     border: "none",
     boxShadow: "none",
     minHeight: "0",
+    height: "100%",
     // padding: "10px",
     // border: "none",
     // boxShadow: "none",
@@ -35,7 +40,8 @@ const customStyles = {
   }),
   valueContainer: (defaultStyles) => ({
     ...defaultStyles,
-    padding: "0",
+    padding: "0 0 0 6px",
+    // height: "100%",
   }),
   indicatorSeparator: (defaultStyles) => ({
     ...defaultStyles,
@@ -68,11 +74,11 @@ const SearchBar = () => {
   const brands = useSelector(getSearchBrand);
 
   const [query, setQuery] = useState(oldQuery);
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState(_categories);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    const __categories = categories.value;
+    const __categories = categories?.value;
     const _brands = brands.map((entry) => entry.value);
     const params = {
       query,
@@ -108,34 +114,32 @@ const SearchBar = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4"
+      className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4 sm:h-[48px] h-[40px]"
     >
-      <div className="bg-greyLight sm:p-3 p-2 rounded-tl-sm rounded-bl-sm flex items-center">
-        <div className="flex flex-row items-center sm:gap-2 gap-1 text-uiBlack max-w-full">
-          {/* <span className="whitespace-nowrap sm:text-sm text-xs font-medium">
-            All Categories
-          </span>
-          <FiChevronDown className="sm:text-base text-sm" /> */}
+      <div className="bg-greyLight rounded-tl-sm rounded-bl-sm flex items-center">
+        <div className="flex flex-row items-center sm:gap-2 gap-1 text-uiBlack max-w-full h-full">
           <AsyncSelect
             cacheOptions
             loadOptions={loadCategories}
             defaultOptions
             name="category"
             onChange={setCategories}
-            value={categories ? categories : null}
+            value={categories}
+            isClearable
             placeholder="Select Category"
             className="sm:text-sm text-xs sm:w-[200px] w-[130px]"
             styles={customStyles}
+            noOptionsMessage={() => "No categories found"}
           />
           <div className="ml-1 w-[1px] bg-uiGrey sm:h-[24px] h-[14px]" />
         </div>
       </div>
-      <div className="bg-greyLight flex-1 flex items-center">
+      <div className="bg-greyLight flex-1 flex items-center h-full">
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="bg-transparent text-uiBlack sm:text-sm text-xs focus:outline-none sm:w-[250px] w-full pr-4"
+          className="bg-transparent text-uiBlack sm:text-sm text-xs focus:outline-none sm:w-[250px] w-full pr-4 h-full pl-4"
           placeholder="Search for products..."
         />
       </div>
