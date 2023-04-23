@@ -14,8 +14,8 @@ import {
   removeAdminCategoriesError,
 } from "../../../redux/adminSlice/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ImSpinner8 } from "react-icons/im";
 import AlertBox from "../../common/AlertBox";
+import SimpleLoading from "../../common/loaders/SimpleLoading";
 
 const CategoriesList = () => {
   const dispatch = useDispatch();
@@ -63,11 +63,7 @@ const CategoriesList = () => {
       <div className="grid-list-5 w-full relative">
         {status === "loading" ? (
           <div className="col-span-5">
-            <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
-              <div className="flex w-full h-full justify-center items-center">
-                <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
-              </div>
-            </div>
+            <SimpleLoading />
           </div>
         ) : null}
         {data.length === 0 ? (

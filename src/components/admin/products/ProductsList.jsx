@@ -15,8 +15,8 @@ import {
   getAdminProductsTotalProducts,
   removeAdminProductsError,
 } from "../../../redux/adminSlice/productsSlice";
-import { ImSpinner8 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
+import SimpleLoading from "../../common/loaders/SimpleLoading";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
@@ -181,12 +181,8 @@ const ProductsList = () => {
           <tbody className="relative h-full w-full">
             {status === "loading" ? (
               <tr>
-                <td colSpan={4}>
-                  <div className="absolute top-0 left-0 w-full h-full bg-greyLight/50">
-                    <div className="flex w-full h-full justify-center items-center">
-                      <ImSpinner8 className="text-[66px] animate-spin text-uiBlue" />
-                    </div>
-                  </div>
+                <td colSpan={4} className="p-4">
+                  <SimpleLoading />
                 </td>
               </tr>
             ) : null}
