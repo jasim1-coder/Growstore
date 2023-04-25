@@ -24,6 +24,7 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(fetchProductDetails(id));
+    localStorage.setItem("product", JSON.stringify(id));
 
     return () => {
       dispatch(clearProductDetails());

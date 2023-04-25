@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FiCheckCircle, FiDownload, FiXCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cancelOrder,
   getCancelStatus,
 } from "../../../../redux/slice/myOrderSlice";
 import { ImSpinner2 } from "react-icons/im";
+import { PRIVATE_API } from "../../../../api/apiIndex";
 
 const OrderActions = ({ orderStatus, id }) => {
   const dispatch = useDispatch();
@@ -13,10 +14,25 @@ const OrderActions = ({ orderStatus, id }) => {
   const status = useSelector(getCancelStatus);
 
   const [cancelOrderActive, setCancelOrderActive] = useState(false);
+  const [downloadStatus, setDownloadStatus] = useState("idle");
 
   const handleCancel = async () => {
     await dispatch(cancelOrder(id)).unwrap();
     setCancelOrderActive(false);
+  };
+
+  const handleInvoiceDownload = async () => {
+    try {
+      setDownloadStatus("loading");
+      const invoice = await PRIVATE_API.get(`/order/invoice/${id}`, {
+        responseType: "blob",
+      });
+      window.open(URL.createObjectURL(invoice.data));
+      setDownloadStatus("success");
+    } catch (err) {
+      console.log(err);
+      setDownloadStatus("failed");
+    }
   };
 
   return (
@@ -56,7 +72,25 @@ const OrderActions = ({ orderStatus, id }) => {
           </div>
         </div>
       ) : (
-        <div className="">
+        <div className="flex flex-row gap-4">
+          {orderStatus === "Delivered" ? (
+            <button
+              type="button"
+              onClick={handleInvoiceDownload}
+              className="primary-button font-normal py-2 px-4"
+              disabled={downloadStatus === "loading"}
+            >
+              {downloadStatus === "loading" ? (
+                <ImSpinner2 className="animate-spin" />
+              ) : (
+                <p className="flex flex-row items-center gap-2">
+                  <span>Invoice</span>
+                  <FiDownload />
+                </p>
+              )}
+            </button>
+          ) : null}
+
           <button
             type="button"
             onClick={() => setCancelOrderActive(true)}

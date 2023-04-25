@@ -16,6 +16,7 @@ import OrderProducts from "../../components/admin/orders/OrderProducts";
 import AlertBox from "../../components/common/AlertBox";
 import SimpleLoading from "../../components/common/loaders/SimpleLoading";
 import { colorCodes } from "../../utils/DefaultValues";
+import DownloadInvoiceButton from "../../components/admin/orders/DownloadInvoiceButton";
 
 const AdminManageOrder = () => {
   const dispatch = useDispatch();
@@ -43,12 +44,19 @@ const AdminManageOrder = () => {
           <div className="flex flex-row w-full justify-between items-center">
             <AdminBackButton to="/admin/orders" />
 
-            <div
-              className={`px-4 py-1 rounded-sm border ${
-                colorCodes[data.status]
-              }`}
-            >
-              <span className="text-[18px] font-semibold">{data?.status}</span>
+            <div className="flex flex-row gap-4">
+              <div
+                className={`px-4 py-1 rounded-sm border ${
+                  colorCodes[data.status]
+                }`}
+              >
+                <span className="text-[18px] font-semibold">
+                  {data?.status}
+                </span>
+              </div>
+              {data.status !== "Cancelled" ? (
+                <DownloadInvoiceButton id={id} />
+              ) : null}
             </div>
           </div>
           <div className="flex flex-col relative">

@@ -19,6 +19,7 @@ const initialState = {
   popularStatus: "idle",
 
   topPicks: [],
+  topPicksId: null,
   topPicksError: "",
   topPicksStatus: "idle",
 
@@ -141,6 +142,9 @@ const productSlice = createSlice({
       state.searchCategory = [];
       state.searchPrice = state.priceRange;
     },
+    setTopPicksId: (state, action) => {
+      state.topPicksId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -259,7 +263,8 @@ const productSlice = createSlice({
   },
 });
 
-export const { clearProductDetails, clearSearchFilter } = productSlice.actions;
+export const { clearProductDetails, clearSearchFilter, setTopPicksId } =
+  productSlice.actions;
 
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
@@ -282,6 +287,7 @@ export const getPopularProductsStatus = (state) => state.product.popularStatus;
 export const getPopularProductsError = (state) => state.product.popularError;
 
 export const getTopPicks = (state) => state.product.topPicks;
+export const getTopPicksId = (state) => state.product.topPicksId;
 export const getTopPicksStatus = (state) => state.product.topPicksStatus;
 export const getTopPicksError = (state) => state.product.topPicksError;
 
