@@ -4,7 +4,7 @@ import getContractProcessor from "../../../../utils/SmartContractProcessors";
 
 const CryptoPayment = ({
   setPaymentProcessor,
-  setDai,
+  setDaiProcessor,
   paymentValidated,
   setPaymentValidated,
   inrValue,
@@ -16,7 +16,7 @@ const CryptoPayment = ({
       setError("");
       const { paymentProcessor, daiProcessor } = await getContractProcessor();
       setPaymentProcessor(paymentProcessor);
-      setDai(daiProcessor);
+      setDaiProcessor(daiProcessor);
       setPaymentValidated(true);
     } catch (err) {
       setError(err.message);

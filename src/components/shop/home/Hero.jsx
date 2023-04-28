@@ -19,7 +19,7 @@ const Hero = () => {
             Elevate Your Meals with Our Fresh and Flavorful Groceries
           </h1>
           <p className="text-textDim sm:text-base text-sm">
-            Our commitment to quality means you'll always find the freshest and
+            Our commitment to quality means you'll always find the fresh and
             <br />
             most flavorful groceries in our store.
           </p>

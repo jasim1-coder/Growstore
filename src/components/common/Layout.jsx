@@ -8,6 +8,7 @@ import {
 import ScrollToTop from "../../utils/ScrollToTop";
 import Footer from "./footer";
 import Header from "./header";
+import ChatBot from "./chat/ChatBot";
 
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const Layout = ({ children }) => {
       <Header />
       <main className="">{children}</main>
       <Footer />
+      <ChatBot />
     </div>
   );
 };

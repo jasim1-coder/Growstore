@@ -8,6 +8,7 @@ import wishlistReducer from "./slice/wishlistSlice";
 import addressReducer from "./slice/addressSlice";
 import orderReducer from "./slice/orderSlice";
 import myOrderReducer from "./slice/myOrderSlice";
+import chatReducer from "./slice/chatSlice";
 import daiReducer from "./slice/daiSlice";
 
 import adminOrderReducer from "./adminSlice/ordersSlice";
@@ -26,6 +27,7 @@ const combinedReducer = combineReducers({
   address: addressReducer,
   order: orderReducer,
   myOrder: myOrderReducer,
+  chat: chatReducer,
   dai: daiReducer,
   adminOrder: adminOrderReducer,
   adminUsers: adminUsersReducer,

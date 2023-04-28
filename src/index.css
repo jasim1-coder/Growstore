@@ -261,3 +261,40 @@
 .zeh-max {
   z-index: 999;
 }
+
+.chatbot-container {
+  /* transition: height .15s ease-in-out; */
+  animation: slide-down 300ms ease-out forwards;
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,.02),0 8px 24px 0 rgba(0,0,0,.12);
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #cccccc; 
+}
+
+/* Handle on hover */
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
