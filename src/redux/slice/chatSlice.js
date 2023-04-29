@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PYTHON_API } from "../../api/apiIndex";
+import { PRIVATE_PYTHON_API } from "../../api/apiIndex";
 
 const initialState = {
   responses: [
@@ -16,7 +16,7 @@ export const fetchChatResponses = createAsyncThunk(
   "chat/fetchChatResponses",
   async (message, { rejectWithValue }) => {
     try {
-      const response = await PYTHON_API.get("/chat", {
+      const response = await PRIVATE_PYTHON_API.get("/chat", {
         params: { query: message },
       });
       return response.data;
@@ -35,6 +35,10 @@ const chatSlice = createSlice({
         ...state.responses,
         { sender: "user", message: action.payload },
       ];
+    },
+    removeChatErrorMessage: (state) => {
+      state.error = "";
+      state.status = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -59,7 +63,7 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setUserResponse } = chatSlice.actions;
+export const { setUserResponse, removeChatErrorMessage } = chatSlice.actions;
 
 export const getChatResponses = (state) => state.chat.responses;
 export const getChatStatus = (state) => state.chat.status;

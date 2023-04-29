@@ -2,27 +2,46 @@ import React, { useEffect, useRef } from "react";
 import { logoSmall } from "../../../assets";
 import ChatMessage from "./ChatMessage";
 import BotResponse from "./BotResponse";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  getChatError,
   getChatResponses,
   getChatStatus,
+  removeChatErrorMessage,
 } from "../../../redux/slice/chatSlice";
 import UserResponse from "./UserResponse";
+import AlertBox from "../AlertBox";
+import { fetchCartItems } from "../../../redux/slice/cartSlice";
 
 const ChatBox = () => {
   const chatBoxRef = useRef(null);
+  const dispatch = useDispatch();
 
   const responses = useSelector(getChatResponses);
   const status = useSelector(getChatStatus);
+  const error = useSelector(getChatError);
 
   useEffect(() => {
     chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
   }, [responses]);
 
+  useEffect(() => {
+    if (status === "success") {
+      dispatch(fetchCartItems());
+    }
+  }, [status]);
+
   return (
     <div
       className={`w-[320px] h-[400px] chatbot-container bg-white p-2 rounded-xl`}
     >
+      {status === "failed" ? (
+        <AlertBox
+          message={error}
+          type={status}
+          toDispatch={removeChatErrorMessage}
+        />
+      ) : null}
       <div className="flex flex-col h-full">
         <div className="flex flex-row items-center gap-2 py-2 border-b border-b-greyLight">
           <img src={logoSmall} alt="" className="h-[36px]" />

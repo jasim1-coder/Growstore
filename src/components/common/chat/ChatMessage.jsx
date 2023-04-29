@@ -15,9 +15,11 @@ const ChatMessage = () => {
 
   const handleSend = (e) => {
     e.preventDefault();
+    const stringRegex = /[^A-Za-z0-9 ?.,!]/g;
+    const sanitizedMessage = message.replace(stringRegex, "");
     if (message && message.trim() && status !== "loading") {
-      dispatch(fetchChatResponses(message));
-      dispatch(setUserResponse(message));
+      dispatch(fetchChatResponses(sanitizedMessage));
+      dispatch(setUserResponse(sanitizedMessage));
       setMessage("");
     }
   };
