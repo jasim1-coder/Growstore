@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import jwt
 
 from methods.chatbot import chatbotResponse
 from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
@@ -80,8 +81,15 @@ def getSearchedProducts():
 @app.route('/chat', methods=['GET'])
 def getChatbotReply():
     try:
+        authorization = request.headers.get("Authorization")
+        userId = None
+        if authorization:
+            token = authorization.split()[1]
+            userData = jwt.decode(
+                token, '43OGrCQbln25duO7seZ4RH2bk8KaHY4OS1', algorithms='HS256')
+            userId = userData['userId']
         query = request.args.get('query')
-        res = chatbotResponse(query)
+        res = chatbotResponse(query, userId)
         return jsonify(data=res), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500

@@ -10,3 +10,5 @@ client = MongoClient(database_url)
 db = client.MainDB
 reviewsModel = db.reviews
 productsModel = db.products
+cartsModel = db.carts
+ordersModel = db.orders

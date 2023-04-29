@@ -7,13 +7,15 @@
         "Hey",
         "Is anyone there?",
         "Hello",
-        "Good day"
+        "Good morning",
+        "Good day",
+        "Good afternoon"
       ],
       "responses": [
-        "Hey :-) My name is Daz!",
-        "Hello, thanks for visiting. My name is Daz!",
-        "Hi there, My name is Daz!. What can I do for you?",
-        "Hi there, My name is Daz! How can I help?"
+        "Hey, Welcome to Growcomers Online Grocery Store",
+        "Hello, Welcome to Growcomers. How can I help you!",
+        "Hi there, Welcome to Growcomers. What can I do for you?",
+        "Hi there, Welcome to Growcomers. How can I help?"
       ]
     },
     {
@@ -24,11 +26,11 @@
         "How is your day?"
       ],
       "responses": [
-        "I'm good, all's good, thanks. How about you?"
+        "I'm excited to help you, thanks. How about you?"
       ]
     },
-            {
-      "tag": "user response",
+    {
+      "tag": "positive user response",
       "patterns": [
         "I'm good",
         "Im good",
@@ -38,6 +40,20 @@
       ],
       "responses": [
         "Great to hear you are doing good."
+      ]
+    },   
+    {
+      "tag": "negative user response",
+      "patterns": [
+        "I'm not good",
+        "Im not good",
+        "Im not doing good",
+        "I am not good",
+        "I am not okay",
+        "I am not feeling good"
+      ],
+      "responses": [
+        "Sorry to hear that. Hope for your speedy recovery"
       ]
     },   
     {
@@ -59,11 +75,10 @@
         "Which items do you have?",
         "What kinds of items are there?",
         "What do you sell?",
-        "What do you offer?",
-        "What can I buy?"
+        "What service do you provide?"
       ],
       "responses": [
-        "Search your preference in our flagship store's search bar to see all available products. "
+        "We sell all types of groceries."
       ]
     },
     {
@@ -71,25 +86,32 @@
       "patterns": [
         "Do you take credit cards?",
         "Do you accept Mastercard?",
-        "Can I pay with Cash?",
+        "Can I pay with Paypal?",
         "Are you cash only?",
+        "What is the payment method?",
+        "Can i pay using crypto?",
+        "Can i pay using cryptocurrency?",
+        "Do you accept crypto?",
+        "Do you accept cryptocurrency?",
         "What are your payment methods?",
         "How do I pay?"
       ],
       "responses": [
-        "We accept VISA, Mastercard and Cash"
+        "We accept Cryptocurrency Payments using DAI stable coin as well as VISA, Mastercard."
       ]
     },
     {
-      "tag": "track",
+      "tag": "crypto payments",
       "patterns": [
-        "How can I track my order", 
-        "I want to track my order", 
-        "Can I track my order", 
-        "Track order"
+        "What is required for crypto payments?",
+        "How to pay using crypto?",
+        "Which crypto coin do you accept?",
+        "Which cryptocurrency do you accept?",
+        "Cryptocurrency payments",
+        "Crypto Payments"
       ],
       "responses": [
-        "Visit the order page, click on the specific order, select 'track my order', and check the status"
+        "To pay using cryptocurrency,<br /> You have to setup metamask wallet extension in your browser.<br />Add your accounts that has DAI stable coin.<br /> Then you can easily pay using your wallet.<br />Note: We accept only DAI stable coin"
       ]
     },
     {
@@ -97,41 +119,26 @@
       "patterns": [
         "How long does delivery take?",
         "How long does shipping take?",
-        "Please Tell me about my delivery",
         "When do I get my delivery?",
-        "Why is my order not delivered yet"
+        "what is the delivery time"
       ],
       "responses": [
-        "Delivery takes 2-4 days. Please bear with us!",
-        "Shipping takes 2-4 days.  Please bear with us!"
+        "Delivery takes 1-2 days",
+        "Shipping takes 1-2 days"
       ]
     },
     {
-      "tag": "confirm",
+      "tag": "hate",
       "patterns": [
-        "My payment was processed successfully but I didn't get any order confirmation. What should I do?",
-        "Payment was completed but no confirmation",
-        "Order was not confirmed",
-        "Money deducted but order is not confirmed"
+        "Not satisfied with your service",
+        "Prducts are worst and not satisfied",
+        "Very poor service",
+        "Product quality need to be improved",
+        "Worst products"
       ],
       "responses": [
-        "Daraz sends you an Email & SMS upon confirmation of your order. If it requires manual confirmation, our team will contact you within 24 hours after order placement. Delay in confirmation SMS may occur due to network error, you may receive it with a delay.",
-        "It takes upto 24 hours for confirmation, please bear with us! Type Need more help for more assistance. "
-      ]
-    },
-    {
-      "tag": "delay",
-      "patterns": [
-        "Why is my order delayed? ",
-        "Did my order get delayed?",
-        "Why is my order not delivered yet?",
-        "When do I get my delivery?"
-      ],
-      "responses": [
-        "We are really sorry if there has been a delay in your order! If your order is within delivery period, We recommend you to please wait during this period since our Delivery Heroes make 3 attempts to deliver your order!",
-        "If your order is past up to 3 days after delivery period, There may be logistic issues causing a delay in delivery. Please type 'Common reasons for delivery delay' to know more about this.",
-        "We appreciate if you could wait for your items as most orders are delivered successfully within this period.",
-        "If your order is past more than 3 days, Since there may be unexpected issues causing delivery delays, you can click on 'Need more Help' for further assistance."
+        "Sorry for the inconvenience",
+        "We will try to improve our service"
       ]
     },
     {
@@ -143,7 +150,7 @@
         "delivery delay"
       ],
       "responses": [
-        "Reasons include Seller Sourcing Issues, Courier Issues, Cross Border shipment delay, Wrong Address or Phone Number, and Unavailability of Customer. "
+        "Reasons include seller sourcing issues, courier issues, cross border shipment delay, wrong address or Mobile Number, and Unavailability of customer."
       ]
     },
     {
@@ -157,136 +164,191 @@
         "how to contact customer service",
         "customer service number",
         "contact number for help",
-        "helpline number",
-        "How to become a seller",
-        "How to contact a seller"
+        "Customer service",
+        "helpline number"
       ],
       "responses": [
-        "Contact us for further information here: Phone: 021-111-132729. Timings are from 09:00 AM to 05:00 PM from Monday to Saturday."
-      ]
-    },
-    {
-      "tag": "cancel",
-      "patterns": [
-        "Can I cancel my order?",
-        "Why is my order cancelled?",
-        "How do I can cancel my order",
-        "Can I cancel an order"
-      ],
-      "responses": [
-        "Order can only be cancelled within 7 days of placement. Digital goods do not qualify for refund.",
-        "Visit my orders page to check status of specific orders."
-      ]
-    },
-    {
-      "tag": "refund",
-      "patterns": [
-        "Can I refund an item.",
-        "I want to refund an item",
-        "can I refund my order",
-        "Are refunds available"
-      ],
-      "responses": [
-        "Refund can only be issued within 7 days of placement. Digital goods do not qualify for refund.",
-        "Visit my orders page to check for specific orders."
-      ]
-    },
-    {
-      "tag": "refund status",
-      "patterns": [
-        "Why is the status Refunded when it's not credited?",
-        "No refund even though status is refunded",
-        "No refund when status says refunded",
-        "I did not receive my refund money",
-        "Refund money not received"
-      ],
-      "responses": [
-        "Please be patient as refunds take upto 30 days to receive into bank. "
-      ]
-    },
-    {
-      "tag": "refund",
-      "patterns": [
-        "Can I refund an item.",
-        "I want to refund an item",
-        "can I refund my order",
-        "Are refunds available"
-      ],
-      "responses": [
-        "Refund can only be issued within 7 days of placement. Digital goods do not qualify for refund.",
-        "Visit my orders page to check for specific orders."
-      ]
-    },
-    {
-      "tag": "return",
-      "patterns": [
-        "How long do return items take",
-        "When will my items be returned",
-        "When can I get a refund for return items?",
-        "Are refunds available for return?"
-      ],
-      "responses": [
-        "Return takes 6 to 10 business days. There are 2 parts to the return process. In the first part, we check the items received from you to verify the issue highlighted in your return claim. Once we've verified and accepted your return, we initiate the refund process which takes 1 business day for Daraz wallet and 2-10 business days for bank or card. "
-      ]
-    },
-    {
-      "tag": "withdraw refunds",
-      "patterns": [
-        "How to withdraw refunds from wallet?",
-        "Withdraw funds",
-        "Can I withdraw refunds"
-      ],
-      "responses": [
-        "Withdrawing refunds from your wallet is very easy. Please follow the steps below: Step 1: Click on the 'Wallet' icon on the top right corner of the Daraz App, or click here. Step 2: Click on the 'Balance Details' Icon. Step 3: Click on 'Withdraw' button. Step 4: Enter your bank account details and click 'Withdraw'. Step 5: You will receive a verification email, click confirm to initiate your withdrawal request."
+        "Sure you can Contact Growcomers at +91-00000000 or info@growcomers.com<br /> Timings are from 09:00 AM to 05:00 PM from Monday to Friday."
       ]
     },
     {
       "tag": "order status",
       "patterns": [
         "What is my order status",
-        "I want to know my return status",
-        "How to return status"
+        "Order status",
+        "Manage my order",
+        "Cancel my order",
+        "How do I can cancel my order",
+        "Can I cancel my order?"
       ],
       "responses": [
-        "Please visit the My Orders page for a list of your confirmed orders."
+        "Please visit the My Orders page in your profile to manage your orders and to view the status."
       ]
     },
     {
-      "tag": "use voucher",
-      "patterns": [
-        "How to use a voucher?",
-        "Can I use a voucher?",
-        "How to use a voucher?"
-      ],
-      "responses": [
-        "You can add a voucher by clicking on My Cart > Check Out > Enter Voucher Code > APPLY. "
-      ]
-    },
-        {
-      "tag": "profile info",
+      "tag": "profile update",
       "patterns": [
         "How can I change my profile information",
-        "I want to change my password",
+        "change my phone number",
         "I want to change my phone number",
-        "I want to change my address",
-        "I want to Reset my password",
-        "I want to delete my account",
-        "delete my account"
+        "How to change my phone number",
+        "change my name",
+        "I want to change my name",
+        "How to change my name"
       ],
       "responses": [
-        "You can easily add or change your account details by following the steps below: Step 1: Click on 'Account', Step 2: Click on 'Manage my account' from the icon, Step 3: You change or edit your name, address, email address, mobile number, etc., Step 4: Fill in the required details, and click on Save. Note: You can also change your delivery address from the Checkout page before proceeding to pay."
+        "You can easily update your account details by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on edit button,<br /> Step 4: Update name and mobile number, and click on Save."
       ]
     },
-        {
-      "tag": "mobile app",
+    {
+      "tag": "email update",
       "patterns": [
-        "Can I download a mobile app for this?",
-        "Mobile app",
-        "Download mobile app"
+        "How can I change my email",
+        "change my email",
+        "I want to change my email",
+        "How to change my email"
       ],
       "responses": [
-        "You can download the Daraz Mobile App from both IOS App Store, and Google Play Store. "
+        "Changing or updating email once verified is not possible."
       ]
-    }  
+    },
+    {
+      "tag": "address",
+      "patterns": [
+        "Edit address",
+        "Add address",
+        "Update address",
+        "How to Edit address",
+        "How to Add address",
+        "How to Update address",
+        "I want to Edit address",
+        "I want to Add address",
+        "I want to Update address"
+      ],
+      "responses": [
+        "You can easily add or update your address details by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Addresses'<br /> Then you can edit, delete or add addresses."
+      ]
+    },
+    {
+      "tag": "pasword update",
+      "patterns": [
+        "Change my password",
+        "Reset my password",
+        "I want to change my password",
+        "I want to Reset my password",
+        "How to change my password?",
+        "How to Reset my password?"
+      ],
+      "responses": [
+        "You can easily change your password by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on 'Change Password' button,<br /> Step 4: Enter your old password and new password,<br /> Step5: Click on Save."
+      ]
+    },
+    {
+      "tag": "account delete",
+      "patterns": [
+        "I want to delete my account",
+        "How to delete my account",
+        "delete my account",
+        "I want to deactivate my account",
+        "How to deactivate my account",
+        "deactivate my account"
+      ],
+      "responses": [
+        "You can easily deactivate your account by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on 'Deactivate' button,<br /> Step 4: Click on 'confirm' button<br /> This will deactivate your account."
+      ]
+    },
+    {
+      "tag": "order",
+      "patterns": [
+        "I want to order", 
+        "I would like to order", 
+        "Can I order",
+        "i want to get",
+        "I want to add",
+        "Add to cart"
+      ],
+      "responses": [
+        "Sure, what items would you like to order?", 
+        "Great, what can I get for you?", 
+        "Alright, let's start your order."
+      ]
+    },
+    {
+      "tag": "cancel_cart",
+      "patterns": [
+        "Cancel",
+        "Clear",
+        "No",
+        "clear my order", 
+        "cancel my order"
+      ],
+      "responses": [
+        "Okay, your order has been cancelled.",
+        "No problem, cancelling your order."
+      ]
+    },
+    {
+      "tag": "add_cart",
+      "patterns": [
+        "Confirm", 
+        "Yes", 
+        "Done"
+      ],
+      "responses": [
+        "Items added to cart successfully"
+      ]
+    },
+    {
+      "tag": "place_order",
+      "patterns": [
+        "Place my order", 
+        "Checkout cart", 
+        "How can i place my order?",
+        "I want to place my order",
+        "Checkout shopping cart"
+      ],
+      "responses": [
+        "You can visit your cart to proceed checkout."
+      ]
+    },
+    {
+      "tag": "view_cart",
+      "patterns": [
+        "I want to see my orders", 
+        "shopping cart", 
+        "what items are there in my cart?",
+        "cart",
+        "show me my shopping cart"
+      ],
+      "responses": [
+        "Here is your shopping cart:"
+      ]
+    },
+    {
+      "tag": "clear_cart",
+      "patterns": [
+        "I want to clear my cart", 
+        "I want to clear my shopping cart", 
+        "clear cart", 
+        "Remove shopping cart",
+        "clear shopping cart",
+        "Delte shopping cart"
+      ],
+      "responses": [
+        "The cart is cleared successfully."
+      ]
+    },
+    {
+      "tag": "get_orders",
+      "patterns": [
+        "I want to see my orders", 
+        "Show my orders", 
+        "Past orders", 
+        "Status of my orders"
+      ],
+      "responses": [
+        "Here are your orders:"
+      ]
+    }
   ]
 }
