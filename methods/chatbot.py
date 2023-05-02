@@ -216,7 +216,7 @@ def handleAddCart(userId):
         cartsModel.update_one({"userId": userId}, {
                               "$push": {"products": {"$each": newProducts}}})
     else:
-        cartsModel.create({"userId": userId, "products": newProducts})
+        cartsModel.insert_one({"userId": userId, "products": newProducts})
     shopping_cart.clear()
     return "The items are successfully added to cart"
 
