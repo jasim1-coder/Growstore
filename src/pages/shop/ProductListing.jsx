@@ -37,7 +37,7 @@ const ProductListing = () => {
   const [sortOrder, setSortOrder] = useState(order);
 
   const handleOrderChange = (e) => {
-    const _categories = categories.value;
+    const _categories = categories?.value;
     const _brands = brands.map((entry) => entry.value);
     const params = {
       query,
@@ -51,7 +51,7 @@ const ProductListing = () => {
   };
 
   const handlePageChange = () => {
-    const _categories = categories.value;
+    const _categories = categories?.value;
     const _brands = brands.map((entry) => entry.value);
     const params = {
       query,
