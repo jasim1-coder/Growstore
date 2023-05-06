@@ -119,7 +119,7 @@ def extract_items_and_quantity(sentence):
     return items2
 
 
-def handle_order_intent(intent, sentence):
+def handleCartIntent(intent, sentence):
     # Get the user's order
     if ("order" in sentence):
         order_index = sentence.index("order") + len("order")
@@ -197,10 +197,6 @@ def predictClass(sentence, model):
         return_list.append(
             {"intent": chatClasses[r[0]], "probability": str(r[1])})
     return return_list
-
-
-def handleCartIntent():
-    return "handleCartIntent"
 
 
 def handleAddCart(userId):
@@ -303,8 +299,8 @@ def handleViewCart(userId):
     for data in cartData:
         title = data['title'][:40]
         imageUrl = data['imageUrl']
-        quantity = data['quantity']
-        price = data['price']
+        quantity = int(data['quantity'])
+        price = float(data['price'])
         total += quantity * price
         response += f"""
         <div style="display: flex; flex-direction: row; gap: 0.5rem; align-items: center">
@@ -388,7 +384,7 @@ def getResponse(ints, intents_json, query, userId=None):
         if (i['tag'] == tag):
             if tag == "order":
                 if userId:
-                    return handle_order_intent(i, query)
+                    return handleCartIntent(i, query)
                     # return handleCartIntent()
                 return "Please login to add items to cart."
             elif tag == "add_cart":

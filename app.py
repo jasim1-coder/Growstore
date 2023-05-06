@@ -1,12 +1,19 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import jwt
+import os
 
 from methods.chatbot import chatbotResponse
 from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
 from methods.smartSearch import loadSmartSearchProducts
 from methods.createNewDF import loadDBListener
 from db import productsModel
+
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
+
+JWTkey = os.environ.get("JWT_SECRET_KEY")
 
 app = Flask(__name__)
 CORS(app)
@@ -86,7 +93,7 @@ def getChatbotReply():
         if authorization:
             token = authorization.split()[1]
             userData = jwt.decode(
-                token, '43OGrCQbln25duO7seZ4RH2bk8KaHY4OS1', algorithms='HS256')
+                token, JWTkey, algorithms='HS256')
             userId = userData['userId']
         query = request.args.get('query')
         res = chatbotResponse(query, userId)
