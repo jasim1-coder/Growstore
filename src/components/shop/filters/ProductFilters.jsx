@@ -29,7 +29,7 @@ const ProductFilters = () => {
   const [brand, setBrand] = useState([]);
 
   const handleFilter = async () => {
-    const _categories = categories.value;
+    const _categories = categories?.value;
     const _brands = brand.map((entry) => entry.value);
     const params = {
       query,

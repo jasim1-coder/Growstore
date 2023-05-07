@@ -18,6 +18,7 @@ export const fetchChatResponses = createAsyncThunk(
     try {
       const response = await PRIVATE_PYTHON_API.get("/chat", {
         params: { query: message },
+        withCredentials: true,
       });
       return response.data;
     } catch (error) {
