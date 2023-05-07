@@ -33,8 +33,6 @@ chatIntents = json.loads(open('dataset/chatbot/intents.json').read())
 chatbotModel = tf.keras.models.load_model(
     'trainedModels/chatbotModel.h5')
 
-shopping_cart = defaultdict(int)
-
 
 def fuzzy_search(query, dataframe, threshold=0.6):
     best_match = None
@@ -77,8 +75,8 @@ def fuzzy_search(query, dataframe, threshold=0.6):
             index = i
 
     if index == -1:
-        return "No product found", None
-    return best_match, dataframe.loc[index, "_id"]
+        return None
+    return dataframe.loc[index, "_id"]
 
 
 def extract_items_and_quantity(sentence):
@@ -86,7 +84,6 @@ def extract_items_and_quantity(sentence):
     tags = pos_tag(tokens)
 
     items = defaultdict(int)
-    quantities = []
     last_item = None
     for i, (word, tag) in enumerate(tags):
         if tag == 'NN' or tag == 'NNS':
@@ -94,14 +91,8 @@ def extract_items_and_quantity(sentence):
                 last_item = items.popitem()[0] + ' ' + word if items else word
             elif word.lower() != 'order' and word.lower() != 'i':
                 items[word] = 1
-
     if last_item is not None:
         items[last_item] = 1
-
-    # Add default quantity of 1 for items with no quantity specified
-    for i, quantity in enumerate(quantities):
-        if quantity is None:
-            quantities[i] = 1
 
     words_split = sentence.translate(
         str.maketrans('', '', string.punctuation)).split()
@@ -114,12 +105,13 @@ def extract_items_and_quantity(sentence):
     items2 = defaultdict(int)
     for old_key in items.keys():
         # Replace the old key with the new key
-        new_key, productId = fuzzy_search(old_key, productsDF)
-        items2[productId] = items[old_key]
+        productId = fuzzy_search(old_key, productsDF)
+        if productId:
+            items2[productId] = items[old_key]
     return items2
 
 
-def handleCartIntent(intent, sentence):
+def handleCartIntent(sentence):
     # Get the user's order
     if ("order" in sentence):
         order_index = sentence.index("order") + len("order")
@@ -133,6 +125,9 @@ def handleCartIntent(intent, sentence):
 
     shopping_cart.update(extract_items_and_quantity(sentence))
     # Confirm the order and show the shopping cart
+
+    if len(shopping_cart) == 0:
+        return f"Sorry no products found for {sentence}. Please try with some other products.<br /><br /> Thank you"
     response = """<div style="display: flex; flex-direction: column; gap: 1.5rem;">
                         <p>Sure, The following items will be added to cart:</p>
                         <div style="display: flex; flex-direction: column; gap: .8rem;">
@@ -200,6 +195,8 @@ def predictClass(sentence, model):
 
 
 def handleAddCart(userId):
+    if len(shopping_cart) == 0:
+        return "Please first ask me to order some items and confirm the order."
     newProducts = []
     for productId, count in shopping_cart.items():
         newProducts.append({"id": productId, "quantity": count})
@@ -218,6 +215,8 @@ def handleAddCart(userId):
 
 
 def handleCancelCart():
+    if len(shopping_cart) == 0:
+        return "Please first ask me to order some items and cancel the order."
     shopping_cart.clear()
     return "The items has not been added to your cart. Thank you"
 
@@ -384,7 +383,7 @@ def getResponse(ints, intents_json, query, userId=None):
         if (i['tag'] == tag):
             if tag == "order":
                 if userId:
-                    return handleCartIntent(i, query)
+                    return handleCartIntent(query)
                     # return handleCartIntent()
                 return "Please login to add items to cart."
             elif tag == "add_cart":
@@ -417,7 +416,9 @@ def getResponse(ints, intents_json, query, userId=None):
     return "Sorry. I did not understand."
 
 
-def chatbotResponse(text, userId):
+def chatbotResponse(text, userId, localCart):
+    global shopping_cart
+    shopping_cart = localCart
     ints = predictClass(text, chatbotModel)
     res = getResponse(ints, chatIntents, text, userId)
-    return res
+    return res, shopping_cart

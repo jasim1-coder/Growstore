@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import jwt
 import os
+from collections import defaultdict
 
 from methods.chatbot import chatbotResponse
 from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
@@ -16,7 +17,9 @@ load_dotenv(find_dotenv())
 JWTkey = os.environ.get("JWT_SECRET_KEY")
 
 app = Flask(__name__)
-CORS(app)
+app.secret_key = JWTkey
+app.config['SESSION_COOKIE_HTTPONLY'] = False
+CORS(app, supports_credentials=True)
 
 
 @app.route('/')
@@ -90,13 +93,15 @@ def getChatbotReply():
     try:
         authorization = request.headers.get("Authorization")
         userId = None
+        localCart = session.get('localCart', defaultdict(int))
         if authorization:
             token = authorization.split()[1]
             userData = jwt.decode(
                 token, JWTkey, algorithms='HS256')
             userId = userData['userId']
         query = request.args.get('query')
-        res = chatbotResponse(query, userId)
+        res, updatedCart = chatbotResponse(query, userId, localCart)
+        session['localCart'] = updatedCart
         return jsonify(data=res), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
