@@ -12,12 +12,14 @@ ratingsDF = pd.read_csv('dataset/cleanedRatings.csv')
 with open('trainedModels/svdModel.pkl', 'rb') as f:
     svdModel = pickle.load(f)
 
-neuralModel = tf.keras.models.load_model(
-    'trainedModels/neuralNetwork.h5', compile=False)
-neuralModel.compile(
-    optimizer=tf.optimizers.Adam(
-        learning_rate=0.001),
-    loss='mean_squared_error')
+# neuralModel = tf.keras.models.load_model(
+#     'trainedModels/neuralNetwork.h5', compile=False)
+# neuralModel.compile(
+#     optimizer=tf.optimizers.Adam(
+#         learning_rate=0.001),
+#     loss='mean_squared_error')
+
+neuralModel = tf.keras.models.load_model('trainedModels/neuralNetwork.h5')
 
 
 def weightedRating(row, m, C):

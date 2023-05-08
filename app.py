@@ -1,16 +1,16 @@
+from dotenv import load_dotenv, find_dotenv
+from db import productsModel
+from methods.createNewDF import loadDBListener
+from methods.smartSearch import loadSmartSearchProducts
+from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
+from methods.chatbot import chatbotResponse
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import jwt
 import os
 from collections import defaultdict
-
-from methods.chatbot import chatbotResponse
-from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
-from methods.smartSearch import loadSmartSearchProducts
-from methods.createNewDF import loadDBListener
-from db import productsModel
-
-from dotenv import load_dotenv, find_dotenv
+import warnings
+warnings.filterwarnings('ignore')
 
 load_dotenv(find_dotenv())
 
