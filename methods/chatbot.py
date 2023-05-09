@@ -3,6 +3,7 @@ import random
 import pickle
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
@@ -11,9 +12,7 @@ import regex as re
 from collections import defaultdict
 import datetime
 
-from methods.recommender import productsDF
 from db import cartsModel, ordersModel, productsModel
-
 # nltk.download('punkt')
 # nltk.download('wordnet')
 # nltk.download('averaged_perceptron_tagger')
@@ -22,20 +21,8 @@ from db import cartsModel, ordersModel, productsModel
 
 lemmatizer = nltk.stem.WordNetLemmatizer()
 
-with open('dataset/chatbot/chatWords.pkl', 'rb') as f:
-    chatWords = pickle.load(f)
-
-with open('dataset/chatbot/chatClasses.pkl', 'rb') as f:
-    chatClasses = pickle.load(f)
-
-chatIntents = json.loads(open('dataset/chatbot/intents.json').read())
-
-chatbotModel = tf.keras.models.load_model(
-    'trainedModels/chatbotModel.h5')
-
 
 def fuzzy_search(query, dataframe, threshold=0.6):
-    best_match = None
     best_score = 0
     index = -1
 
@@ -80,6 +67,7 @@ def fuzzy_search(query, dataframe, threshold=0.6):
 
 
 def extract_items_and_quantity(sentence):
+    productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
     tokens = word_tokenize(sentence)
     tags = pos_tag(tokens)
 
@@ -179,7 +167,7 @@ def bow(sentence, words):
     return (np.array(bag))
 
 
-def predictClass(sentence, model):
+def predictClass(sentence, model, chatWords, chatClasses):
     # filter out predictions below a threshold
     p = bow(sentence, chatWords)
     res = model.predict(np.array([p]))[0]
@@ -418,7 +406,18 @@ def getResponse(ints, intents_json, query, userId=None):
 
 def chatbotResponse(text, userId, localCart):
     global shopping_cart
+
+    with open('dataset/chatbot/chatWords.pkl', 'rb') as f:
+        chatWords = pickle.load(f)
+
+    with open('dataset/chatbot/chatClasses.pkl', 'rb') as f:
+        chatClasses = pickle.load(f)
+
+    chatIntents = json.loads(open('dataset/chatbot/intents.json').read())
+
+    chatbotModel = tf.keras.models.load_model(
+        'trainedModels/chatbotModel.h5')
     shopping_cart = localCart
-    ints = predictClass(text, chatbotModel)
+    ints = predictClass(text, chatbotModel, chatWords, chatClasses)
     res = getResponse(ints, chatIntents, text, userId)
     return res, shopping_cart

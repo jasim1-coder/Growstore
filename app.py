@@ -1,19 +1,21 @@
 from dotenv import load_dotenv, find_dotenv
 from db import productsModel
-from methods.createNewDF import loadDBListener
+
 from methods.smartSearch import loadSmartSearchProducts
 from methods.recommender import loadPopularProducts, loadRelatedProducts, loadRecommendations
 from methods.chatbot import chatbotResponse
+from methods.trainModel import trainCFModel
+
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import jwt
 import os
+import time
 from collections import defaultdict
 import warnings
+
 warnings.filterwarnings('ignore')
-
 load_dotenv(find_dotenv())
-
 JWTkey = os.environ.get("JWT_SECRET_KEY")
 
 app = Flask(__name__)
@@ -107,10 +109,37 @@ def getChatbotReply():
         return jsonify({"message": str(e)}), 500
 
 
-@app.route('/listen')
-def listenDB():
-    loadDBListener()
-    return 'Listening to MongoDB collection...'
+@app.route('/train', methods=['GET', 'POST'])
+def trainModel():
+    try:
+        authorization = request.headers.get("Authorization")
+        if not authorization:
+            return jsonify({"message": "No token"}), 401
+
+        token = authorization.split()[1]
+        userData = jwt.decode(
+            token, JWTkey, algorithms='HS256')
+        role = userData['role']
+
+        if role != "ADMIN":
+            return jsonify({"message": "Not authorized"}), 403
+
+        if request.method == 'GET':
+            modifiedDate = os.path.getmtime("trainedModels/neuralNetwork.h5")
+            return jsonify(data=modifiedDate), 200
+        else:
+            epoch = request.json.get('epoch')
+            print(epoch)
+            RMSE, MSE, MAE, accuracy = trainCFModel(epoch)
+            return_data = {
+                "RMSE": RMSE,
+                "MSE": MSE,
+                "MAE": MAE,
+                "accuracy": accuracy
+            }
+            return jsonify(data=return_data), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 if __name__ == "__main__":

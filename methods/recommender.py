@@ -6,20 +6,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from methods.getProductDB import getProductData
 
-productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
-ratingsDF = pd.read_csv('dataset/cleanedRatings.csv')
+# productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
+# ratingsDF = pd.read_csv('dataset/cleanedRatings.csv')
 
-with open('trainedModels/svdModel.pkl', 'rb') as f:
-    svdModel = pickle.load(f)
+# with open('trainedModels/svdModel.pkl', 'rb') as f:
+#     svdModel = pickle.load(f)
 
-# neuralModel = tf.keras.models.load_model(
-#     'trainedModels/neuralNetwork.h5', compile=False)
-# neuralModel.compile(
-#     optimizer=tf.optimizers.Adam(
-#         learning_rate=0.001),
-#     loss='mean_squared_error')
+# # neuralModel = tf.keras.models.load_model(
+# #     'trainedModels/neuralNetwork.h5', compile=False)
+# # neuralModel.compile(
+# #     optimizer=tf.optimizers.Adam(
+# #         learning_rate=0.001),
+# #     loss='mean_squared_error')
 
-neuralModel = tf.keras.models.load_model('trainedModels/neuralNetwork.h5')
+# neuralModel = tf.keras.models.load_model('trainedModels/neuralNetwork.h5')
 
 
 def weightedRating(row, m, C):
@@ -31,11 +31,9 @@ def weightedRating(row, m, C):
 
 
 def loadPopularProducts():
-    ratingsDFCopied = ratingsDF.copy()
-    newRatingsDF = pd.read_csv('dataset/newRatings.csv')
-    combinedRatingsDF = pd.concat([ratingsDFCopied, newRatingsDF])
+    ratingsDFCopied = pd.read_csv('dataset/cleanedRatings.csv')
 
-    groupedRatingsDF = combinedRatingsDF.groupby("ProductID").agg({"UserID": "count", "Rating": "mean"}).rename(
+    groupedRatingsDF = ratingsDFCopied.groupby("ProductID").agg({"UserID": "count", "Rating": "mean"}).rename(
         columns={"UserID": "Number of Rating", "Rating": "Mean Rating"}).reset_index()
 
     filteredRatingsDF = groupedRatingsDF[groupedRatingsDF['Number of Rating']
@@ -57,6 +55,10 @@ def loadPopularProducts():
 
 
 def loadRelatedProducts(productId, productText):
+    with open('trainedModels/svdModel.pkl', 'rb') as f:
+        svdModel = pickle.load(f)
+    productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
+
     # Transform the product data using the SVD model
     productTransformed = svdModel.transform([productText])
 
@@ -80,6 +82,10 @@ def loadRelatedProducts(productId, productText):
 
 
 def loadRecommendations(id):
+    productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
+    ratingsDF = pd.read_csv('dataset/cleanedRatings.csv')
+    neuralModel = tf.keras.models.load_model('trainedModels/neuralNetwork.h5')
+
     productLen = productsDF.shape[0]
 
     tempRatingsDF = ratingsDF[ratingsDF['UserID'].str.contains(id)]

@@ -1,7 +1,6 @@
-from methods.getProductDB import getProductData
-from methods.recommender import productsDF
+import pandas as pd
 
-# Function to calculate the fuzzy match score
+from methods.getProductDB import getProductData
 
 
 def getMatchScore(string, string2):
@@ -45,15 +44,15 @@ def getMatchScore(string, string2):
 
 
 def loadSmartSearchProducts(query):
-    productsDFCopy = productsDF.copy()
+    productsDF = pd.read_csv('dataset/cleanedMetaData.csv')
 
-    productsDFCopy['match_score'] = productsDFCopy['title'].apply(
+    productsDF['match_score'] = productsDF['title'].apply(
         lambda x: getMatchScore(x, query))
 
     # Sort the dataframe by the match score in descending order
-    productsDFCopy = productsDFCopy.sort_values('match_score', ascending=False)
+    productsDF = productsDF.sort_values('match_score', ascending=False)
 
-    products = productsDFCopy[["title", "_id", "match_score"]].head(10)
+    products = productsDF[["title", "_id", "match_score"]].head(10)
     productIds = list(products._id)
     products = getProductData(productIds)
 
