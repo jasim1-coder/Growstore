@@ -7,6 +7,7 @@ import { logoBig } from "../../../assets";
 import {
   FiLogOut,
   FiPackage,
+  FiSettings,
   FiShoppingCart,
   FiTag,
   FiUsers,
@@ -76,6 +77,15 @@ const AdminSideBar = () => {
           >
             <FiTag />
             <span className="sm:block hidden">Brands</span>
+          </NavLink>
+          <NavLink
+            to="/admin/train"
+            className={({ isActive }) =>
+              isActive ? "linkActiveAdmin" : "linkInactiveAdmin"
+            }
+          >
+            <FiSettings />
+            <span className="sm:block hidden">Train</span>
           </NavLink>
         </div>
         <div>

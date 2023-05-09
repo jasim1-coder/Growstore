@@ -51,6 +51,7 @@ import GoogleLogin from "./pages/GoogleLogin";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import TrainModel from "./pages/admin/TrainModel";
 
 function App() {
   const dispatch = useDispatch();
@@ -121,7 +122,7 @@ function App() {
           <Route path="brands" element={<AdminBrands />} />
           <Route path="brands/add" element={<AdminAddBrand />} />
           <Route path="brands/:id" element={<AdminManageBrands />} />
-          <Route path="dashboard" element={<p>Admin dashboard</p>} />
+          <Route path="train" element={<TrainModel />} />
           <Route path="*" element={<p>Admin side pages</p>} />
         </Route>
 
