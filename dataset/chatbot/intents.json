@@ -314,7 +314,7 @@
     {
       "tag": "view_cart",
       "patterns": [
-        "I want to see my orders", 
+        "I want to see my cart", 
         "shopping cart", 
         "what items are there in my cart?",
         "cart",
