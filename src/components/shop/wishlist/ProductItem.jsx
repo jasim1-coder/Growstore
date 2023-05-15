@@ -40,7 +40,7 @@ const ProductItem = ({ data }) => {
   return (
     <tr className="py-2 border-b border-greyLight">
       <td className="px-2 py-4 overflow-clip flex flex-col gap-3">
-        <div className="flex flex-row gap-3 items-center">
+        <div className="flex sm:flex-row flex-col gap-1 sm:gap-3 sm:items-center">
           <img
             className="h-[100px] object-cover w-[100px] rounded-sm"
             src={data.imageUrl}
@@ -53,7 +53,7 @@ const ProductItem = ({ data }) => {
             />
           </Link>
         </div>
-        <div className="flex flex-row">
+        <div className="flex sm:flex-row flex-col sm:gap-0 gap-3">
           {deleteStatus === "loading" ? (
             <span className="text-uiRed text-xs pr-3 border-r-[2px] border-textDim/60">
               Removing...
@@ -62,12 +62,12 @@ const ProductItem = ({ data }) => {
             <button
               type="button"
               onClick={handleDelete}
-              className="text-textDim flex flex-row gap-2 items-center pr-3 border-r-[2px] border-textDim/60 hover:text-uiRed"
+              className="text-textDim flex flex-row gap-2 items-center sm:pr-3 sm:border-r-[2px] sm:border-textDim/60 hover:text-uiRed"
             >
               <FiTrash2 /> <span className="text-xs">Remove</span>
             </button>
           )}
-          <p className="pl-3 text-textDim text-xs">Added on: {addedOn}</p>
+          <p className="sm:pl-3 text-textDim text-xs">Added on: {addedOn}</p>
         </div>
       </td>
       <td className="px-2 py-4 overflow-clip text-center">
