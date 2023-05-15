@@ -55,11 +55,11 @@ const ProfileSidebar = () => {
         <span className="sm:block hidden">Reviews</span>
       </NavLink>
 
-      <div className="sm:block hidden w-full">
+      <div className="">
         <button
           onClick={handleLogout}
           type="button"
-          className="border border-uiGrey text-uiBlack text-sm py-2 rounded-sm hover:bg-baseGreen hover:text-uiWhite hover:border-baseGreen transition-all duration-150 font-medium flex flex-row gap-2 justify-center items-center mt-6 w-full"
+          className="sm:border sm:border-uiGrey text-uiBlack text-sm sm:py-2 rounded-sm hover:bg-baseGreen hover:text-uiWhite hover:border-baseGreen transition-all duration-150 font-medium flex flex-row gap-2 justify-center items-center mt-6 w-full"
         >
           <FiLogOut />
           <span className="sm:block hidden">Logout</span>
