@@ -89,6 +89,9 @@ def loadRecommendations(id):
     productLen = productsDF.shape[0]
 
     tempRatingsDF = ratingsDF[ratingsDF['UserID'].str.contains(id)]
+    if tempRatingsDF.empty:
+        raise Exception(
+            "No recommendation available. It seems you are a new user.")
     userId = tempRatingsDF.iloc[0].user
 
     productArray = np.arange(productLen)
