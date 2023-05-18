@@ -187,7 +187,7 @@ def handleAddCart(userId):
         return "Please first ask me to order some items and confirm the order."
     newProducts = []
     for productId, count in shopping_cart.items():
-        newProducts.append({"id": productId, "quantity": count})
+        newProducts.append({"id": productId, "quantity": int(count)})
     oldCart = cartsModel.find_one({"userId": userId})
     if oldCart:
         oldProducts = list(oldCart['products'])
