@@ -143,4 +143,4 @@ def trainModel():
 
 
 if __name__ == "__main__":
-    app.run(port=4002, debug=True)
+    app.run()
