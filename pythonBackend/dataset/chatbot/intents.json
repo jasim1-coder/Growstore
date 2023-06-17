@@ -1,0 +1,354 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "Is anyone there?",
+        "Hello",
+        "Good morning",
+        "Good day",
+        "Good afternoon"
+      ],
+      "responses": [
+        "Hey, Welcome to Growcomers Online Grocery Store",
+        "Hello, Welcome to Growcomers. How can I help you!",
+        "Hi there, Welcome to Growcomers. What can I do for you?",
+        "Hi there, Welcome to Growcomers. How can I help?"
+      ]
+    },
+    {
+      "tag": "personal",
+      "patterns": [
+        "How are you?",
+        "How are you doing?",
+        "How is your day?"
+      ],
+      "responses": [
+        "I'm excited to help you, thanks. How about you?"
+      ]
+    },
+    {
+      "tag": "positive user response",
+      "patterns": [
+        "I'm good",
+        "Im good",
+        "Im doing good",
+        "I am good",
+        "I am okay"
+      ],
+      "responses": [
+        "Great to hear you are doing good."
+      ]
+    },   
+    {
+      "tag": "negative user response",
+      "patterns": [
+        "I'm not good",
+        "Im not good",
+        "Im not doing good",
+        "I am not good",
+        "I am not okay",
+        "I am not feeling good"
+      ],
+      "responses": [
+        "Sorry to hear that. Hope for your speedy recovery"
+      ]
+    },   
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye"],
+      "responses": [
+        "See you later, thanks for visiting. Hope I was able to help!",
+        "Have a nice day. Hope I was able to help!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!", "thx", "thnks"],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "items",
+      "patterns": [
+        "Which items do you have?",
+        "What kinds of items are there?",
+        "What do you sell?",
+        "What service do you provide?"
+      ],
+      "responses": [
+        "We sell all types of groceries."
+      ]
+    },
+    {
+      "tag": "payments",
+      "patterns": [
+        "Do you take credit cards?",
+        "Do you accept Mastercard?",
+        "Can I pay with Paypal?",
+        "Are you cash only?",
+        "What is the payment method?",
+        "Can i pay using crypto?",
+        "Can i pay using cryptocurrency?",
+        "Do you accept crypto?",
+        "Do you accept cryptocurrency?",
+        "What are your payment methods?",
+        "How do I pay?"
+      ],
+      "responses": [
+        "We accept Cryptocurrency Payments using DAI stable coin as well as VISA, Mastercard."
+      ]
+    },
+    {
+      "tag": "crypto payments",
+      "patterns": [
+        "What is required for crypto payments?",
+        "How to pay using crypto?",
+        "Which crypto coin do you accept?",
+        "Which cryptocurrency do you accept?",
+        "Cryptocurrency payments",
+        "Crypto Payments"
+      ],
+      "responses": [
+        "To pay using cryptocurrency,<br /> You have to setup metamask wallet extension in your browser.<br />Add your accounts that has DAI stable coin.<br /> Then you can easily pay using your wallet.<br />Note: We accept only DAI stable coin"
+      ]
+    },
+    {
+      "tag": "delivery",
+      "patterns": [
+        "How long does delivery take?",
+        "How long does shipping take?",
+        "When do I get my delivery?",
+        "what is the delivery time"
+      ],
+      "responses": [
+        "Delivery takes 1-2 days",
+        "Shipping takes 1-2 days"
+      ]
+    },
+    {
+      "tag": "hate",
+      "patterns": [
+        "Not satisfied with your service",
+        "Prducts are worst and not satisfied",
+        "Very poor service",
+        "Product quality need to be improved",
+        "Worst products"
+      ],
+      "responses": [
+        "Sorry for the inconvenience",
+        "We will try to improve our service"
+      ]
+    },
+    {
+      "tag": "reasons",
+      "patterns": [
+        "Common reasons for delivery delay",
+        "common reasons for delivery delay",
+        "reasons for delay",
+        "delivery delay"
+      ],
+      "responses": [
+        "Reasons include seller sourcing issues, courier issues, cross border shipment delay, wrong address or Mobile Number, and Unavailability of customer."
+      ]
+    },
+    {
+      "tag": "more",
+      "patterns": [
+        "Need more help",
+        "help me more",
+        "can I talk to an agent",
+        "can I call customer service",
+        "customer support number",
+        "how to contact customer service",
+        "customer service number",
+        "contact number for help",
+        "Customer service",
+        "helpline number"
+      ],
+      "responses": [
+        "Sure you can Contact Growcomers at +91-00000000 or info@growcomers.com<br /> Timings are from 09:00 AM to 05:00 PM from Monday to Friday."
+      ]
+    },
+    {
+      "tag": "order status",
+      "patterns": [
+        "What is my order status",
+        "Order status",
+        "Manage my order",
+        "Cancel my order",
+        "How do I can cancel my order",
+        "Can I cancel my order?"
+      ],
+      "responses": [
+        "Please visit the My Orders page in your profile to manage your orders and to view the status."
+      ]
+    },
+    {
+      "tag": "profile update",
+      "patterns": [
+        "How can I change my profile information",
+        "change my phone number",
+        "I want to change my phone number",
+        "How to change my phone number",
+        "change my name",
+        "I want to change my name",
+        "How to change my name"
+      ],
+      "responses": [
+        "You can easily update your account details by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on edit button,<br /> Step 4: Update name and mobile number, and click on Save."
+      ]
+    },
+    {
+      "tag": "email update",
+      "patterns": [
+        "How can I change my email",
+        "change my email",
+        "I want to change my email",
+        "How to change my email"
+      ],
+      "responses": [
+        "Changing or updating email once verified is not possible."
+      ]
+    },
+    {
+      "tag": "address",
+      "patterns": [
+        "Edit address",
+        "Add address",
+        "Update address",
+        "How to Edit address",
+        "How to Add address",
+        "How to Update address",
+        "I want to Edit address",
+        "I want to Add address",
+        "I want to Update address"
+      ],
+      "responses": [
+        "You can easily add or update your address details by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Addresses'<br /> Then you can edit, delete or add addresses."
+      ]
+    },
+    {
+      "tag": "pasword update",
+      "patterns": [
+        "Change my password",
+        "Reset my password",
+        "I want to change my password",
+        "I want to Reset my password",
+        "How to change my password?",
+        "How to Reset my password?"
+      ],
+      "responses": [
+        "You can easily change your password by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on 'Change Password' button,<br /> Step 4: Enter your old password and new password,<br /> Step5: Click on Save."
+      ]
+    },
+    {
+      "tag": "account delete",
+      "patterns": [
+        "I want to delete my account",
+        "How to delete my account",
+        "delete my account",
+        "I want to deactivate my account",
+        "How to deactivate my account",
+        "deactivate my account"
+      ],
+      "responses": [
+        "You can easily deactivate your account by following the steps below: <br /> Step 1: Click on 'Account',<br /> Step 2: Click on 'Profile',<br /> Step 3: Click on 'Deactivate' button,<br /> Step 4: Click on 'confirm' button<br /> This will deactivate your account."
+      ]
+    },
+    {
+      "tag": "order",
+      "patterns": [
+        "I want to order", 
+        "I would like to order", 
+        "Can I order",
+        "i want to get",
+        "I want to add",
+        "Add to cart"
+      ],
+      "responses": [
+        "Sure, what items would you like to order?", 
+        "Great, what can I get for you?", 
+        "Alright, let's start your order."
+      ]
+    },
+    {
+      "tag": "cancel_cart",
+      "patterns": [
+        "Cancel",
+        "Clear",
+        "No",
+        "clear my order", 
+        "cancel my order"
+      ],
+      "responses": [
+        "Okay, your order has been cancelled.",
+        "No problem, cancelling your order."
+      ]
+    },
+    {
+      "tag": "add_cart",
+      "patterns": [
+        "Confirm", 
+        "Yes", 
+        "Done"
+      ],
+      "responses": [
+        "Items added to cart successfully"
+      ]
+    },
+    {
+      "tag": "place_order",
+      "patterns": [
+        "Place my order", 
+        "Checkout cart", 
+        "How can i place my order?",
+        "I want to place my order",
+        "Checkout shopping cart"
+      ],
+      "responses": [
+        "You can visit your cart to proceed checkout."
+      ]
+    },
+    {
+      "tag": "view_cart",
+      "patterns": [
+        "I want to see my cart", 
+        "shopping cart", 
+        "what items are there in my cart?",
+        "cart",
+        "show me my shopping cart"
+      ],
+      "responses": [
+        "Here is your shopping cart:"
+      ]
+    },
+    {
+      "tag": "clear_cart",
+      "patterns": [
+        "I want to clear my cart", 
+        "I want to clear my shopping cart", 
+        "clear cart", 
+        "Remove shopping cart",
+        "clear shopping cart",
+        "Delte shopping cart"
+      ],
+      "responses": [
+        "The cart is cleared successfully."
+      ]
+    },
+    {
+      "tag": "get_orders",
+      "patterns": [
+        "I want to see my orders", 
+        "Show my orders", 
+        "Past orders", 
+        "Status of my orders"
+      ],
+      "responses": [
+        "Here are your orders:"
+      ]
+    }
+  ]
+}
