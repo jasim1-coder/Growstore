@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
 import Addresses from "./pages/shop/userProfile/Addresses";
 import Cart from "./pages/shop/Cart";
 import Home from "./pages/shop/Home";
