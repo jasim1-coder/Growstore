@@ -1,1 +1,8 @@
-## Frontend for a machine learning and Blockchain based ecommerce website
+## Frontend for Growcomers: Online Grocery Store
+
+### Technologies Used
+
+- React
+- Tailwind CSS
+- Redux Toolkit
+- Vite
