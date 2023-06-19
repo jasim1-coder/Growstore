@@ -6,6 +6,7 @@
 
 - [Overview](#overview)
 - [Deployment](#deployment)
+- [Dataset](#dataset)
 - [Technologies](#technologies)
 - [Features](#features)
 - [Architecture](#architecture)
@@ -25,7 +26,11 @@ The platform provides a range of features including:
 
 ## Deployment
 
-The application has been deployed and is accessible at the following link: [Growcomers: Online Grocery Store](https://growcomers.netlify.app)
+The application has been deployed and is accessible at the following link: [Growcomers: Online Grocery Store](https://growcomers.netlify.app). The website is a demo application and we do not fulfill any orders placed at the website.
+
+## Dataset
+
+We have used Grocery and Gourmet Food dataset from [Amazon Reviews Data](https://nijianmo.github.io/amazon/index.html) to train our recommender system model and the metadata from the same dataset is used in our website. We do not own the dataset.
 
 ## Technologies
 
