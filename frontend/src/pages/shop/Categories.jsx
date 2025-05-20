@@ -20,10 +20,8 @@ const Categories = () => {
 
   const data = useSelector(getCategoriesData);
   const query = useSelector(getCategoriesSearchQuery);
-
   const status = useSelector(getCategoriesStatus);
   const error = useSelector(getCategoriesError);
-
   const _page = useSelector(getCategoriesCurrentPage);
   const limit = useSelector(getCategoriesPageLimit);
   const totalCategories = useSelector(getCategoriesTotalLength);
@@ -31,30 +29,32 @@ const Categories = () => {
   const [page, setPage] = useState(_page);
 
   const handlePageChange = () => {
-    const params = {
-      query,
-      page,
-      limit,
-    };
-    console.log(params);
-    dispatch(fetchCategories(params));
+    // Only dispatch if the page has changed to avoid redundant fetches
+    if (page !== _page) {
+      const params = { query, page, limit };
+      dispatch(fetchCategories(params)); // Dispatch to fetch categories
+    }
   };
 
+  // Whenever page or any relevant state changes, trigger the page change
   useEffect(() => {
-    if (_page !== page) {
-      handlePageChange();
-    }
-  }, [page]);
+    // Fetch categories when page changes
+    handlePageChange();
+  }, [page, _page, dispatch, query, limit]);
 
+  // Sync local state page with Redux page
   useEffect(() => {
     setPage(_page);
   }, [_page]);
 
-  useEffect(() => {
-    if (data.length === 0 && status !== "loading") {
-      dispatch(fetchCategories({}));
-    }
-  }, []);
+  // Fetch categories on initial load if there are no categories
+useEffect(() => {
+  if (data.length === 0 && status !== "loading") {
+    console.log("Fetching categories on initial load");
+    dispatch(fetchCategories({ query, page: 1, limit }));
+  }
+}, [dispatch, data, status, query, page, limit]);
+
 
   return (
     <Layout>
@@ -62,17 +62,16 @@ const Categories = () => {
         <div className="self-end">
           <CategorySearch />
         </div>
-        <div className="">
+        <div>
           <h2 className="heading2">Explore Categories</h2>
         </div>
-        {status === "failed" ? (
-          <p className="text-red-500">Error: {error}</p>
-        ) : null}
+        {status === "failed" && <p className="text-red-500">Error: {error}</p>}
+
         <div className="grid-list-5 w-full">
           {status === "loading" ? (
             <p>Loading...</p>
           ) : data.length === 0 ? (
-            <p>No Categories found</p>
+            <p>No categories found</p>
           ) : (
             data.map((entry) => <CategoryCard key={entry._id} data={entry} />)
           )}

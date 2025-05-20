@@ -97,14 +97,20 @@ const ProductMain = () => {
       <div className="flex flex-col gap-2">
         <p className="text-textDim font-[18px]">Categories</p>
         <div className="flex flex-row flex-wrap gap-3">
-          {data.category.map((entry, key) => (
-            <div
-              key={key}
-              className="py-2 px-4 bg-lightGreen border border-baseGreen/40 rounded-sm"
-            >
-              <span className="text-uiBlack">{entry.label}</span>
-            </div>
-          ))}
+         {Array.isArray(data.category) ? (
+  data.category.map((entry, key) => (
+    <div key={key} className="py-2 px-4 bg-lightGreen border border-baseGreen/40 rounded-sm">
+      <span className="text-uiBlack">{entry.label}</span>
+    </div>
+  ))
+) : (
+  <div className="py-2 px-4 bg-lightGreen border border-baseGreen/40 rounded-sm">
+    <span className="text-uiBlack">
+      {data.category?.label || data.category || "Uncategorized"}
+    </span>
+  </div>
+)}
+
         </div>
       </div>
 

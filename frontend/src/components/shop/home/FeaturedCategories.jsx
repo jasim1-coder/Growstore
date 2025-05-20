@@ -5,33 +5,42 @@ import {
   getFeaturedCategories,
   getFeaturedCategoriesStatus,
   getFeaturedCategoryError,
-} from "../../../redux/slice/categoriesSlice";
-import CategoryCard from "../categories/CategoryCard";
+} from "../../../redux/slice/categoriesSlice"; // Ensure the path is correct
+import CategoryCard from "../categories/CategoryCard"; // Ensure the path is correct
 
 const FeaturedCategories = () => {
   const dispatch = useDispatch();
+
+  // Selectors to fetch data, status, and error
   const data = useSelector(getFeaturedCategories);
   const status = useSelector(getFeaturedCategoriesStatus);
   const error = useSelector(getFeaturedCategoryError);
 
+  // Fetch data when component mounts if data is empty
   useEffect(() => {
-    if (data.length === 0) {
-      dispatch(fetchFeaturedCategories());
+    if (status === "idle") {
+      dispatch(fetchFeaturedCategories()); // Fetch categories only if the status is idle
     }
-  }, []);
+  }, [dispatch, status]); // Run the effect once when the component mounts
 
   return (
     <div className="container main-container">
       <h2 className="heading2">Explore Categories</h2>
-      {status === "loading" ? <p>Loading...</p> : null}
-      {status === "failed" ? <p>{error}</p> : null}
-      {status === "success" ? (
+
+      {/* Display loading state */}
+      {status === "loading" && <p>Loading...</p>}
+
+      {/* Display error if fetch failed */}
+      {status === "failed" && <p>{error}</p>}
+
+      {/* Display categories if fetch was successful */}
+      {status === "success" && (
         <div className="grid-list-5 w-full">
           {data.map((entry) => (
             <CategoryCard key={entry._id} data={entry} />
           ))}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

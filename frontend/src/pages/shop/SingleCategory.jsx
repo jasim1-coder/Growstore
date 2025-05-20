@@ -24,11 +24,11 @@ const SingleCategory = () => {
   const error = useSelector(getCategoriesProductError);
 
   useEffect(() => {
-    dispatch(fetchCategoriesProduct(id));
+    dispatch(fetchCategoriesProduct(id));  // Fetch products when the category changes
     return () => {
-      dispatch(removeCategoriesProductData());
+      dispatch(removeCategoriesProductData());  // Reset product data when component unmounts
     };
-  }, []);
+  }, [id]);  // Fetch new products when category ID changes
 
   return (
     <Layout>
@@ -37,7 +37,7 @@ const SingleCategory = () => {
           <BackButton />
           <CategorySearch />
         </div>
-        <div className="">
+        <div>
           <h3 className="heading3">Products for "{categoryName}" Category</h3>
         </div>
         {status === "failed" ? (

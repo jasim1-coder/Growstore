@@ -42,88 +42,137 @@ const initialState = {
   filterError: "",
 };
 
-export const fetchFeaturedProduct = createAsyncThunk(
-  "product/fetchFeaturedProduct",
+
+
+// Fetch products from local mock db.json
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get("/product/featured");
-      return response.data;
+      const response = await fetch("http://localhost:3001/products");
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      const products = await response.json();
+      console.log(products);  // Add this to check the response
+      return products;  // Return the products array
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message);  // Handle error
     }
   }
 );
 
+
+
+
+
+// Fetch Best Selling Products
 export const fetchBestSellingProduct = createAsyncThunk(
   "product/fetchBestSellingProduct",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get("/product/best-selling");
-      return response.data;
+      const response = await fetch("http://localhost:3001/products/best-sellers");  // Mock data URL
+      if (!response.ok) {
+        throw new Error("Failed to fetch best-selling products");
+      }
+      const bestSellers = await response.json();
+      return bestSellers;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
 
+// Fetch Recommendations for a specific user (you can use mock data here as well)
 export const fetchRecommendation = createAsyncThunk(
   "product/fetchRecommendation",
-  async (id, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await PYTHON_API.get(`/user/recommend?id=${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/products/recommendations?userId=${userId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch product recommendations");
+      }
+      const recommendations = await response.json();
+      return recommendations;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
 
+// Fetch Popular Products
 export const fetchPopular = createAsyncThunk(
   "product/fetchPopular",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await PYTHON_API.get(`/product/popular`);
-      return response.data;
+      const response = await fetch("http://localhost:3001/products/popular");
+      if (!response.ok) {
+        throw new Error("Failed to fetch popular products");
+      }
+      const popularProducts = await response.json();
+      return popularProducts;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
 
+// Fetch Top Picks
 export const fetchTopPicks = createAsyncThunk(
   "product/fetchTopPicks",
-  async (id, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await PYTHON_API.get(`/product/related?id=${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/products/top-picks?userId=${userId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch top picks");
+      }
+      const topPicks = await response.json();
+      return topPicks;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
 
+// Assuming you have an action like this for fetching product details
 export const fetchProductDetails = createAsyncThunk(
   "product/fetchProductDetails",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get(`/product/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/products?&_id=${id}`);
+      if (!response.ok) {
+        throw new Error("Product not found");
+      }
+      const data = await response.json();
+      console.log(data);
+      return data[0]; // return product data
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // reject with the error message
     }
   }
 );
 
+// Fetch Filtered Products based on search criteria (e.g., price, category, brand)
 export const fetchFilteredProducts = createAsyncThunk(
   "product/fetchFilteredProducts",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get(`/product/search`, {
-        params,
+      const response = await fetch(`http://localhost:3001/products/filter`, {
+        method: "POST", // You can use POST or GET depending on how you filter data
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(params), // Pass search params (filters) as JSON
       });
-      return response.data;
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch filtered products");
+      }
+
+      const filteredProducts = await response.json();
+      return filteredProducts;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
@@ -148,138 +197,130 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // GET FEATURED Product
-      .addCase(fetchFeaturedProduct.pending, (state) => {
+      // Fetch Featured Products
+      .addCase(fetchProducts.pending, (state) => {
         state.featuredStatus = "loading";
         state.featuredError = "";
       })
-      .addCase(fetchFeaturedProduct.fulfilled, (state, action) => {
-        state.featuredStatus = "success";
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.featuredStatus = "succeeded";
         state.featuredError = "";
-        state.featuredProduct = action.payload.data;
+        state.featuredProduct = action.payload;
       })
-      .addCase(fetchFeaturedProduct.rejected, (state, action) => {
+      .addCase(fetchProducts.rejected, (state, action) => {
         state.featuredStatus = "failed";
-        state.featuredError = action.payload.message;
+        state.featuredError = action.payload;
       })
-      // GET BEST SELLING Product
+
+      // Fetch Best Selling Products
       .addCase(fetchBestSellingProduct.pending, (state) => {
         state.bestSellerStatus = "loading";
         state.bestSellerError = "";
       })
       .addCase(fetchBestSellingProduct.fulfilled, (state, action) => {
-        state.bestSellerStatus = "success";
+        state.bestSellerStatus = "succeeded";
         state.bestSellerError = "";
-        state.bestSellerProducts = action.payload.data;
+        state.bestSellerProducts = action.payload;
       })
       .addCase(fetchBestSellingProduct.rejected, (state, action) => {
         state.bestSellerStatus = "failed";
-        state.bestSellerError = action.payload.message;
+        state.bestSellerError = action.payload;
       })
 
-      // GET RECOMMENDATION FOR USER
+      // Fetch Recommendations
       .addCase(fetchRecommendation.pending, (state) => {
         state.recommendStatus = "loading";
         state.recommendError = "";
       })
       .addCase(fetchRecommendation.fulfilled, (state, action) => {
-        state.recommendStatus = "success";
+        state.recommendStatus = "succeeded";
         state.recommendError = "";
-        state.recommendProducts = action.payload.data;
+        state.recommendProducts = action.payload;
       })
       .addCase(fetchRecommendation.rejected, (state, action) => {
         state.recommendStatus = "failed";
-        state.recommendError = action.payload.message;
+        state.recommendError = action.payload;
       })
 
-      // GET Popular products
+      // Fetch Popular Products
       .addCase(fetchPopular.pending, (state) => {
         state.popularStatus = "loading";
         state.popularError = "";
       })
       .addCase(fetchPopular.fulfilled, (state, action) => {
-        state.popularStatus = "success";
+        state.popularStatus = "succeeded";
         state.popularError = "";
-        state.popularProducts = action.payload.data;
+        state.popularProducts = action.payload;
       })
       .addCase(fetchPopular.rejected, (state, action) => {
         state.popularStatus = "failed";
-        state.popularError = action.payload.message;
+        state.popularError = action.payload;
       })
 
-      // GET Top Picks
+      // Fetch Top Picks
       .addCase(fetchTopPicks.pending, (state) => {
         state.topPicksStatus = "loading";
         state.topPicksError = "";
       })
       .addCase(fetchTopPicks.fulfilled, (state, action) => {
-        state.topPicksStatus = "success";
+        state.topPicksStatus = "succeeded";
         state.topPicksError = "";
-        state.topPicks = action.payload.data;
+        state.topPicks = action.payload;
       })
       .addCase(fetchTopPicks.rejected, (state, action) => {
         state.topPicksStatus = "failed";
-        state.topPicksError = action.payload.message;
+        state.topPicksError = action.payload;
       })
-      // GET Product Details
+
+      // Fetch Product Details
       .addCase(fetchProductDetails.pending, (state) => {
         state.productStatus = "loading";
         state.productError = "";
       })
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
-        state.productStatus = "success";
+        state.productStatus = "succeeded";
         state.productError = "";
-        state.product = action.payload.data;
+        state.product = action.payload;
       })
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.productStatus = "failed";
-        state.productError = action.payload.message;
+        state.productError = action.payload;
       })
-      // GET Filtered ProductData
+
+      // Fetch Filtered Products
       .addCase(fetchFilteredProducts.pending, (state) => {
         state.filterStatus = "loading";
         state.filterError = "";
       })
       .addCase(fetchFilteredProducts.fulfilled, (state, action) => {
-        state.filterStatus = "success";
+        state.filterStatus = "succeeded";
         state.filterError = "";
-        state.filteredResults = action.payload.data;
-        state.searchBrand = action.payload.brands;
-        state.searchCategory = action.payload.categories;
-        state.searchPrice = action.payload.price;
-        state.searchPageLimit = action.payload.limit;
-        state.searchCurrentPage = action.payload.page;
-        state.searchResultsCount = action.payload.totalResults;
-        if (action.payload.priceRange) {
-          state.priceRange = action.payload.priceRange;
-        }
-        state.searchOrder = action.payload.sortOrder;
-        state.searchQuery = action.payload.query;
+        state.filteredResults = action.payload;
       })
       .addCase(fetchFilteredProducts.rejected, (state, action) => {
         state.filterStatus = "failed";
-        state.filterError = action.payload.message;
+        state.filterError = action.payload;
       });
   },
 });
 
-export const { clearProductDetails, clearSearchFilter, setTopPicksId } =
-  productSlice.actions;
 
+export const { clearProductDetails, clearSearchFilter, setTopPicksId } = productSlice.actions;
+
+// export const getFeaturedProduct = (state) => state.product.featuredProduct;
+// export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
+// export const getFeaturedProductError = (state) => state.product.featuredError;
 export const getFeaturedProduct = (state) => state.product.featuredProduct;
 export const getFeaturedProductStatus = (state) => state.product.featuredStatus;
 export const getFeaturedProductError = (state) => state.product.featuredError;
 
-export const getBestSellingProduct = (state) =>
-  state.product.bestSellerProducts;
-export const getBestSellingProductStatus = (state) =>
-  state.product.bestSellerStatus;
-export const getBestSellingProductError = (state) =>
-  state.product.bestSellerError;
+
+export const getBestSellingProduct = (state) =>state.product.bestSellerProducts;
+export const getBestSellingProductStatus = (state) =>state.product.bestSellerStatus;
+export const getBestSellingProductError = (state) =>state.product.bestSellerError;
 
 export const getRecommendations = (state) => state.product.recommendProducts;
-export const getRecommendationsStatus = (state) =>
-  state.product.recommendStatus;
+export const getRecommendationsStatus = (state) =>state.product.recommendStatus;
 export const getRecommendationsError = (state) => state.product.recommendError;
 
 export const getPopularProducts = (state) => state.product.popularProducts;
@@ -301,8 +342,7 @@ export const getSearchPrice = (state) => state.product.searchPrice;
 export const getSearchBrand = (state) => state.product.searchBrand;
 export const getSearchOrder = (state) => state.product.searchOrder;
 export const getSearchPageLimit = (state) => state.product.searchPageLimit;
-export const getsearchResultsCount = (state) =>
-  state.product.searchResultsCount;
+export const getsearchResultsCount = (state) =>state.product.searchResultsCount;
 export const getSearchCurrentPage = (state) => state.product.searchCurrentPage;
 export const getPriceRange = (state) => state.product.priceRange;
 

@@ -51,18 +51,20 @@ const ProductListing = () => {
   };
 
   const handlePageChange = () => {
-    const _categories = categories?.value;
-    const _brands = brands.map((entry) => entry.value);
-    const params = {
-      query,
-      order: sortOrder,
-      price: priceRange.toString(),
-      categories: _categories,
-      brands: _brands.toString(),
-      page,
-      limit,
-    };
-    dispatch(fetchFilteredProducts(params));
+    if (page !== _page) {
+      const _categories = categories?.value;
+      const _brands = brands.map((entry) => entry.value);
+      const params = {
+        query,
+        order: sortOrder,
+        price: priceRange.toString(),
+        categories: _categories,
+        brands: _brands.toString(),
+        page,
+        limit,
+      };
+      dispatch(fetchFilteredProducts(params));
+    }
   };
 
   useEffect(() => {
@@ -76,17 +78,37 @@ const ProductListing = () => {
   }, [_page]);
 
   useEffect(() => {
+      console.log("Fetching products with params:", {
+    query,
+    order: sortOrder,
+    price: priceRange.toString(),
+    categories: categories?.value,
+    brands: brands.map((entry) => entry.value).toString(),
+    page,
+    limit,
+    data
+  });
     if (data.length === 0 && status === "idle") {
-      dispatch(fetchFilteredProducts({}));
+      const _categories = categories?.value;
+      const _brands = brands.map((entry) => entry.value);
+      const params = {
+        query,
+        order: sortOrder,
+        price: priceRange.toString(),
+        categories: _categories,
+        brands: _brands.toString(),
+        page,
+        limit,
+      };
+      dispatch(fetchFilteredProducts(params));
     }
-  }, []);
+  }, [dispatch, data.length, status, query, sortOrder, priceRange, categories, brands, page, limit]);
 
   return (
     <Layout>
       <div className="container sm:py-12 py-6">
         <div className="flex sm:flex-row flex-col gap-8 relative">
           <ProductFilters />
-
           <div className="flex flex-col gap-6 flex-1 p-3">
             <div className="flex flex-row justify-between items-center">
               <h2 className="heading3">Shop</h2>
@@ -101,16 +123,10 @@ const ProductListing = () => {
               ) : data.length === 0 ? (
                 <p>No product found</p>
               ) : (
-                data.map((entry, key) => <ProductCard key={key} data={entry} />)
+                data.map((entry) => <ProductCard key={entry._id} data={entry} />)
               )}
             </div>
-
-            <Pagination
-              page={page}
-              limit={limit}
-              total={totalProducts}
-              setPage={setPage}
-            />
+            <Pagination page={page} limit={limit} total={totalProducts} />
           </div>
         </div>
       </div>

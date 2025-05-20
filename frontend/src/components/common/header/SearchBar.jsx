@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import AsyncSelect from "react-select/async";
 import { NODE_API } from "../../../api/apiIndex";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,53 +12,45 @@ import {
   getSearchPrice,
   getSearchQuery,
 } from "../../../redux/slice/productSlice";
+import { useDebounce } from "./useDebounce"; // Import the custom hook
 
 const customStyles = {
-  option: (defaultStyles) => ({
-    ...defaultStyles,
+  option: (provided) => ({
+    ...provided,
+    cursor: 'pointer',
   }),
-  container: (defaultStyles) => ({
-    ...defaultStyles,
-    height: "100%",
+  container: (provided) => ({
+    ...provided,
+    minWidth: '200px',
   }),
-  control: (defaultStyles) => ({
-    ...defaultStyles,
-    padding: "0 4px",
-    backgroundColor: "tansparent",
-    border: "none",
-    boxShadow: "none",
-    minHeight: "0",
-    height: "100%",
-    // padding: "10px",
-    // border: "none",
-    // boxShadow: "none",
+  control: (provided) => ({
+    ...provided,
+    padding: '0 4px',
+    backgroundColor: 'transparent',
+    border: '1px solid #ddd',
+    boxShadow: 'none',
+    minHeight: '0',
   }),
-  singleValue: (defaultStyles) => ({
-    ...defaultStyles,
-    //  color: "#fff"
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#333',
   }),
-  valueContainer: (defaultStyles) => ({
-    ...defaultStyles,
-    padding: "0 0 0 6px",
-    // height: "100%",
+  valueContainer: (provided) => ({
+    ...provided,
+    padding: '0 0 0 6px',
   }),
-  indicatorSeparator: (defaultStyles) => ({
-    ...defaultStyles,
-    display: "none",
-    margin: "0",
+  indicatorSeparator: (provided) => ({
+    ...provided,
+    display: 'none',
   }),
-  indicatorsContainer: (defaultStyles) => ({
-    ...defaultStyles,
-    padding: 0,
+  dropdownIndicator: (provided) => ({
+    ...provided,
+    padding: '0',
   }),
-  dropdownIndicator: (defaultStyles) => ({
-    ...defaultStyles,
-    padding: 0,
-  }),
-  input: (defaultStyles) => ({
-    ...defaultStyles,
-    padding: "0",
-    margin: "0",
+  input: (provided) => ({
+    ...provided,
+    padding: '0',
+    margin: '0',
   }),
 };
 
@@ -76,19 +67,27 @@ const SearchBar = () => {
   const [query, setQuery] = useState(oldQuery);
   const [categories, setCategories] = useState(_categories);
 
+  const debouncedQuery = useDebounce(query, 500); // 500ms debounce delay
+
   const handleSearch = async (e) => {
     e.preventDefault();
-    const __categories = categories?.value;
-    const _brands = brands.map((entry) => entry.value);
+
+    const __categories = categories?.value || null;
+    const _brands = brands?.map((entry) => entry.value).join(",") || null;
+
     const params = {
-      query,
+      query: debouncedQuery,  // Use debounced query
       order,
       price: priceRange.toString(),
       categories: __categories,
-      brands: _brands.toString(),
+      brands: _brands,
     };
-    dispatch(fetchFilteredProducts(params));
-    navigate("/products");
+
+    // Only dispatch if there's a valid query
+    if (params.query || params.categories || params.brands) {
+      dispatch(fetchFilteredProducts(params));
+      navigate("/products");
+    }
   };
 
   const loadCategories = async (searchQuery) => {
@@ -96,7 +95,7 @@ const SearchBar = () => {
       const { data } = await NODE_API.get(
         `/category/select-search?searchQuery=${searchQuery}`
       );
-      return data.data;
+      return data.data || [];
     } catch (error) {
       console.error(error);
       return [];
@@ -112,27 +111,22 @@ const SearchBar = () => {
   }, [oldQuery]);
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4 sm:h-[48px] h-[40px]"
-    >
+    <form onSubmit={handleSearch} className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4 sm:h-[48px] h-[40px]">
       <div className="bg-greyLight rounded-tl-sm rounded-bl-sm flex items-center">
-        <div className="flex flex-row items-center sm:gap-2 gap-1 text-uiBlack max-w-full h-full">
-          <AsyncSelect
-            cacheOptions
-            loadOptions={loadCategories}
-            defaultOptions
-            name="category"
-            onChange={setCategories}
-            value={categories}
-            isClearable
-            placeholder="Select Category"
-            className="sm:text-sm text-xs sm:w-[200px] w-[130px]"
-            styles={customStyles}
-            noOptionsMessage={() => "No categories found"}
-          />
-          <div className="ml-1 w-[1px] bg-uiGrey sm:h-[24px] h-[14px]" />
-        </div>
+        <AsyncSelect
+          cacheOptions
+          loadOptions={loadCategories}
+          defaultOptions
+          name="category"
+          onChange={setCategories}
+          value={categories}
+          isClearable
+          placeholder="Select Category"
+          className="sm:text-sm text-xs sm:w-[200px] w-[130px]"
+          styles={customStyles}
+          noOptionsMessage={() => "No categories found"}
+        />
+        <div className="ml-1 w-[1px] bg-uiGrey sm:h-[24px] h-[14px]" />
       </div>
       <div className="bg-greyLight flex-1 flex items-center h-full">
         <input
@@ -140,13 +134,10 @@ const SearchBar = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="bg-transparent text-uiBlack sm:text-sm text-xs focus:outline-none sm:w-[250px] w-full pr-4 h-full pl-4"
-          placeholder="Search for products..."
+          placeholder="Search for products, brands, or categories..."
         />
       </div>
-      <button
-        type="submit"
-        className="bg-baseGreen text-white sm:px-5 px-2 sm:text-[24px] text-[12px] rounded-tr-sm rounded-br-sm"
-      >
+      <button type="submit" className="bg-baseGreen text-white sm:px-5 px-2 sm:text-[24px] text-[12px] rounded-tr-sm rounded-br-sm">
         <FiSearch />
       </button>
     </form>
