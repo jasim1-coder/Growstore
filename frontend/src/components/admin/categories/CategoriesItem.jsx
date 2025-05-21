@@ -11,7 +11,7 @@ const CategoriesItem = ({ data }) => {
           alt=""
         />
         <div className="mt-auto p-2">
-          <p className="text-uiBlack font-medium">{data.title}</p>
+          <p className="text-uiBlack font-medium">{data.name}</p>
         </div>
       </div>
     </Link>

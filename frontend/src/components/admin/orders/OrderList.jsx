@@ -31,8 +31,18 @@ const OrderList = () => {
   const orderIdQuery = useSelector(getAdminOrderIdQuery);
 
   const [currentPage, setCurrentPage] = useState(_currentPage);
-
   const [sortKey, setSortKey] = useState(sortOrder);
+
+  // Dispatch fetch on initial render
+  useEffect(() => {
+    const params = {
+      orderIdQuery: orderIdQuery,
+      sortOrder: JSON.stringify(sortKey),
+      page: currentPage,
+      limit,
+    };
+    dispatch(fetchAdminOrders(params));  // Fetch orders on initial load
+  }, [dispatch, orderIdQuery, sortKey, currentPage, limit]);  // Ensure params change triggers new fetch
 
   const handleSort = (key) => {
     let newSortOrder;
@@ -74,10 +84,22 @@ const OrderList = () => {
       setSortKey(JSON.parse(sortOrder));
     }
   }, [sortOrder]);
+  useEffect(() => {
+  const params = {
+    orderIdQuery: orderIdQuery || "", // Fallback to empty string if undefined or empty
+    page: currentPage,
+    limit: limit,
+    sortOrder: JSON.stringify(sortKey),
+  };
+
+  // Dispatch the action to fetch data
+  dispatch(fetchAdminOrders(params));
+}, [orderIdQuery, currentPage, sortKey, dispatch]);
+
 
   return (
     <div className="flex flex-col gap-3">
-      {status == "failed" ? (
+      {status === "failed" && error ? (
         <AlertBox
           message={error}
           type={status}
@@ -113,7 +135,7 @@ const OrderList = () => {
                   className="flex flex-row gap-2 items-center"
                 >
                   <span>User</span>
-                  {sortKey?.userName ? (
+                  {sortKey?.user?.userName ? (
                     sortKey.userName === -1 ? (
                       <FaSortUp />
                     ) : (
@@ -185,14 +207,14 @@ const OrderList = () => {
                 </td>
               </tr>
             ) : null}
-            {data?.length === 0 ? (
+            {Array.isArray(data) && data.length === 0 ? (
               <tr className="text-center">
                 <td colSpan="5" className="text-center px-2 py-4">
                   No Orders found
                 </td>
               </tr>
             ) : (
-              data.map((entry) => <OrderItem key={entry._id} data={entry} />)
+              Array.isArray(data) && data.map((entry) => <OrderItem key={entry._id} data={entry} />)
             )}
           </tbody>
         </table>

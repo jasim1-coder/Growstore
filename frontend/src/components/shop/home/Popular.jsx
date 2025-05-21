@@ -14,18 +14,26 @@ const Popular = () => {
   const status = useSelector(getPopularProductsStatus);
   const error = useSelector(getPopularProductsError);
 
+  // Log data, status, and error for debugging
   useEffect(() => {
-    if (data.length === 0) {
+    console.log("Component mounted. Checking popular products...");
+    console.log("Current Data:", data);
+    console.log("Current Status:", status);
+    console.log("Current Error:", error);
+
+    // Dispatch fetchPopular only if data is empty and status is idle or failed
+    if (data.length === 0 && status === "idle") {
+      console.log("Dispatching fetchPopular action...");
       dispatch(fetchPopular());
     }
-  }, []);
+  }, [dispatch, data.length, status]);
 
   return (
     <div className="container main-container mb-8">
       <h2 className="heading2">Popular Products</h2>
       {status === "loading" ? <p>Loading...</p> : null}
       {status === "failed" ? <p>{error}</p> : null}
-      {status === "success" ? (
+      {status === "succeeded" ? (
         <div className="grid-list-4 w-full">
           {data.map((entry) => (
             <ProductCard key={entry._id} data={entry} />

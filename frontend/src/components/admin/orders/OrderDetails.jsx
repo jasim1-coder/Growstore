@@ -16,11 +16,12 @@ const OrderDetails = () => {
   const id = useParams().id;
 
   const data = useSelector(getAdminSingleOrdersData);
+  console.log("single order data",data)
   const orderDate = moment(data.orderDate).format("ddd, MMM DD YYYY, HH:mm");
-  const deliveredDate = moment(data.deliveredDate).format(
+  const deliveredDate = moment(data.orderDate).format(
     "ddd, MMM DD YYYY, HH:mm"
   );
-  const cancelledDate = moment(data.cancelledDate).format(
+  const cancelledDate = moment(data.orderDate).format(
     "ddd, MMM DD YYYY, HH:mm"
   );
 
@@ -57,7 +58,7 @@ const OrderDetails = () => {
             <BsCalendarX className="text-[22px]" />
             <div className="flex flex-col">
               <span className="font-semibold text-uiBlack">
-                {cancelledDate}
+                {orderDate}
               </span>
               <span className="text-textDim text-sm">#Cancelled</span>
             </div>
@@ -96,12 +97,12 @@ const OrderDetails = () => {
           <div className="flex flex-col gap-1">
             <p className="font-semibold text-uiBlack">Customer</p>
             <div className="text-bodyText text-sm">
-              <p>{data?.user?.name}</p>
-              <p>{data?.user?.email}</p>
+              <p>{data?.user?.userName}</p>
+              <p>{data?.user?.userEmail}</p>
               <p>{data?.user?.mobileNumber}</p>
             </div>
             <Link
-              to={`/admin/users/${data?.user?._id}`}
+              to={`/admin/users/${data?.user?.userId}`}
               className="text-uiOrange text-sm"
             >
               View Profile
@@ -145,15 +146,15 @@ const OrderDetails = () => {
               </p>
               <p>
                 <span className="text-textDim text-xs">Street: </span>
-                {data?.address?.street}
+                {data?.shippingAddress?.street}
               </p>
               <p>
                 <span className="text-textDim text-xs">City: </span>
-                {data?.address?.city} {data?.address?.zipCode}
+                {data?.shippingAddress?.city} {data?.address?.zipCode}
               </p>
               <p>
                 <span className="text-textDim text-[12px]">State: </span>
-                {data?.address?.state}, {data?.address?.country}
+                {data?.shippingAddress?.state}, {data?.shippingAddress?.country}
               </p>
             </div>
           </div>

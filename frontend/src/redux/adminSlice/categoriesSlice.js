@@ -20,58 +20,85 @@ const initialState = {
   editError: "",
 };
 
+// Fetch all categories with optional params
 export const fetchAdminCategories = createAsyncThunk(
   "adminCategories/fetchAdminCategories",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/category/", { params });
-      return response.data;
+      const queryString = new URLSearchParams(params).toString();
+      const response = await fetch(`http://localhost:3001/categories?${queryString}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch categories");
+
+      const data = await response.json();
+      return data; // Assuming array of categories
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Fetch a single category by ID
 export const fetchAdminSingleCategory = createAsyncThunk(
   "adminCategories/fetchAdminSingleCategory",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/category/single/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/categories/${id}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch category");
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Update a category (supports multipart/form-data)
 export const updateAdminCategories = createAsyncThunk(
   "adminCategories/updateAdminCategories",
-  async (data, { rejectWithValue }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(
-        `/category/${data.id}`,
-        data.data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      return response.data;
+      const formData = new FormData();
+      for (let key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const response = await fetch(`http://localhost:3001/categories/${id}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Failed to update category");
+
+      const updatedData = await response.json();
+      return updatedData;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Delete a category by ID
 export const deleteAdminCategories = createAsyncThunk(
   "adminCategories/deleteAdminCategories",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.delete(`/category/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/categories/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete category");
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
@@ -101,12 +128,12 @@ const categoriesSlice = createSlice({
       .addCase(fetchAdminCategories.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.data = action.payload.data;
+        state.data = action.payload;
         state.searchQuery = action.payload.searchQuery;
         state.limit = action.payload.limit;
         state.currentPage = action.payload.currentPage;
         state.sortOrder = action.payload.sortOrder;
-        state.totalCategories = action.payload.totalCategories;
+        state.totalCategories = action.payload.length;
       })
       .addCase(fetchAdminCategories.rejected, (state, action) => {
         state.fetchStatus = "failed";

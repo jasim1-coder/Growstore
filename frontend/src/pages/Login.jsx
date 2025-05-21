@@ -15,7 +15,7 @@ import { addToCart } from "../redux/slice/cartSlice";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from;
+  const from = location.state?.from || "/"; // Fallback to home if 'from' is undefined
   const dispatch = useDispatch();
 
   const status = useSelector(getLoginStatus);
@@ -27,16 +27,32 @@ const Login = () => {
     localStorage.removeItem("cart");
   };
 
-  useEffect(() => {
-    if (status === "success" || user) {
-      const localCart = JSON.parse(localStorage.getItem("cart"));
+useEffect(() => {
+  console.log("Login effect triggered");
+  console.log("Login status:", status);
+  console.log("User object:", user);
 
-      if (localCart && localCart.length > 0) {
-        addToCartLocalStorage(localCart);
-      }
-      navigate(from ? from.pathname : "/", { replace: true });
+  if (status === "success" || user) {
+    const localCart = JSON.parse(localStorage.getItem("cart"));
+    console.log("Local cart:", localCart);
+
+    if (localCart && localCart.length > 0) {
+      console.log("Adding local cart items to server cart");
+      addToCartLocalStorage(localCart);
     }
-  }, [navigate, status, user]);
+
+    if (user?.role === "ADMIN") {
+      console.log("User is admin. Redirecting to /admin...");
+      navigate("/admin", { replace: true });
+    } else {
+      console.log("User is not admin. Redirecting to:", from);
+      navigate(from, { replace: true });
+    }
+  }
+}, [navigate, status, user, from]);
+
+
+
 
   return (
     <Layout>

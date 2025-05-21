@@ -23,54 +23,100 @@ const initialState = {
   updateError: "",
 };
 
+// Fetch all admin products
 export const fetchAdminProducts = createAsyncThunk(
   "adminProducts/fetchAdminProducts",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/product/", { params });
-      return response.data;
+      // Construct query string with URLSearchParams
+      const queryString = new URLSearchParams(params).toString();
+      const response = await fetch(`http://localhost:3001/products?${queryString}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      const data = await response.json();
+      return data;  // Assuming 'data' contains the array of products and other metadata
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Fetch a single admin product
 export const fetchAdminSingleProduct = createAsyncThunk(
   "adminProducts/fetchAdminSingleProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/product/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/products/${id}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch product");
+      }
+
+      const data = await response.json();
+      return data;  // Assuming 'data' contains the product information
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Delete an admin product
 export const deleteProductAdmin = createAsyncThunk(
   "adminProducts/deleteProductAdmin",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.delete(`/product/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/products/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete product");
+      }
+
+      const data = await response.json();
+      return data;  // Assuming 'data' contains the result of the delete operation
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Update a specific admin product
 export const updateProductAdmin = createAsyncThunk(
   "adminProducts/updateProductAdmin",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(`/product/${data.id}`, data.data, {
+      const { id, data: productData } = data;
+      const formData = new FormData();
+      
+      // Add all properties of productData to formData
+      for (let key in productData) {
+        formData.append(key, productData[key]);
+      }
+
+      const response = await fetch(`http://localhost:3001/products/${id}`, {
+        method: "PUT",
         headers: {
-          "Content-Type": "multipart/form-data",
+          // No need to specify Content-Type for FormData, the browser does it automatically
         },
+        body: formData,
       });
-      return response.data;
+
+      if (!response.ok) {
+        throw new Error("Failed to update product");
+      }
+
+      const updatedData = await response.json();
+      return updatedData; // Assuming 'updatedData' contains the updated product
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
@@ -102,12 +148,12 @@ const productsSlice = createSlice({
       .addCase(fetchAdminProducts.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.data = action.payload.data;
+        state.data = action.payload;
         state.nameQuery = action.payload.nameQuery;
         state.limit = action.payload.limit;
         state.currentPage = action.payload.currentPage;
         state.sortOrder = action.payload.sortOrder;
-        state.totalProducts = action.payload.totalProducts;
+        state.totalProducts = action.payload.length;
       })
       .addCase(fetchAdminProducts.rejected, (state, action) => {
         state.fetchStatus = "failed";

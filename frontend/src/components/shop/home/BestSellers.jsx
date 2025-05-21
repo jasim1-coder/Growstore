@@ -15,23 +15,30 @@ const BestSellers = () => {
   const error = useSelector(getBestSellingProductError);
 
   useEffect(() => {
-    if (data.length === 0) {
+    // Dispatch action to fetch best-selling products if not already loaded
+    if (data.length === 0 && status === "idle") {
       dispatch(fetchBestSellingProduct());
     }
-  }, []);
+  }, [dispatch, data.length, status]);
 
   return (
     <div className="container main-container">
       <h2 className="heading2">Our Best Selling Products</h2>
-      {status === "loading" ? <p>Loading...</p> : null}
-      {status === "failed" ? <p>{error}</p> : null}
-      {status === "success" ? (
+      
+      {/* Display loading message if the request is in progress */}
+      {status === "loading" && <p>Loading...</p>}
+      
+      {/* Display error message if the request failed */}
+      {status === "failed" && <p className="text-red-500">Error: {error}</p>}
+      
+      {/* Display products if data is successfully fetched */}
+      {status === "succeeded" && (
         <div className="grid-list-4 w-full">
           {data.map((entry) => (
             <ProductCard key={entry._id} data={entry} />
           ))}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

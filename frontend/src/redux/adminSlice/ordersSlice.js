@@ -19,24 +19,63 @@ const initialState = {
 
 export const fetchAdminOrders = createAsyncThunk(
   "adminOrder/fetchAdminOrders",
-  async (params, { rejectWithValue }) => {
+  async (params = {}, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/order/", { params });
-      return response.data;
+      // Provide default values for parameters if not provided
+      const {
+        orderIdQuery = "", // Default to empty string if no query
+        page = 1, // Default to page 1 if no page provided
+        limit = 10, // Default to 10 orders per page
+        sortOrder = "", // Default to no sorting
+      } = params;
+
+      // Construct query string with URLSearchParams
+      const queryString = new URLSearchParams({
+        orderIdQuery,
+        page: page.toString(),
+        limit: limit.toString(),
+        sortOrder
+      }).toString();
+
+      const url = `http://localhost:3001/orders?${queryString}`;
+      const response = await fetch(url, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
+      const data = await response.json();
+      console.log(data)
+      return data; // Assuming 'data' contains the array of orders and other metadata
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
+
 
 export const fetchAdminSingleOrder = createAsyncThunk(
   "adminOrder/fetchAdminSingleOrder",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/order/single/${id}`);
-      return response.data;
+      // Fetch the single order based on ID
+      const response = await fetch(`http://localhost:3001/orders/${String(id)}`, {
+        method: "GET",
+      });
+
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch the order");
+      }
+
+      const data = await response.json();
+      console.log("Order object:", data);
+
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
@@ -45,13 +84,31 @@ export const updateAdminOrder = createAsyncThunk(
   "adminOrder/updateAdminOrder",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(`/order/${data.id}`, data.params);
-      return response.data;
+      // Assuming the data is in the form { id, params }
+      const { id, params } = data;
+
+      // Perform PUT request to update the order
+      const response = await fetch(`http://localhost:3001/orders/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(params),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update the order");
+      }
+
+      const updatedData = await response.json();
+      return updatedData;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
+
+
 
 const ordersSlice = createSlice({
   name: "adminOrder",
@@ -73,16 +130,16 @@ const ordersSlice = createSlice({
         state.fetchStatus = "loading";
         state.fetchError = "";
       })
-      .addCase(fetchAdminOrders.fulfilled, (state, action) => {
-        state.fetchStatus = "success";
-        state.fetchError = "";
-        state.data = action.payload.data;
-        state.orderIdQuery = action.payload.orderIdQuery;
-        state.limit = action.payload.limit;
-        state.currentPage = action.payload.currentPage;
-        state.sortOrder = action.payload.sortOrder;
-        state.totalOrders = action.payload.totalOrders;
-      })
+.addCase(fetchAdminOrders.fulfilled, (state, action) => {
+  state.fetchStatus = "success";
+  state.fetchError = "";
+  state.data = action.payload;  // Assuming 'orders' is the key in the response
+  state.orderIdQuery = action.payload.orderIdQuery;
+  state.limit = action.payload.limit;
+  state.currentPage = action.payload.currentPage;
+  state.sortOrder = action.payload.sortOrder;
+  state.totalOrders = action.payload.length;
+})
       .addCase(fetchAdminOrders.rejected, (state, action) => {
         state.fetchStatus = "failed";
         state.fetchError = action.payload.message;
@@ -95,7 +152,7 @@ const ordersSlice = createSlice({
       .addCase(fetchAdminSingleOrder.fulfilled, (state, action) => {
         state.singleStatus = "success";
         state.singleError = "";
-        state.singleData = action.payload.data;
+        state.singleData = action.payload;
       })
       .addCase(fetchAdminSingleOrder.rejected, (state, action) => {
         state.singleStatus = "failed";

@@ -32,7 +32,7 @@ const Related = () => {
         <>
           {status === "loading" ? <p>Loading...</p> : null}
           {status === "failed" ? <p>{error}</p> : null}
-          {status === "success" ? (
+          {status === "succeeded" ? (
             <div className="grid-list-4 w-full">
               {data.map((entry) => (
                 <ProductCard key={entry._id} data={entry} />

@@ -1,113 +1,44 @@
-// import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   fetchRecommendation,
-//   getRecommendations,
-//   getRecommendationsError,
-//   getRecommendationsStatus,
-// } from "../../../redux/slice/productSlice";
-// import ProductCard from "../product/ProductCard";
-
-// const Foryou = ({ userId }) => {
-//   const dispatch = useDispatch();
-//   const data = useSelector(getRecommendations);
-//   const status = useSelector(getRecommendationsStatus);
-//   const error = useSelector(getRecommendationsError);
-
-//   useEffect(() => {
-//     if (data.length === 0) {
-//       dispatch(fetchRecommendation(userId));
-//     }
-//   }, []);
-
-//   return (
-//     <div className="container main-container sm:pt-16 pt-12">
-//       <h2 className="heading2">Our Top Picks for You</h2>
-//       {status === "loading" ? <p>Loading...</p> : null}
-//       {status === "failed" ? <p>{error}</p> : null}
-//       {status === "success" ? (
-//         <div className="grid-list-4 w-full">
-//           {data.map((entry) => (
-//             <ProductCard key={entry._id} data={entry} />
-//           ))}
-//         </div>
-//       ) : null}
-//     </div>
-//   );
-// };
-
-// export default Foryou;
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchTopPicks, // Updated the action name to reflect that we are fetching top picks now
+  getTopPicks, // Updated selector for top picks
+  getTopPicksError, // Updated error selector
+  getTopPicksStatus, // Updated status selector
+} from "../../../redux/slice/productSlice"; // Ensure that your slice has the updated action and selectors
 import ProductCard from "../product/ProductCard";
 
-const dummyRecommendations = [
-  {
-    _id: "1",
-    title: "Bluetooth Wireless Earbuds",
-    price: 1999,
-    imageURL: "https://via.placeholder.com/200?text=Earbuds",
-    rating: 4.3
-  },
-  {
-    _id: "2",
-    title: "Smart Fitness Watch",
-    price: 3499,
-    imageURL: "https://via.placeholder.com/200?text=Smartwatch",
-    rating: 4.5
-  },
-  {
-    _id: "3",
-    title: "Portable Bluetooth Speaker",
-    price: 2799,
-    imageURL: "https://via.placeholder.com/200?text=Speaker",
-    rating: 4.4
-  },
-  {
-    _id: "4",
-    title: "Wireless Gaming Mouse",
-    price: 1499,
-    imageURL: "https://via.placeholder.com/200?text=Gaming+Mouse",
-    rating: 4.6
-  }
-];
+const Foryou = () => { // Removed userId as it is not needed anymore
+  const dispatch = useDispatch();
+  const data = useSelector(getTopPicks); // Selector for top picks
+  const status = useSelector(getTopPicksStatus); // Status for top picks
+  const error = useSelector(getTopPicksError); // Error for top picks
 
-const Foryou = ({ userId }) => {
-  const [data, setData] = useState([]);
-  const [status, setStatus] = useState("idle"); // idle | loading | success | failed
-  const [error, setError] = useState("");
-
+  // Fetch top picks when component mounts if data is empty
   useEffect(() => {
-    const fetchData = async () => {
-      setStatus("loading");
-      try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setData(dummyRecommendations);
-        setStatus("success");
-      } catch (err) {
-        setError("Failed to fetch recommendations");
-        setStatus("failed");
-      }
-    };
-
     if (data.length === 0) {
-      fetchData();
+      dispatch(fetchTopPicks()); // Dispatch updated action to fetch top picks
     }
-  }, []);
+  }, [dispatch, data.length]);
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Our Top Picks for You</h2>
+    <div className="container main-container sm:pt-16 pt-12">
+      <h2 className="heading2">Our Top Picks for You</h2>
 
-      {status === "loading" && <p>Loading...</p>}
-      {status === "failed" && <p className="text-red-500">{error}</p>}
-      {status === "success" && (
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* Loading state */}
+      {status === "loading" ? <p>Loading...</p> : null}
+
+      {/* Error state */}
+      {status === "failed" ? <p>{error}</p> : null}
+
+      {/* Display top picks if fetch succeeded */}
+      {status === "succeeded" && data.length > 0 ? (
+        <div className="grid-list-4 w-full">
           {data.map((entry) => (
             <ProductCard key={entry._id} data={entry} />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

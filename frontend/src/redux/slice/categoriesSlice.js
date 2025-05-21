@@ -189,4 +189,9 @@ export const getCategoriesProductError = (state) => state.categories.productsErr
 export const getCategoriesProductStatus = (state) => state.categories.productsStatus;
 export const getCategoryName = (state) => state.categories.categoryName;
 // Export reducer
+
+export const getAllCategories = (state) => state.categories.allCategory;
+export const getAllCategoriesStatus = (state) => state.categories.allStatus;
+export const getAllCategoriesError = (state) => state.categories.allError;
+
 export default categoriesSlice.reducer;

@@ -18,59 +18,91 @@ const initialState = {
 
   editStatus: "idle",
   editError: "",
-};
+}; 
 
+// Fetch all brands with optional query parameters
 export const fetchAdminBrands = createAsyncThunk(
   "adminBrands/fetchAdminBrands",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/brand/", { params });
-      return response.data;
+      const queryString = new URLSearchParams(params).toString();
+      const response = await fetch(`http://localhost:3001/brands?${queryString}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch brands");
+
+      const data = await response.json();
+      return data; // Returns array of brands
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Fetch a single brand by ID
 export const fetchAdminSingleBrand = createAsyncThunk(
   "adminBrands/fetchAdminSingleBrand",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/brand/single/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/brands/${id}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch brand");
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Update a brand (multipart/form-data or JSON)
 export const updateAdminBrand = createAsyncThunk(
   "adminBrands/updateAdminBrand",
-  async (data, { rejectWithValue }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(`/brand/${data.id}`, data.data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const formData = new FormData();
+      for (let key in data) {
+        formData.append(key, data[key]);
+      }
+
+      const response = await fetch(`http://localhost:3001/brands/${id}`, {
+        method: "PUT",
+        body: formData,
       });
-      return response.data;
+
+      if (!response.ok) throw new Error("Failed to update brand");
+
+      const updatedData = await response.json();
+      return updatedData;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Delete a brand by ID
 export const deleteAdminBrand = createAsyncThunk(
   "adminBrands/deleteAdminBrand",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.delete(`/brand/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/brands/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete brand");
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
+
 
 const brandsSlice = createSlice({
   name: "adminBrands",
@@ -97,12 +129,12 @@ const brandsSlice = createSlice({
       .addCase(fetchAdminBrands.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.data = action.payload.data;
+        state.data = action.payload;
         state.searchQuery = action.payload.searchQuery;
         state.limit = action.payload.limit;
         state.currentPage = action.payload.currentPage;
         state.sortOrder = action.payload.sortOrder;
-        state.totalBrands = action.payload.totalBrands;
+        state.totalBrands = action.payload.length;
       })
       .addCase(fetchAdminBrands.rejected, (state, action) => {
         state.fetchStatus = "failed";

@@ -29,57 +29,90 @@ const SignupForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  // Helper functions for validation
+  const validateEmail = (email) => {
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateMobile = (mobile) => {
+    const mobileRegex = /^\d{10}$/;
+    return mobileRegex.test(mobile);
+  };
+
+  const validateName = (name) => {
+    const nameRegex = /^\w+\s\w+$/;
+    return nameRegex.test(name);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var err = false;
-    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const nameRegex = /^\w+\s\w+$/;
-    const mobileRegex = /^\d{10}$/;
-    if (!name || !name.trim()) {
+    let err = false;
+
+    // Form Validation
+    setNameError("");
+    setEmailError("");
+    setPasswordError("");
+    setCpasswordError("");
+    setMobileNumberError("");
+
+    if (!name.trim()) {
       setNameError("Name is required");
-    } else if (!nameRegex.test(name)) {
+      err = true;
+    } else if (!validateName(name)) {
       setNameError("Enter valid full name");
       err = true;
     }
-    if (!password || !password.trim()) {
+
+    if (!email.trim()) {
+      setEmailError("Email is required");
+      err = true;
+    } else if (!validateEmail(email)) {
+      setEmailError("Enter a valid email");
+      err = true;
+    }
+
+    if (mobileNumber && !validateMobile(mobileNumber)) {
+      setMobileNumberError("Enter a valid mobile number");
+      err = true;
+    }
+
+    if (!password.trim()) {
       setPasswordError("Password is required");
       err = true;
     } else if (password.length < 6) {
-      setPasswordError("password should contain atleast 6 characters");
+      setPasswordError("Password should contain at least 6 characters");
       err = true;
     } else if (password !== cpassword) {
       setPasswordError("Passwords do not match!");
       err = true;
     }
-    if (!cpassword || !cpassword.trim()) {
-      setCpasswordError("Confirm password id required");
-      err = true;
-    }
-    if (!email || !email.trim()) {
-      setEmailError("Email is required");
-      err = true;
-    } else if (!emailRegex.test(email)) {
-      setEmailError("Enter a valid email");
-      err = true;
-    }
 
-    if (mobileNumber && !mobileRegex.test(mobileNumber)) {
-      setMobileNumberError("Enter a valid mobile number");
+    if (!cpassword.trim()) {
+      setCpasswordError("Confirm password is required");
       err = true;
     }
 
     if (!err) {
       const data = { name, email, password, mobileNumber };
 
-      const res = await dispatch(signup(data)).unwrap();
-      if (res) {
-        navigate("/login", {
-          replace: true,
-          state: { message: "Please check your email to verify your account!" },
-        });
+      try {
+        const res = await dispatch(signup(data)).unwrap();
+        if (res) {
+          navigate("/login", {
+            replace: true,
+            state: { message: "Please check your email to verify your account!" },
+          });
+        }
+      } catch (error) {
+        console.error("Signup error:", error);
+        // Handle error (e.g., show an alert)
+        // You can also set the error state to show it to the user if needed
+        setEmailError("Something went wrong, please try again!");
       }
     }
   };
+
   return (
     <LoginFormLayout heading="New Customer? Sign up">
       <div className="flex flex-col gap-6">
@@ -99,7 +132,7 @@ const SignupForm = () => {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                setNameError("");
+                setNameError(""); // Clear error when user types
               }}
               placeholder="Enter your name"
               className="input-box"
@@ -119,13 +152,14 @@ const SignupForm = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setEmailError("");
+                setEmailError(""); // Clear error when user types
               }}
               placeholder="Enter your email"
               className="input-box"
             />
             {emailError && <span className="input-error">{emailError}</span>}
           </div>
+
           <div className="input-container">
             <label htmlFor="phone" className="input-label">
               Mobile Number
@@ -137,7 +171,7 @@ const SignupForm = () => {
               value={mobileNumber}
               onChange={(e) => {
                 setMobileNumber(e.target.value);
-                setMobileNumberError("");
+                setMobileNumberError(""); // Clear error on change
               }}
               placeholder="Enter your mobile number"
               className="input-box"
@@ -172,7 +206,7 @@ const SignupForm = () => {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  setPasswordError("");
+                  setPasswordError(""); // Clear error on change
                 }}
                 placeholder="Enter your password"
                 className="input-box pr-[50px]"
@@ -195,8 +229,8 @@ const SignupForm = () => {
               value={cpassword}
               onChange={(e) => {
                 setCpassword(e.target.value);
-                setCpasswordError("");
-                setPasswordError("");
+                setCpasswordError(""); // Clear error on change
+                setPasswordError(""); // Clear password error if they edit confirm password
               }}
               placeholder="Enter your password"
               className="input-box"
@@ -211,7 +245,7 @@ const SignupForm = () => {
             className="submit-button"
             disabled={status !== "idle"}
           >
-            {status == "loading" ? (
+            {status === "loading" ? (
               <ImSpinner2 className="animate-spin" />
             ) : (
               "Create Account"

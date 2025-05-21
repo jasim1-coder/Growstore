@@ -9,7 +9,7 @@ const OrderItem = ({ data }) => {
   const date = moment(data.orderDate).format("DD MMM YY, HH:mm");
 
   const handleOrderNavigation = () => {
-    navigate(`/admin/orders/${data._id}`);
+    navigate(`/admin/orders/${data.id}`);
   };
 
   return (

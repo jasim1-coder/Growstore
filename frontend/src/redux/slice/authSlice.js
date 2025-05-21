@@ -1,7 +1,12 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { NODE_API, PRIVATE_API } from "../../api/apiIndex";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios"; // Ensure axios is imported
 
-const _accessToken = JSON.parse(localStorage.getItem("accessToken"));
+const API_URL = "http://localhost:3001"; // Use the proper API base URL
+
+const _accessToken = localStorage.getItem("accessToken");
+
+
+
 
 const initialState = {
   accessToken: _accessToken ? _accessToken : null,
@@ -29,18 +34,38 @@ const initialState = {
   resetPasswordError: "",
 };
 
+
+
 export const login = createAsyncThunk(
   "auth/login",
   async (userData, { rejectWithValue }) => {
+    const { email, password } = userData;
+
     try {
-      const response = await NODE_API.post("/auth/login", userData);
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(response.data.accessToken)
-      );
-      return response.data;
+      const response = await axios.get(`${API_URL}/users?email=${email}`);
+
+      // Check if user exists
+      if (response.data.length === 0) {
+        return rejectWithValue("Invalid email or password");
+      }
+
+      const user = response.data[0];
+
+      // Check if password matches
+      if (user.password !== password) {
+        return rejectWithValue("Invalid email or password");
+      }
+
+      // Simulate an access token
+      const fakeAccessToken = "mock-access-token";
+
+      // Save token and user info in localStorage
+      localStorage.setItem("accessToken", fakeAccessToken);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      return { user, accessToken: fakeAccessToken };
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue("Login failed");
     }
   }
 );
@@ -49,10 +74,19 @@ export const signup = createAsyncThunk(
   "auth/signup",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.post("/auth/signup", userData);
+      // Check if user already exists
+      const existingUser = await axios.get(`${API_URL}/users?email=${userData.email}`);
+      if (existingUser.data.length > 0) {
+        return rejectWithValue("User already exists");
+      }
+
+      // Add default fields for the new user
+      const newUser = { ...userData, verified: false, role: "CUSTOMER" };
+
+      const response = await axios.post(`${API_URL}/users`, newUser);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue("Signup failed");
     }
   }
 );
@@ -61,10 +95,23 @@ export const loginwithtoken = createAsyncThunk(
   "auth/loginwithtoken",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/auth/getByToken");
-      return response.data;
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        return rejectWithValue("No token found");
+      }
+
+      // Fetch user details from db.json using the token (assuming token is user ID here)
+      const res = await axios.get(`${API_URL}/users/${token}`);
+      const user = res.data;
+
+      if (!user || !user.verified) {
+        return rejectWithValue("Invalid or unverified user");
+      }
+
+      return { user, accessToken: token };
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue("Token login failed");
     }
   }
 );
@@ -73,7 +120,7 @@ export const updateUserDetails = createAsyncThunk(
   "auth/updateUserDetails",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put("/auth/", data);
+      const response = await axios.put(`${API_URL}/users/${data.id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error);
@@ -85,13 +132,8 @@ export const loginWithGoogle = createAsyncThunk(
   "auth/loginWithGoogle",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.get("/google/success", {
-        withCredentials: true,
-      });
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(response.data.user.accessToken)
-      );
+      const response = await axios.get(`${API_URL}/google/success`, { withCredentials: true });
+      localStorage.setItem("accessToken", response.data.user.accessToken);
       return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error);
@@ -103,7 +145,7 @@ export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.post("/auth/password/forgot", data);
+      const response = await axios.post(`${API_URL}/auth/password/forgot`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error);
@@ -115,8 +157,8 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.put(
-        `/auth/password/reset/${data.token}`,
+      const response = await axios.put(
+        `${API_URL}/auth/password/reset/${data.token}`,
         data.data
       );
       return response.data;
@@ -130,16 +172,27 @@ export const verifyUser = createAsyncThunk(
   "auth/verifyUser",
   async (token, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.put(`/auth/verify/${token}`);
+      const userId = token;
 
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(response.data.accessToken)
-      );
+      // Fetch user by ID from db.json using axios
+      const userRes = await axios.get(`${API_URL}/users/${userId}`);
 
-      return response.data;
+      const user = userRes.data;
+
+      if (!user) {
+        return rejectWithValue("User not found");
+      }
+
+      // Mark user as verified in db.json by PATCH request
+      await axios.patch(`${API_URL}/users/${userId}`, { verified: true });
+
+      const fakeAccessToken = "mock-access-token"; // Use real access token logic if needed
+      localStorage.setItem("accessToken", fakeAccessToken);
+      localStorage.setItem("user", JSON.stringify({ ...user, verified: true }));
+
+      return { user: { ...user, verified: true }, accessToken: fakeAccessToken };
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue("Verification failed");
     }
   }
 );
@@ -148,9 +201,6 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      // const response = await NODE_API.get("auth/logout", {
-      //   withCredentials: true,
-      // });
       localStorage.removeItem("accessToken");
       return { data: "success" };
     } catch (error) {
@@ -158,6 +208,7 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -204,7 +255,7 @@ const authSlice = createSlice({
         state.loginStatus = "success";
         state.loginError = "";
         state.accessToken = action.payload.accessToken;
-        state.data = action.payload.data;
+        state.data = action.payload.user;
       })
       .addCase(login.rejected, (state, action) => {
         // console.log(action.payload);

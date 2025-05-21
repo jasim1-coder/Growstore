@@ -66,22 +66,27 @@ export const fetchProducts = createAsyncThunk(
 
 
 
-// Fetch Best Selling Products
 export const fetchBestSellingProduct = createAsyncThunk(
   "product/fetchBestSellingProduct",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/products/best-sellers");  // Mock data URL
+      const response = await fetch("/db.json");  // Fetch from local db.json
       if (!response.ok) {
         throw new Error("Failed to fetch best-selling products");
       }
-      const bestSellers = await response.json();
+
+      const data = await response.json();
+
+      // Assuming you have a `products` array in db.json with a `bestSeller` field
+      const bestSellers = data.products.filter(product => product.bestSeller);
+
       return bestSellers;
     } catch (error) {
       return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
+
 
 // Fetch Recommendations for a specific user (you can use mock data here as well)
 export const fetchRecommendation = createAsyncThunk(
@@ -105,34 +110,46 @@ export const fetchPopular = createAsyncThunk(
   "product/fetchPopular",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/products/popular");
+      const response = await fetch("/db.json"); // Fetch from local db.json
       if (!response.ok) {
         throw new Error("Failed to fetch popular products");
       }
-      const popularProducts = await response.json();
-      return popularProducts;
+      
+      const data = await response.json();
+
+      // Assuming products have a 'popular' field to mark them as popular
+      const popularProducts = data.products.filter(product => product.popular);
+
+      return popularProducts; // Return filtered popular products
     } catch (error) {
       return rejectWithValue(error.message); // Handle any errors
     }
   }
 );
 
+
 // Fetch Top Picks
 export const fetchTopPicks = createAsyncThunk(
   "product/fetchTopPicks",
-  async (userId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {  // No need for userId anymore
     try {
-      const response = await fetch(`http://localhost:3001/products/top-picks?userId=${userId}`);
+      const response = await fetch('http://localhost:3001/products');  // No userId here
       if (!response.ok) {
-        throw new Error("Failed to fetch top picks");
+        throw new Error("Failed to fetch products");
       }
-      const topPicks = await response.json();
+      const products = await response.json();
+
+      // Filter products where topPick is true
+      const topPicks = products.filter(product => product.topPick === true);
+      console.log(topPicks);
       return topPicks;
+
     } catch (error) {
-      return rejectWithValue(error.message); // Handle any errors
+      return rejectWithValue(error.message);  // Handle errors
     }
   }
 );
+
 
 // Assuming you have an action like this for fetching product details
 export const fetchProductDetails = createAsyncThunk(
@@ -152,27 +169,43 @@ export const fetchProductDetails = createAsyncThunk(
   }
 );
 
-// Fetch Filtered Products based on search criteria (e.g., price, category, brand)
 export const fetchFilteredProducts = createAsyncThunk(
   "product/fetchFilteredProducts",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3001/products/filter`, {
-        method: "POST", // You can use POST or GET depending on how you filter data
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(params), // Pass search params (filters) as JSON
-      });
+      const response = await fetch("/db.json");
 
       if (!response.ok) {
-        throw new Error("Failed to fetch filtered products");
+        throw new Error("Failed to load products from local db.json");
       }
 
-      const filteredProducts = await response.json();
+      const data = await response.json();
+      const allProducts = data.products;
+
+      // Apply filters from params (e.g., category, brand, minPrice, maxPrice)
+      const filteredProducts = allProducts.filter(product => {
+        const matchesCategory = params.category
+          ? product.category.toLowerCase() === params.category.toLowerCase()
+          : true;
+
+        const matchesBrand = params.brand
+          ? product.brand.toLowerCase() === params.brand.toLowerCase()
+          : true;
+
+        const matchesMinPrice = params.minPrice
+          ? product.price >= parseFloat(params.minPrice)
+          : true;
+
+        const matchesMaxPrice = params.maxPrice
+          ? product.price <= parseFloat(params.maxPrice)
+          : true;
+
+        return matchesCategory && matchesBrand && matchesMinPrice && matchesMaxPrice;
+      });
+
       return filteredProducts;
     } catch (error) {
-      return rejectWithValue(error.message); // Handle any errors
+      return rejectWithValue(error.message);
     }
   }
 );

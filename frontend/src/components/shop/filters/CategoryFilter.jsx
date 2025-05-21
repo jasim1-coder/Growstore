@@ -1,16 +1,29 @@
 import React from "react";
 import AsyncSelect from "react-select/async";
-import { NODE_API } from "../../../api/apiIndex";
 
 const CategoryFilter = ({ categories, setCategories }) => {
-  const loadCategories = async (searchQuery) => {
+  // Fetch and filter from db.json
+  const fetchProductsByQuery = async (searchQuery) => {
     try {
-      const { data } = await NODE_API.get(
-        `/category/select-search?searchQuery=${searchQuery}`
-      );
-      return data.data;
+      const response = await fetch("/db.json");
+      const data = await response.json();
+
+      // Get unique matching categories
+      const matchingCategories = data.products
+        .filter(product =>
+          product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .map(product => product.category);
+
+      const uniqueCategories = [...new Set(matchingCategories)];
+
+      // Format for react-select
+      return uniqueCategories.map(cat => ({
+        label: cat,
+        value: cat
+      }));
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching categories:", error);
       return [];
     }
   };
@@ -22,7 +35,7 @@ const CategoryFilter = ({ categories, setCategories }) => {
       </label>
       <AsyncSelect
         cacheOptions
-        loadOptions={loadCategories}
+        loadOptions={fetchProductsByQuery}
         defaultOptions
         name="category"
         onChange={setCategories}

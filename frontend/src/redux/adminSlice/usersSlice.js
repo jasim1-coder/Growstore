@@ -17,41 +17,75 @@ const initialState = {
   singleError: "",
 };
 
+// Fetch all admin users
 export const fetchAdminUsers = createAsyncThunk(
   "adminUsers/fetchAdminUsers",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/auth/", { params });
-      return response.data;
+      const queryString = new URLSearchParams(params).toString();
+      const response = await fetch(`http://localhost:3001/users?${queryString}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+
+      const data = await response.json();
+      return data;  // Assuming 'data' contains the array of users and other metadata
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Fetch a single admin user
 export const fetchAdminSingleUser = createAsyncThunk(
   "adminUsers/fetchAdminSingleUser",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/auth/single/${id}`);
-      return response.data;
+      const response = await fetch(`http://localhost:3001/users/${id}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user");
+      }
+
+      const data = await response.json();
+      return data;  // Assuming 'data' contains the user information
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
 
+// Update a specific admin user
 export const updateUserAdmin = createAsyncThunk(
   "adminUsers/updateUserAdmin",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(`/auth/${data.id}`, data.data);
-      return response.data;
+      const { id, data: userData } = data;
+      const response = await fetch(`http://localhost:3001/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user");
+      }
+
+      const updatedData = await response.json();
+      return updatedData;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || error);
     }
   }
 );
+
 
 const usersSlice = createSlice({
   name: "adminUsers",
@@ -76,12 +110,12 @@ const usersSlice = createSlice({
       .addCase(fetchAdminUsers.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.data = action.payload.data;
+        state.data = action.payload;
         state.nameQuery = action.payload.nameQuery;
         state.limit = action.payload.limit;
         state.currentPage = action.payload.currentPage;
         state.sortOrder = action.payload.sortOrder;
-        state.totalUsers = action.payload.totalUsers;
+        state.totalUsers = action.payload.length;
       })
       .addCase(fetchAdminUsers.rejected, (state, action) => {
         state.fetchStatus = "failed";

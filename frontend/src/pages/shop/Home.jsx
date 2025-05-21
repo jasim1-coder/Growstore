@@ -21,7 +21,7 @@ const Home = () => {
       <FeaturedCategories />
       <FeaturedProducts />
       <InfoSection />
-      <Related />
+      <Foryou />
       <BestSellers />
       <Popular />
     </Layout>

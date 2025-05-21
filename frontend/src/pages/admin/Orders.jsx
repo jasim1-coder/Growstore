@@ -19,20 +19,25 @@ const AdminOrders = () => {
 
   const handleSearch = (e) => {
     setOrderIdQuery(e.target.value);
-    const params = {
-      orderIdQuery: e.target.value,
-    };
-    dispatch(fetchAdminOrders(params));
   };
 
   useEffect(() => {
-    if (orderData.length === 0) {
+    // Whenever the orderIdQuery changes, dispatch the action
+    const params = {
+      orderIdQuery: orderIdQuery,
+    };
+    dispatch(fetchAdminOrders(params));
+  }, [orderIdQuery, dispatch]); // Dependency array ensures it runs when orderIdQuery changes
+
+  useEffect(() => {
+    if (!orderData || orderData.length === 0) { // Check if orderData is undefined or empty
       const params = {
         orderIdQuery: _orderIdQuery,
       };
-      dispatch(fetchAdminOrders(params));
+      dispatch(fetchAdminOrders(params)); // Fetch orders when page loads if no data
     }
-  }, []);
+    console.log("orderdatas", orderData); // Log to check the fetched data
+  }, [orderData, _orderIdQuery, dispatch]); // This will trigger when orderData changes
 
   return (
     <AdminLayout>
@@ -48,7 +53,12 @@ const AdminOrders = () => {
               placeholder="Search by orderId..."
             />
           </div>
-          <OrderList />
+          {/* Only render OrderList if orderData is not undefined */}
+          {orderData && orderData.length > 0 ? (
+            <OrderList />
+          ) : (
+            <div>No orders found</div>
+          )}
         </section>
       </div>
     </AdminLayout>
