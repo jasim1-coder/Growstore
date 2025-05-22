@@ -13,10 +13,12 @@ const CartMain = ({ handleCheckout }) => {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
   const itemsLength = useSelector(getCartItemsLength);
+  console.log("cart length:",itemsLength)
+  console.log("user:",user)
 
   useEffect(() => {
     if (user && itemsLength === 0) {
-      dispatch(fetchCartItems());
+      dispatch(fetchCartItems(user.id));
     }
   }, []);
 

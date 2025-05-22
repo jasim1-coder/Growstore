@@ -21,6 +21,7 @@ import SimpleLoading from "../../common/loaders/SimpleLoading";
 const OrderList = () => {
   const dispatch = useDispatch();
   const data = useSelector(getAdminOrdersData);
+  console.log("To get the order details:")
   const status = useSelector(getAdminOrderFetchStatus);
   const error = useSelector(getAdminOrderFetchError);
 
@@ -136,7 +137,7 @@ const OrderList = () => {
                 >
                   <span>User</span>
                   {sortKey?.user?.userName ? (
-                    sortKey.userName === -1 ? (
+                    sortKey.user?.sortOrder === -1 ? (
                       <FaSortUp />
                     ) : (
                       <FaSortDown />

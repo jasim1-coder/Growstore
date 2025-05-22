@@ -5,6 +5,7 @@ import ConfirmBox from "../commons/ConfirmBox";
 import { useNavigate } from "react-router-dom";
 import {
   deleteAdminBrand,
+  fetchAdminSingleBrand,
   getAdminSingleBrandData,
   getAdminSingleBrandFetchStatus,
   updateAdminBrand,
@@ -13,13 +14,14 @@ import {
 const BrandMetadata = ({ id }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const brandData = useSelector(getAdminSingleBrandData);
+  const brandData = useSelector(getAdminSingleBrandData) || {};
+  console.log("brandDATA:",brandData)
 
   const updateStatus = useSelector(getAdminSingleBrandFetchStatus);
 
   const [showBox, setShowBox] = useState(false);
-  const [title, setTitle] = useState("");
-  const [titleError, setTitleError] = useState("");
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [image, setImage] = useState(null);
 
   const handleDelete = async () => {
@@ -27,26 +29,24 @@ const BrandMetadata = ({ id }) => {
       await dispatch(deleteAdminBrand(id)).unwrap();
       setShowBox(false);
       navigate("/admin/brands", { replace: true });
-    } catch (err) {
-      // eslint-disable-next-line no-empty
-    }
+    } catch (err) {}
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
 
-    if (!title || !title.trim()) {
-      setTitleError("Required!");
+    if (!name || !name.trim()) {
+      setNameError("Required!");
     } else {
       const formData = new FormData();
-      formData.append("title", title);
-      formData.append("image", image);
+      formData.append("name", name);
+      if (image) formData.append("logo", image);
       dispatch(updateAdminBrand({ id, data: formData }));
     }
   };
 
   useEffect(() => {
-    setTitle(brandData.title);
+    setName(brandData.name || "");
   }, [brandData]);
 
   return (
@@ -73,37 +73,39 @@ const BrandMetadata = ({ id }) => {
           </button>
         </div>
       </div>
+
       <div className="input-container gap-1">
-        <label className="text-sm text-textDim" htmlFor="title">
-          Title
+        <label className="text-sm text-textDim" htmlFor="name">
+          Brand Name
         </label>
         <input
-          name="title"
+          name="name"
           className="input-box h-[36px] text-sm"
-          placeholder="Eg. Chocolate"
-          value={title}
+          placeholder="Eg. Fresh Farms"
+          value={name}
           onChange={(e) => {
-            setTitle(e.target.value);
-            setTitleError("");
+            setName(e.target.value);
+            setNameError("");
           }}
         />
-        {titleError ? <span className="input-error">{titleError}</span> : null}
+        {nameError ? <span className="input-error">{nameError}</span> : null}
       </div>
 
       <div className="grid-list-2">
         <div className="input-container gap-1">
-          <span className="text-sm text-textDim">Featured Image</span>
+          <span className="text-sm text-textDim">Current Logo</span>
           <div className="w-[200px] max-h-[200px] bg-greyLight flex justify-center items-center">
             <img
-              src={brandData.featuredImage}
-              alt=""
+              src={brandData.logo}
+              alt="Brand Logo"
               className="object-contain max-h-full min-h-[150px]"
             />
           </div>
         </div>
+
         <div className="input-container gap-1">
           <label className="text-sm text-textDim" htmlFor="image">
-            Upload New Image
+            Upload New Logo
           </label>
           <input
             type="file"
@@ -111,7 +113,7 @@ const BrandMetadata = ({ id }) => {
             accept="image/*"
             onChange={(e) => setImage(e.currentTarget.files[0])}
           />
-          {image ? (
+          {image && (
             <div className="w-[200px] max-h-[160px] bg-greyLight flex justify-center items-center relative">
               <div className="absolute top-0 right-0">
                 <button className="p-1" onClick={() => setImage(null)}>
@@ -120,11 +122,11 @@ const BrandMetadata = ({ id }) => {
               </div>
               <img
                 src={URL.createObjectURL(image)}
-                alt=""
+                alt="New Logo Preview"
                 className="object-contain w-full max-h-full min-h-[150px]"
               />
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 
@@ -132,7 +134,7 @@ const BrandMetadata = ({ id }) => {
         <ConfirmBox
           onConfirm={handleDelete}
           setShowBox={setShowBox}
-          message={`Delete ${brandData.title}`}
+          message={`Delete brand "${brandData.name}"?`}
         />
       )}
     </form>

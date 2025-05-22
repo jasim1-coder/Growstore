@@ -65,6 +65,7 @@ const AdminCategories = () => {
       dispatch(fetchAdminCategories(params));
     }
   }, []);
+  console.log("category data:",categoriesData)
 
   useEffect(() => {
     if (_sortOrder) {

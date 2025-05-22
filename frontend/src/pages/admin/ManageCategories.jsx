@@ -18,7 +18,7 @@ import AlertBox from "../../components/common/AlertBox";
 import SimpleLoading from "../../components/common/loaders/SimpleLoading";
 
 const AdminManageCategories = () => {
-  const id = useParams().id;
+  const {id} = useParams();
 
   const dispatch = useDispatch();
 

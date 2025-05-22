@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../../utils/FormatCurrency";
-import { useState } from "react";
-import { PRIVATE_API } from "../../../api/apiIndex";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductsByBrand } from "../../../redux/adminSlice/brandsSlice";
 import Pagination from "../../common/pagination/Pagination";
 import AlertBox from "../../common/AlertBox";
 import SimpleLoading from "../../common/loaders/SimpleLoading";
@@ -40,38 +40,25 @@ const ProductItem = ({ entry }) => {
 };
 
 const BrandProduct = ({ id }) => {
+  const dispatch = useDispatch();
+
+  // Get products, loading status, and error from Redux store
+  const products = useSelector((state) => state.adminBrands.products);
+  const fetchProdStatus = useSelector((state) => state.adminBrands.fetchProdStatus);
+  const fetchProdError = useSelector((state) => state.adminBrands.fetchProdError);
+  const total = useSelector((state) => state.adminBrands.totalBrands); // Assuming total is managed in your state
+
   const limit = 10;
-  const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = React.useState(1);
 
-  const fetchData = async () => {
-    try {
-      setStatus("loading");
-      const { data } = await PRIVATE_API.get(`/brand/products/${id}`, {
-        params: {
-          page: currentPage,
-          limit: limit,
-        },
-      });
-      setTotal(data.total);
-      setData(data.data);
-      setStatus("success");
-    } catch (err) {
-      setStatus("failed");
-      setError(err.response ? err.response.data.message : err);
-    }
-  };
-
+  // Fetch products on page change
   useEffect(() => {
-    fetchData();
-  }, [currentPage]);
+    dispatch(fetchProductsByBrand(id)); // Dispatch the action to fetch products by brand
+  }, [dispatch, id, currentPage]); // Dependency array includes currentPage
 
   return (
     <div className="flex flex-col">
-      {status == "failed" ? <AlertBox message={error} type={status} /> : null}
+      {fetchProdStatus === "failed" && <AlertBox message={fetchProdError} type="failed" />}
       <div className="pb-3 border-b border-b-greyLight flex flex-row justify-between items-center">
         <h4 className="heading4">Products</h4>
         <span className="text-textDim text-sm">Total: {total}</span>
@@ -87,21 +74,21 @@ const BrandProduct = ({ id }) => {
             </tr>
           </thead>
           <tbody className="relative h-full w-full">
-            {status === "loading" ? (
+            {fetchProdStatus === "loading" ? (
               <tr>
                 <td colSpan={5} className="p-4">
                   <SimpleLoading />
                 </td>
               </tr>
             ) : null}
-            {!data || data?.length === 0 ? (
+            {products.length === 0 ? (
               <tr className="text-center">
                 <td colSpan="4" className="text-center px-2 py-4">
                   No items found for this category
                 </td>
               </tr>
             ) : (
-              data.map((entry) => <ProductItem key={entry._id} entry={entry} />)
+              products.map((entry) => <ProductItem key={entry._id} entry={entry} />)
             )}
           </tbody>
         </table>

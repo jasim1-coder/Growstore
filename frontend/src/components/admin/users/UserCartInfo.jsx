@@ -16,12 +16,12 @@ const ProductItem = ({ entry }) => {
     >
       <td className="px-2 py-4 overflow-clip flex flex-row items-center gap-2 text-bodyText">
         <img
-          src={entry.imageUrl}
+          src={entry.image}
           className="h-[50px] w-[50px] object-contain"
         />
         <span
           className="text-sm"
-          dangerouslySetInnerHTML={{ __html: entry.title }}
+          dangerouslySetInnerHTML={{ __html: entry.name }}
         />
       </td>
       <td className="px-2 py-4 overflow-clip">

@@ -12,7 +12,7 @@ const initialState = {
   currentPage: 1,
   sortOrder: "",
 
-  singleData: "",
+  singleData: {},
   singleStatus: "idle",
   singleError: "",
 
@@ -51,7 +51,7 @@ export const fetchAdminSingleProduct = createAsyncThunk(
   "adminProducts/fetchAdminSingleProduct",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3001/products/${id}`, {
+      const response = await fetch(`http://localhost:3001/products?&_id=${id}`, {
         method: "GET",
       });
 
@@ -60,7 +60,8 @@ export const fetchAdminSingleProduct = createAsyncThunk(
       }
 
       const data = await response.json();
-      return data;  // Assuming 'data' contains the product information
+      console.log("product fetched successfully:",data)
+      return data[0];  // Assuming 'data' contains the product information
     } catch (error) {
       return rejectWithValue(error.message || error);
     }
@@ -130,7 +131,7 @@ const productsSlice = createSlice({
       state.fetchStatus = "idle";
     },
     removeAdminSingleProduct: (state) => {
-      state.singleData = "";
+      state.singleData = {};
       state.singleStatus = "idle";
       state.singleError = "";
     },
@@ -186,7 +187,7 @@ const productsSlice = createSlice({
       .addCase(fetchAdminSingleProduct.fulfilled, (state, action) => {
         state.singleStatus = "success";
         state.singleError = "";
-        state.singleData = action.payload.data;
+        state.singleData = action.payload;
       })
       .addCase(fetchAdminSingleProduct.rejected, (state, action) => {
         state.singleStatus = "failed";

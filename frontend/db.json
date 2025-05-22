@@ -1,1 +1,513 @@
-{}
+{
+  "users": [
+    {
+  "id": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "123456",
+  "mobileNumber": "9876543210",
+  "role": "CUSTOMER",
+  "verified": true,
+  "total_orders":"1",
+  "orders": [
+    {
+      "id": 1,
+      "orderId": 101,
+      "date": "2024-05-21",
+      "status": "Completed",
+      "amount": 250.00,
+      "items": [
+        {
+          "productId": 1,
+          "name": "Nike Air Max",
+          "quantity": 2,
+          "price": 120.00
+        },
+        {
+          "productId": 2,
+          "name": "Adidas UltraBoost",
+          "quantity": 1,
+          "price": 110.00
+        }
+      ]
+    }
+  ],
+  "cart": [
+    {
+      "productId": 1,
+      "name": "Nike Air Max",
+      "quantity": 1,
+      "price": 120.00,
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
+    },
+    {
+      "productId": 3,
+      "name": "Puma Running Shoes",
+      "quantity": 2,
+      "price": 90.00,
+      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRj9_7c03alTUI5fX4RNwqFfAHm-KhFvVvb37-uGO9OxKVqQfbYQtnUPDCI2CYLCshLXt3jzaL61ukX6FYVblFYGZdJ_o-Qo_oCve8v4vHxsConUDN8e9wFMA"
+    }
+  ],
+  "wishlist": [
+    {
+      "productId": 2,
+      "name": "Adidas UltraBoost",
+      "price": 110.00,
+      "addedOn": "2024-05-20T10:00:00Z",
+      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
+    }
+  ],
+  "addresses": [
+    {
+      "_id": 1,
+      "title": "Home",
+      "mobileNumber": "9876543210",
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "country": "USA"
+    },
+    {
+      "_id": 2,
+      "title": "Office",
+      "mobileNumber": "9876543211",
+      "street": "456 Office Ave",
+      "city": "San Francisco",
+      "state": "CA",
+      "zipCode": "94105",
+      "country": "USA"
+    }
+  ]
+},
+    {
+      "id": 2,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "ADMIN",
+      "verified": true
+    },
+    {
+      "id": "3a39",
+      "name": "jasim jas",
+      "email": "jasim@gmail.com",
+      "password": "jasim@123",
+      "mobileNumber": "1236547896",
+      "verified": false,
+      "role": "CUSTOMER"
+    }
+  ],
+  "wishlists": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 101,
+          "name": "Nike Air Max",
+          "price": 120,
+          "image": "airmax.jpg"
+        },
+        {
+          "productId": 102,
+          "name": "Adidas Ultraboost",
+          "price": 140,
+          "image": "ultraboost.jpg"
+        }
+      ]
+    }
+  ],
+  "carts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 101,
+          "name": "Nike Air Max",
+          "price": 120,
+          "quantity": 2,
+          "image": "airmax.jpg"
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "_id": "p1",
+      "title": "Apple",
+      "price": 2.99,
+      "MRP": 3.49,
+      "imageUrl": "https://assets.clevelandclinic.org/transform/cd71f4bd-81d4-45d8-a450-74df78e4477a/Apples-184940975-770x533-1_jpg",
+      "category": "Fruits",
+      "brand": "Fresh Farms",
+      "rating": 4.7,
+      "quantity": 100,
+      "featured": true,
+      "bestSeller": false,
+      "recommended": false,
+      "popular": true,
+      "topPick": false
+    },
+    {
+      "_id": "p2",
+      "title": "Banana",
+      "price": 1.99,
+      "MRP": 2.49,
+      "imageUrl": "https://png.pngtree.com/png-clipart/20220716/ourmid/pngtree-banana-yellow-fruit-banana-skewers-png-image_5944324.png",
+      "category": "Fruits",
+      "brand": "Tropical Farms",
+      "rating": 4.5,
+      "quantity": 150,
+      "featured": true,
+      "bestSeller": true,
+      "recommended": false,
+      "popular": true,
+      "topPick": false
+    },
+    {
+      "_id": "p3",
+      "title": "Milk",
+      "price": 1.49,
+      "MRP": 1.99,
+      "imageUrl": "https://eportal.sundarini.organic/assets/images/full/1704459290-1704459290-451950086.jpg",
+      "category": "Dairy",
+      "brand": "Dairy Fresh",
+      "rating": 4.8,
+      "quantity": 200,
+      "featured": false,
+      "bestSeller": true,
+      "recommended": true,
+      "popular": true,
+      "topPick": true
+    },
+    {
+      "_id": "p4",
+      "title": "Eggs",
+      "price": 3.99,
+      "MRP": 4.49,
+      "imageUrl": "https://kidseatincolor.com/wp-content/uploads/2022/02/eggs-e1648216369366.jpeg",
+      "category": "Dairy",
+      "brand": "Farm Fresh",
+      "rating": 4.3,
+      "quantity": 180,
+      "featured": false,
+      "bestSeller": true,
+      "recommended": false,
+      "popular": false,
+      "topPick": false
+    },
+    {
+      "_id": "p5",
+      "title": "Carrot",
+      "price": 1.29,
+      "MRP": 1.79,
+      "imageUrl": "https://seed2plant.in/cdn/shop/products/carrotseeds.jpg?v=1604032858&width=1500",
+      "category": "Vegetables",
+      "brand": "Green Fields",
+      "rating": 4.6,
+      "quantity": 120,
+      "featured": false,
+      "bestSeller": false,
+      "recommended": true,
+      "popular": false,
+      "topPick": false
+    },
+    {
+      "_id": "p6",
+      "title": "Rice",
+      "price": 5.99,
+      "MRP": 7.49,
+      "imageUrl": "https://www.wayanadgreenfresh.com/cdn/shop/products/AromaticRice1.jpg?v=1646650942",
+      "category": "Grains",
+      "brand": "Golden Grains",
+      "rating": 4.9,
+      "quantity": 80,
+      "featured": true,
+      "bestSeller": true,
+      "recommended": true,
+      "popular": true,
+      "topPick": true
+    },
+    {
+      "_id": "p7",
+      "title": "Tomato",
+      "price": 2.49,
+      "MRP": 2.99,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg",
+      "category": "Vegetables",
+      "brand": "Green Fields",
+      "rating": 4.4,
+      "quantity": 150,
+      "featured": false,
+      "bestSeller": false,
+      "recommended": false,
+      "popular": true,
+      "topPick": false
+    },
+    {
+      "_id": "p8",
+      "title": "Chicken Breast",
+      "price": 7.99,
+      "MRP": 9.99,
+      "imageUrl": "https://assets.tendercuts.in/product/C/H/594e4559-f6b7-417d-9aac-d0643b5711d3.jpg",
+      "category": "Meat",
+      "brand": "Farm Fresh",
+      "rating": 4.8,
+      "quantity": 60,
+      "featured": false,
+      "bestSeller": true,
+      "recommended": true,
+      "popular": false,
+      "topPick": false
+    },
+    {
+      "_id": "p9",
+      "title": "Bread",
+      "price": 2.49,
+      "MRP": 2.99,
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwPB9-qZJius702WsEPf2tOQPYAOp1h_W32g&s",
+      "category": "Bakery",
+      "brand": "Bakery Delights",
+      "rating": 4.6,
+      "quantity": 200,
+      "featured": true,
+      "bestSeller": false,
+      "recommended": false,
+      "popular": true,
+      "topPick": false
+    },
+    {
+      "_id": "p10",
+      "title": "Cheese",
+      "price": 4.49,
+      "MRP": 5.49,
+      "imageUrl": "https://fhafnb.com/wp-content/uploads/2023/09/swiss-cheese.jpg",
+      "category": "Dairy",
+      "brand": "Dairy Fresh",
+      "rating": 4.7,
+      "quantity": 50,
+      "featured": true,
+      "bestSeller": true,
+      "recommended": true,
+      "popular": false,
+      "topPick": true
+    }
+  ],
+  "tokens": [
+    {
+      "userId": 1,
+      "accessToken": "fake-jwt-token-for-user-1"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Fruits",
+      "featuredImage": "https://hips.hearstapps.com/hmg-prod/images/assortment-of-colorful-ripe-tropical-fruits-top-royalty-free-image-1729774230.jpg",
+      "products": [
+        {
+          "id": "p1",
+          "title": "Apple",
+          "price": 2.99,
+          "MRP": 3.49,
+          "imageUrl": "https://assets.clevelandclinic.org/transform/cd71f4bd-81d4-45d8-a450-74df78e4477a/Apples-184940975-770x533-1_jpg",
+          "category": "Fruits",
+          "brand": "Fresh Farms",
+          "rating": 4.7,
+          "quantity": 100,
+          "featured": true,
+          "bestSeller": false,
+          "recommended": false,
+          "popular": true,
+          "topPick": false
+        },
+        {
+          "id": "p2",
+          "title": "Banana",
+          "price": 1.99,
+          "MRP": 2.49,
+          "imageUrl": "https://png.pngtree.com/png-clipart/20220716/ourmid/pngtree-banana-yellow-fruit-banana-skewers-png-image_5944324.png",
+          "category": "Fruits",
+          "brand": "Tropical Farms",
+          "rating": 4.5,
+          "quantity": 150,
+          "featured": true,
+          "bestSeller": true,
+          "recommended": false,
+          "popular": true,
+          "topPick": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Dairy",
+      "featuredImage": "https://img.freepik.com/free-vector/group-dairy-product-cheese-butter-milk_1308-160301.jpg?semt=ais_hybrid&w=740",
+      "products": [
+        {
+          "id": "p3",
+          "title": "Milk",
+          "price": 1.49,
+          "MRP": 1.99,
+          "imageUrl": "https://eportal.sundarini.organic/assets/images/full/1704459290-1704459290-451950086.jpg",
+          "category": "Dairy",
+          "brand": "Dairy Fresh",
+          "rating": 4.8,
+          "quantity": 200,
+          "featured": false,
+          "bestSeller": true,
+          "recommended": true,
+          "popular": true,
+          "topPick": true
+        },
+        {
+          "id": "p4",
+          "title": "Eggs",
+          "price": 3.99,
+          "MRP": 4.49,
+          "imageUrl": "https://kidseatincolor.com/wp-content/uploads/2022/02/eggs-e1648216369366.jpeg",
+          "category": "Dairy",
+          "brand": "Farm Fresh",
+          "rating": 4.3,
+          "quantity": 180,
+          "featured": false,
+          "bestSeller": true,
+          "recommended": false,
+          "popular": false,
+          "topPick": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Vegetables",
+      "featuredImage": "https://cdn.britannica.com/17/196817-159-9E487F15/vegetables.jpg",
+      "products": [
+        {
+          "id": "p5",
+          "title": "Carrot",
+          "price": 1.29,
+          "MRP": 1.79,
+          "imageUrl": "https://seed2plant.in/cdn/shop/products/carrotseeds.jpg?v=1604032858&width=1500",
+          "category": "Vegetables",
+          "brand": "Green Fields",
+          "rating": 4.6,
+          "quantity": 120,
+          "featured": false,
+          "bestSeller": false,
+          "recommended": true,
+          "popular": false,
+          "topPick": false
+        },
+        {
+          "id": "p7",
+          "title": "Tomato",
+          "price": 2.49,
+          "MRP": 2.99,
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg",
+          "category": "Vegetables",
+          "brand": "Green Fields",
+          "rating": 4.4,
+          "quantity": 150,
+          "featured": false,
+          "bestSeller": false,
+          "recommended": false,
+          "popular": true,
+          "topPick": false
+        }
+      ]
+    }
+  ],
+  "brands": [
+    {
+      "_id": "b1",
+      "name": "Fresh Farms",
+      "description": "Organic fruit brand",
+      "logo": "https://img.freepik.com/free-vector/farm-fresh-green-leafy-food-label-design_1017-30769.jpg"
+    },
+    {
+      "_id": "b2",
+      "name": "Dairy Fresh",
+      "description": "High-quality dairy products",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2O4clWnW9GUjxBQG1N2WkQ5rKXsSdDmFJeg&s"
+    },
+    {
+      "_id": "b3",
+      "name": "Bakery Delights",
+      "description": "High-quality dairy products",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwCPLzGQAQ9eevXVzLY8tJxOirm16pY_MAOw&s"
+    },
+    {
+      "_id": "b4",
+      "name": "Green Fields",
+      "description": "High-quality dairy products",
+      "logo": "https://static.vecteezy.com/system/resources/previews/031/705/662/non_2x/green-field-logo-icon-design-inspiration-with-tree-sun-and-hand-illustration-vector.jpg"
+    },
+    {
+      "_id": "b5",
+      "name": "Golden Grains",
+      "description": "High-quality dairy products",
+      "logo": "https://m.media-amazon.com/images/S/stores-image-uploads-eu-prod/3/AmazonStores/A21TJRUUN4KGV/bbb03adffc34bcc855c464109f6ec7a6.w400.h400.png"
+    },
+    {
+      "_id": "b6",
+      "name": "Tropical Farms",
+      "description": "High-quality dairy products",
+      "logo": "https://c8.alamy.com/comp/2F6MJD9/beach-and-farm-design-tropical-and-agricultural-logo-design-vector-beach-farm-logo-design-concept-vector-image-2F6MJD9.jpg"
+    }
+  ],
+   "orders": [
+    {
+      "id": "1",
+      "orderId": "ORD001",
+      "orderDate": "2024-01-01T10:00:00Z",
+      "status": "Pending", 
+      "totalAmount": 120.5,
+      "paymentMethod": "Credit Card",
+      "paymentId": "PAY123456789",
+
+      "user": {
+        "userId": 1,
+        "userName": "John Doe",
+        "userEmail": "john.doe@example.com",
+        "mobileNumber": "1234567890"
+      },
+
+      "address": {
+        "mobileNumber": "1234567890",
+        "zipCode": "10001"
+      },
+
+      "shippingAddress": {
+        "street": "123 Main St",
+        "city": "New York",
+        "state": "NY",
+        "zip": "10001",
+        "country": "USA"
+      },
+
+      "products": [
+        {
+          "productId": "prod1",
+          "title": "Smartphone X200",
+          "brand": "BrandX",
+          "quantity": 1,
+          "price": 100,
+          "subTotal": 100,
+          "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQdmvyVhWRmKC5iVedubukLd6XFC6y31JAROb1PGiNXB3MoWHBdgdcUui1YccMRGRk2vhcDWdrR2V6ep3PStmDqwWp58RMmShbo2tDASxfyRRfU9FTR7qhu9g"
+        },
+        {
+          "productId": "prod2",
+          "title": "Fast Charger 20W",
+          "brand": "BrandX",
+          "quantity": 1,
+          "price": 20.5,
+          "subTotal": 20.5,
+          "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS84dJsKufEFzPsV8LZ4mKmQOqq2_ilu8-HWrdBtZN5ZQUNl3osdM283B2pwVsSC4ep_L1nOV3-Uy47L-Za_8eFP-svQdWA_hcS5b4_YT96ozFwKR0CpqeRiA"
+        }
+      ]
+    }
+  ]
+}

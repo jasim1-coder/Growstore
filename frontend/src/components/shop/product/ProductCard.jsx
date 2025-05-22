@@ -79,7 +79,7 @@ const ProductCard = ({ data }) => {
     <div className="m-auto sm:min-h-[300px] h-full max-w-[300px] w-full">
       <div className="group outline outline-1 outline-greyLight rounded-sm h-full">
         <div className="h-[250px] w-full overflow-hidden relative bg-greyLight">
-          <Link to={`/product/${data._id}`}>
+          <Link to={`/product/${data._id || data.id}`}>
             <img
               className="object-contain h-full w-full"
               src={data.imageUrl}

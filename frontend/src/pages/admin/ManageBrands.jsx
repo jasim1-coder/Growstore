@@ -18,8 +18,8 @@ import {
 } from "../../redux/adminSlice/brandsSlice";
 
 const AdminManageBrands = () => {
-  const id = useParams().id;
-
+  const {id} = useParams();
+console.log("brand id:",id)
   const dispatch = useDispatch();
 
   const status = useSelector(getAdminSingleBrandFetchStatus);
@@ -34,7 +34,7 @@ const AdminManageBrands = () => {
     return () => {
       dispatch(removeAdminSingleBrand());
     };
-  }, []);
+  }, [id]);
 
   return (
     <AdminLayout>

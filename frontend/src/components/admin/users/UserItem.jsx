@@ -7,7 +7,7 @@ const UserItem = ({ data }) => {
   const date = moment(data.createdAt).format("DD MMM YY, HH:mm");
 
   const handleUserNavigation = () => {
-    navigate(`/admin/users/${data._id}`);
+    navigate(`/admin/users/${data.id}`);
   };
 
   return (

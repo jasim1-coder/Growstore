@@ -50,7 +50,7 @@ const CategoriesList = () => {
   useEffect(() => {
     setCurrentPage(_currentPage);
   }, [_currentPage]);
-
+console.log("category entry:",data)
   return (
     <div className="flex flex-col gap-3">
       {status == "failed" ? (
@@ -69,7 +69,7 @@ const CategoriesList = () => {
         {data.length === 0 ? (
           <p>No Categories found</p>
         ) : (
-          data.map((entry) => <CategoriesItem key={entry._id} data={entry} />)
+          data.map((entry) => <CategoriesItem key={entry.id} data={entry} />)
         )}
       </div>
       <Pagination

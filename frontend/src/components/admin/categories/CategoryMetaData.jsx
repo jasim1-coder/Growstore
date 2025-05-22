@@ -11,15 +11,15 @@ import ConfirmBox from "../commons/ConfirmBox";
 import { useNavigate } from "react-router-dom";
 
 const CategoryMetaData = ({ id }) => {
+  console.log("id for fetching the category data:",id)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const categoryData = useSelector(getAdminSingleCategoryData);
-
   const updateStatus = useSelector(getAdminSingleCategoryFetchStatus);
 
   const [showBox, setShowBox] = useState(false);
-  const [title, setTitle] = useState("");
-  const [titleError, setTitleError] = useState("");
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [image, setImage] = useState(null);
 
   const handleDelete = async () => {
@@ -28,27 +28,29 @@ const CategoryMetaData = ({ id }) => {
       setShowBox(false);
       navigate("/admin/categories", { replace: true });
     } catch (err) {
-      // eslint-disable-next-line no-empty
+      console.error(err);
     }
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
 
-    if (!title || !title.trim()) {
-      setTitleError("Required!");
+    if (!name || !name.trim()) {
+      setNameError("Required!");
     } else {
       const formData = new FormData();
-      formData.append("title", title);
-      formData.append("image", image);
+      formData.append("name", name);
+      if (image) formData.append("image", image);
       dispatch(updateAdminCategories({ id, data: formData }));
     }
   };
-
+  
   useEffect(() => {
-    setTitle(categoryData.title);
+    if (categoryData?.name) {
+      setName(categoryData.name);
+    }
   }, [categoryData]);
-
+console.log("category data:",categoryData)
   return (
     <form onSubmit={handleEdit} className="flex flex-col gap-4 mb-6">
       <div className="pb-3 border-b border-b-greyLight flex flex-row justify-between items-center">
@@ -73,22 +75,24 @@ const CategoryMetaData = ({ id }) => {
           </button>
         </div>
       </div>
+
       <div className="input-container gap-1">
-        <label className="text-sm text-textDim" htmlFor="title">
-          Title
+        <label className="text-sm text-textDim" htmlFor="name">
+          Name
         </label>
         <input
-          name="title"
+          name="name"
           className="input-box h-[36px] text-sm"
-          placeholder="Eg. Chocolate"
-          value={title}
+          placeholder="Eg. Dairy"
+          value={name}
           onChange={(e) => {
-            setTitle(e.target.value);
-            setTitleError("");
+            setName(e.target.value);
+            setNameError("");
           }}
         />
-        {titleError ? <span className="input-error">{titleError}</span> : null}
+        {nameError ? <span className="input-error">{nameError}</span> : null}
       </div>
+
       <div className="grid-list-2">
         <div className="input-container gap-1">
           <span className="text-sm text-textDim">Featured Image</span>
@@ -100,6 +104,7 @@ const CategoryMetaData = ({ id }) => {
             />
           </div>
         </div>
+
         <div className="input-container gap-1">
           <label className="text-sm text-textDim" htmlFor="image">
             Upload New Image
@@ -110,7 +115,7 @@ const CategoryMetaData = ({ id }) => {
             accept="image/*"
             onChange={(e) => setImage(e.currentTarget.files[0])}
           />
-          {image ? (
+          {image && (
             <div className="w-[200px] max-h-[160px] bg-greyLight flex justify-center items-center relative">
               <div className="absolute top-0 right-0">
                 <button className="p-1" onClick={() => setImage(null)}>
@@ -123,7 +128,7 @@ const CategoryMetaData = ({ id }) => {
                 className="object-contain w-full max-h-full min-h-[150px]"
               />
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 

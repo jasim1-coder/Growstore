@@ -49,7 +49,7 @@ const SingleCategory = () => {
           ) : data.length === 0 ? (
             <p>No Products found</p>
           ) : (
-            data.map((entry) => <ProductCard key={entry._id} data={entry} />)
+            data.map((entry) => <ProductCard key={entry.id} data={entry} />)
           )}
         </div>
       </div>

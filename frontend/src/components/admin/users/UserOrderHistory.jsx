@@ -8,7 +8,7 @@ const OrderItem = ({ entry }) => {
   const navigate = useNavigate();
 
   const handleOrderNavigation = () => {
-    navigate(`/admin/orders/${entry._id}`);
+    navigate(`/admin/orders/${entry.id}`);
   };
 
   return (
@@ -23,7 +23,7 @@ const OrderItem = ({ entry }) => {
         <span>{moment(entry.orderDate).format("DD MMMM YYYY, HH:mm")}</span>
       </td>
       <td className="px-2 py-4 overflow-clip">
-        <span>{formatCurrency(entry.totalAmount)}</span>
+        <span>{formatCurrency(entry.amount)}</span>
       </td>
       <td className="px-2 py-4 overflow-clip">
         <span className={`${colorCodes[entry.status]}`}>{entry.status}</span>
@@ -32,24 +32,27 @@ const OrderItem = ({ entry }) => {
   );
 };
 
-const UserOrderHistory = ({ data }) => {
+const UserOrderHistory = ({ data = [] }) => {
+  const totalAmountSpent = data.reduce((acc, order) => acc + (order.amount || 0), 0);
+
   return (
     <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight">
         <h4 className="heading4">Orders</h4>
       </div>
+
       <div className="p-3 grid-list-2">
         <div className="flex flex-col">
           <span className="text-sm text-textDim">Total Orders</span>
-          <span className="">{data?.data?.length || 0}</span>
+          <span className="">{data.length}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-textDim">Total Amount Spent</span>
-          <span className="">{formatCurrency(data?.totalExpense || 0)}</span>
+          <span className="">{formatCurrency(totalAmountSpent)}</span>
         </div>
       </div>
+
       <div className="sm:w-full w-[calc(100vw-120px)] overflow-x-auto pt-3">
-        {/* Table Header */}
         <table className="w-full text-left">
           <thead className="text-sm font-normal">
             <tr className="border-b p-2 border text-textDim">
@@ -60,16 +63,14 @@ const UserOrderHistory = ({ data }) => {
             </tr>
           </thead>
           <tbody className="relative h-full w-full">
-            {!data || data?.data?.length === 0 ? (
+            {!data || data.length === 0 ? (
               <tr className="text-center">
                 <td colSpan="4" className="text-center px-2 py-4">
                   No orders found
                 </td>
               </tr>
             ) : (
-              data.data.map((entry) => (
-                <OrderItem key={entry._id} entry={entry} />
-              ))
+              data.map((entry) => <OrderItem key={entry.id} entry={entry} />)
             )}
           </tbody>
         </table>

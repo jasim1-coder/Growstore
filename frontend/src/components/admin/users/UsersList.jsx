@@ -74,6 +74,7 @@ const UsersList = () => {
       setSortKey(JSON.parse(sortOrder));
     }
   }, [sortOrder]);
+  console.log("User Detals:",data)
 
   return (
     <div className="flex flex-col gap-3">
@@ -144,7 +145,7 @@ const UsersList = () => {
                 </td>
               </tr>
             ) : (
-              data.map((entry) => <UserItem key={entry._id} data={entry} />)
+              data.map((entry) => <UserItem key={entry.id} data={entry} />)
             )}
           </tbody>
         </table>

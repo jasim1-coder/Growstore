@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NODE_API, PRIVATE_API } from "../../api/apiIndex";
 
 const initialState = {
-  cartItems: [],
+  cartItems: [], // Ensuring cartItems is always an array
   cartId: "",
 
   addStatus: "idle",
@@ -15,50 +15,92 @@ const initialState = {
   fetchError: "",
 };
 
+// Add to Cart for a user
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async (data, { rejectWithValue }) => {
+  async ({ userId, product }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.post("/cart/add", data);
-      return response.data;
+      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const user = await res.json();
+
+      const cart = user.cart || [];
+
+      const index = cart.findIndex((item) => item.productId === product.productId);
+
+      if (index !== -1) {
+        // Update quantity
+        cart[index].quantity += product.quantity || 1;
+      } else {
+        // Add new item
+        cart.push({ ...product, quantity: product.quantity || 1 });
+      }
+
+      const updateRes = await fetch(`http://localhost:3001/users/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart }),
+      });
+
+      const updatedUser = await updateRes.json();
+      return updatedUser.cart || [];  // Ensure it's always an array
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || "Failed to add to cart");
     }
   }
 );
 
+// Remove from Cart for a user
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
-  async (id, { rejectWithValue }) => {
+  async ({ userId, productId }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.delete(`/cart/product/${id}`);
-      return response.data;
+      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const user = await res.json();
+
+      const updatedCart = (user.cart || []).filter(
+        (item) => item.productId !== productId
+      );
+
+      const patchRes = await fetch(`http://localhost:3001/users/${userId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart: updatedCart }),
+      });
+
+      const updatedUser = await patchRes.json();
+      return updatedUser.cart || []; // Ensure it's always an array
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || "Failed to remove item");
     }
   }
 );
 
+// Fetch Cart Items for a user
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
-  async (_, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/cart/user");
-      return response.data;
+      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const user = await res.json();
+      return user.cart || []; // Ensure it's always an array
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || "Failed to fetch cart");
     }
   }
 );
 
+// Fetch Cart Items without user login (based on productIds list)
 export const fetchCartItemsNOUSER = createAsyncThunk(
   "cart/fetchCartItemsNOUSER",
-  async (data, { rejectWithValue }) => {
+  async (productIds, { rejectWithValue }) => {
     try {
-      const response = await NODE_API.post("/cart/by-productIds", data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      const query = productIds.map((id) => `productId=${id}`).join("&");
+      const { data } = await NODE_API.get(`/cart?${query}`);
+      return data || []; // Ensure it's always an array
+    } catch (err) {
+      return rejectWithValue(err?.response?.data || err.message);
     }
   }
 );
@@ -81,7 +123,6 @@ const cartSlice = createSlice({
       }
     },
     removeFromCartNOUSER: (state, action) => {
-      console.log(action.payload);
       state.cartItems = state.cartItems.filter(
         (entry) => entry.id !== action.payload
       );
@@ -105,8 +146,8 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.addStatus = "success";
         state.addError = "";
-        state.cartItems = action.payload.data;
-        state.cartId = action.payload.cartId;
+        state.cartItems = action.payload || [];  // Ensures cartItems is always an array
+        state.cartId = action.payload.cartId || "";
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.addStatus = "failed";
@@ -120,7 +161,7 @@ const cartSlice = createSlice({
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.removeStatus = "success";
         state.removeError = "";
-        state.cartItems = action.payload.data;
+        state.cartItems = action.payload || [];  // Ensures cartItems is always an array
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.removeStatus = "failed";
@@ -134,8 +175,8 @@ const cartSlice = createSlice({
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.cartItems = action.payload.data;
-        state.cartId = action.payload.cartId;
+        state.cartItems = action.payload || [];  // Ensures cartItems is always an array
+        state.cartId = action.payload.cartId || "";
       })
       .addCase(fetchCartItems.rejected, (state, action) => {
         state.fetchStatus = "failed";
@@ -149,7 +190,7 @@ const cartSlice = createSlice({
       .addCase(fetchCartItemsNOUSER.fulfilled, (state, action) => {
         state.fetchStatus = "success";
         state.fetchError = "";
-        state.cartItems = action.payload.data;
+        state.cartItems = action.payload || [];  // Ensures cartItems is always an array
       })
       .addCase(fetchCartItemsNOUSER.rejected, (state, action) => {
         state.fetchStatus = "failed";
@@ -168,10 +209,10 @@ export const {
 export const getCartItems = (state) => state.cart.cartItems;
 export const getCartId = (state) => state.cart.cartId;
 export const getCartTotal = (state) => {
-  var total = 0;
-
-  state.cart.cartItems.forEach((item) => {
-    const price = parseFloat(item.total);
+  let total = 0;
+  // Ensure cartItems is always an array before iteration
+  (state.cart.cartItems || []).forEach((item) => {
+    const price = parseFloat(item.price);
     total += price;
   });
   return total;

@@ -20,6 +20,7 @@ import SimpleLoading from "../../common/loaders/SimpleLoading";
 const BrandsList = () => {
   const dispatch = useDispatch();
   const data = useSelector(getAdminBrandsData);
+  console.log("data in the list brands:",data)
   const status = useSelector(getAdminBrandsFetchStatus);
   const error = useSelector(getAdminBrandsFetchError);
 

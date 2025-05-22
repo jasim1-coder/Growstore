@@ -12,7 +12,7 @@ const initialState = {
   currentPage: 1,
   sortOrder: "",
 
-  singleData: "",
+  singleData: {},
   singleStatus: "idle",
   singleError: "",
 
@@ -52,6 +52,7 @@ export const fetchAdminSingleCategory = createAsyncThunk(
       if (!response.ok) throw new Error("Failed to fetch category");
 
       const data = await response.json();
+      console.log("fetched single category:",data)
       return data;
     } catch (error) {
       return rejectWithValue(error.message || error);
@@ -112,7 +113,7 @@ const categoriesSlice = createSlice({
       state.fetchStatus = "idle";
     },
     removeAdminSingleCategory: (state) => {
-      state.singleData = "";
+      state.singleData = {};
       state.singleStatus = "idle";
       state.singleError = "";
       state.editStatus = "idle";
@@ -147,7 +148,7 @@ const categoriesSlice = createSlice({
       .addCase(fetchAdminSingleCategory.fulfilled, (state, action) => {
         state.singleStatus = "success";
         state.singleError = "";
-        state.singleData = action.payload.data;
+        state.singleData = action.payload;
       })
       .addCase(fetchAdminSingleCategory.rejected, (state, action) => {
         state.singleStatus = "failed";

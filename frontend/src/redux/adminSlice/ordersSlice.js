@@ -84,12 +84,10 @@ export const updateAdminOrder = createAsyncThunk(
   "adminOrder/updateAdminOrder",
   async (data, { rejectWithValue }) => {
     try {
-      // Assuming the data is in the form { id, params }
       const { id, params } = data;
 
-      // Perform PUT request to update the order
       const response = await fetch(`http://localhost:3001/orders/${id}`, {
-        method: "PUT",
+        method: "PATCH", // <- changed from PUT
         headers: {
           "Content-Type": "application/json",
         },
@@ -107,6 +105,7 @@ export const updateAdminOrder = createAsyncThunk(
     }
   }
 );
+
 
 
 
@@ -133,13 +132,18 @@ const ordersSlice = createSlice({
 .addCase(fetchAdminOrders.fulfilled, (state, action) => {
   state.fetchStatus = "success";
   state.fetchError = "";
-  state.data = action.payload;  // Assuming 'orders' is the key in the response
-  state.orderIdQuery = action.payload.orderIdQuery;
-  state.limit = action.payload.limit;
-  state.currentPage = action.payload.currentPage;
-  state.sortOrder = action.payload.sortOrder;
-  state.totalOrders = action.payload.length;
+
+  state.data = action.payload;
+
+  // These are not returned from the server — use original request params
+  state.orderIdQuery = action.meta.arg.orderIdQuery;
+  state.limit = action.meta.arg.limit;
+  state.currentPage = action.meta.arg.page;
+  state.sortOrder = action.meta.arg.sortOrder;
+
+  state.totalOrders = action.payload.length; // Or maybe get total from X-Total-Count header if paginated
 })
+
       .addCase(fetchAdminOrders.rejected, (state, action) => {
         state.fetchStatus = "failed";
         state.fetchError = action.payload.message;
@@ -173,7 +177,7 @@ const ordersSlice = createSlice({
           cancelledDate: action.payload.cancelledDate,
         };
         state.data = state.data.map((entry) =>
-          entry._id === action.payload.id
+          entry.id === action.payload.id
             ? { ...entry, status: action.payload.status }
             : entry
         );

@@ -21,7 +21,8 @@ import AlertBox from "../../components/common/AlertBox";
 
 const AdminManageUsers = () => {
   const dispatch = useDispatch();
-  const id = useParams().id;
+const { id } = useParams();
+console.log("id:",id)
 
   const userData = useSelector(getAdminSingleUsersData);
   const status = useSelector(getAdminSingleUserFetchStatus);
@@ -29,7 +30,7 @@ const AdminManageUsers = () => {
 
   useEffect(() => {
     dispatch(fetchAdminSingleUser(id));
-
+console.log("specific user dataa",userData)
     return () => {
       dispatch(removeAdminSingleUser());
     };
@@ -65,10 +66,10 @@ const AdminManageUsers = () => {
                 active={userData.active}
               />
             ) : null}
-            <UserOrderHistory data={userData.orders} />
+            <UserOrderHistory data={userData.orders} userId={userData.id} />
             <UserCartInfo data={userData.cart} />
             <UserWishlistInfo data={userData.wishlist} />
-            <UserAddressesInfo data={userData.address} />
+            <UserAddressesInfo data={userData.addresses} />
           </div>
         </section>
       </div>

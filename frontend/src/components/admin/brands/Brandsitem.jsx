@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Brandsitem = ({ data }) => {
+  console.log("daata:",data)
   return (
     <Link to={`/admin/brands/${data._id}`}>
       <div className="m-auto max-w-[250px] border border-greyLight flex flex-col rounded-md">

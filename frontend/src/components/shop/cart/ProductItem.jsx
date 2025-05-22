@@ -90,15 +90,15 @@ const ProductItem = ({ data }) => {
       <div className="h-[100px] w-[100px] flex-none">
         <img
           className="object-cover h-full w-full rounded-sm"
-          src={data.imageUrl}
+          src={data.image}
           alt=""
         />
       </div>
       <div className="flex flex-col">
-        <Link to={`/product/${data.id}`}>
+        <Link to={`/product/${data.productId}`}>
           <span
             className="hover:text-uiOrange"
-            dangerouslySetInnerHTML={{ __html: data.title }}
+            dangerouslySetInnerHTML={{ __html: data.name }}
           />
         </Link>
         <div className="flex flex-col pt-2">
@@ -145,7 +145,7 @@ const ProductItem = ({ data }) => {
         <p className="pt-4">
           <span className="text-sm">Amount: </span>
           <span className="font-medium text-baseGreen">
-            {formatCurrency(data.total)}
+            {formatCurrency(data.price)}
           </span>
         </p>
         <div className="flex flex-row pt-6">

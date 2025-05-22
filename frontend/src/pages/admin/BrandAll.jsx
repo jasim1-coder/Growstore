@@ -73,7 +73,7 @@ const AdminBrands = () => {
       setSortOrder("");
     }
   }, [_sortOrder]);
-
+console.log("data in the brands:",usersData)
   return (
     <AdminLayout>
       <div className="adminContainer">

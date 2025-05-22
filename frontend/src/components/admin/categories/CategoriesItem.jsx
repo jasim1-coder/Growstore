@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CategoriesItem = ({ data }) => {
   return (
-    <Link to={`/admin/categories/${data._id}`}>
+    <Link to={`/admin/categories/${data.id}`}>
       <div className="m-auto max-w-[250px] border border-greyLight flex flex-col rounded-md">
         <img
           className="object-cover h-[150px] w-full rounded-tr-md rounded-tl-md"

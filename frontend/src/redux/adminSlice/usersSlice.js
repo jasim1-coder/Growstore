@@ -53,6 +53,7 @@ export const fetchAdminSingleUser = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log("userdata:::",data)
       return data;  // Assuming 'data' contains the user information
     } catch (error) {
       return rejectWithValue(error.message || error);
@@ -129,7 +130,7 @@ const usersSlice = createSlice({
       .addCase(fetchAdminSingleUser.fulfilled, (state, action) => {
         state.singleStatus = "success";
         state.singleError = "";
-        state.singleData = action.payload.data;
+        state.singleData = action.payload;
       })
       .addCase(fetchAdminSingleUser.rejected, (state, action) => {
         state.singleStatus = "failed";

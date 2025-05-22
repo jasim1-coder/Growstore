@@ -20,19 +20,21 @@ import ProductReviewsHistory from "../../components/admin/products/ProductReview
 
 const AdminManageProducts = () => {
   const dispatch = useDispatch();
-  const id = useParams().id;
-
+  const {id}= useParams();
+  console.log("id",id)
   const data = useSelector(getAdminSingleProductData);
   const status = useSelector(getAdminSingleProductFetchStatus);
   const error = useSelector(getAdminSingleProductFetchError);
 
-  useEffect(() => {
-    dispatch(fetchAdminSingleProduct(id));
+useEffect(() => {
+  dispatch(fetchAdminSingleProduct(id));
+}, [id, dispatch]);
 
-    return () => {
-      dispatch(removeAdminSingleProduct());
-    };
-  }, []);
+// Log the data after the fetch action is dispatched
+useEffect(() => {
+  console.log("Updated single data:", data);  // This will log when 'data' changes
+}, [data,id,dispatch]);
+ // Include 'data' in the dependency array to log the latest state
 
   return (
     <AdminLayout>

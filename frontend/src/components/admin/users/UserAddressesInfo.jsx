@@ -1,6 +1,7 @@
 import React from "react";
 
 const UserAddressesInfo = ({ data }) => {
+  console.log("address data:",data)
   return (
     <div className="flex flex-col mb-6">
       <div className="pb-3 border-b border-b-greyLight">
