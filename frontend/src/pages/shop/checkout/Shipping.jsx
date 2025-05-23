@@ -21,6 +21,8 @@ const Shipping = ({ onNextStep }) => {
 
   const addressId = useSelector(getAddressId);
   const addressData = useSelector(getAllAddress);
+  console.log("addresId:",addressId);
+  console.log("addresData:",addressData);
   const status = useSelector(getFetchAddressStatus);
 
   const addStatus = useSelector(getAddAddressStatus);
@@ -38,9 +40,9 @@ const Shipping = ({ onNextStep }) => {
   const [addAddressActive, setAddAddressActive] = useState(false);
 
   useEffect(() => {
-    if (addressData.length === 0) {
+    
       dispatch(fetchAddress());
-    }
+    
   }, []);
 
   return (

@@ -6,16 +6,21 @@ import {
   fetchWishlist,
   getWishlistItemsLength,
 } from "../../redux/slice/wishlistSlice";
+import { getUser } from "../../redux/slice/authSlice";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser)
   const length = useSelector(getWishlistItemsLength);
+  console.log("wishlist length:",length);
+  const userId = user.id;
+  console.log("user id for wishlist :",userId);
 
   useEffect(() => {
     if (length === 0) {
-      dispatch(fetchWishlist());
+      dispatch(fetchWishlist(userId));
     }
-  }, []);
+  }, [userId]);
 
   return (
     <Layout>

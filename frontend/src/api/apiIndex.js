@@ -27,19 +27,18 @@ export const PRIVATE_PYTHON_API = axios.create({
 });
 
 PRIVATE_API.interceptors.request.use((req) => {
-  if (localStorage.getItem("accessToken")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(
-      localStorage.getItem("accessToken")
-    )}`;
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
   }
   return req;
 });
 
 PRIVATE_PYTHON_API.interceptors.request.use((req) => {
-  if (localStorage.getItem("accessToken")) {
-    req.headers.Authorization = `Bearer ${JSON.parse(
-      localStorage.getItem("accessToken")
-    )}`;
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
   }
   return req;
 });
+

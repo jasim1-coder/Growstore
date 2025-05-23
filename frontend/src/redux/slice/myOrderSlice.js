@@ -1,49 +1,71 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { PRIVATE_API } from "../../api/apiIndex";
+import axios from "axios";
+
+const BASE_URL = "http://localhost:3001";
 
 const initialState = {
   ordersData: [],
   fetchStatus: "idle",
   fetchError: "",
-  singleOrder: "",
+  singleOrder: null,
   singleOrderStatus: "idle",
   singleOrderError: "",
   cancelStatus: "idle",
   cancelError: "",
 };
 
+// Fetch all orders of a user by userId
 export const fetchMyOrders = createAsyncThunk(
   "myOrder/fetchMyOrders",
-  async (_, { rejectWithValue }) => {
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get("/order/user");
-      return response.data;
+      const response = await axios.get(`${BASE_URL}/users/${userId}`);
+      return response.data.orders || [];
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
 
+// Fetch a single order by userId and orderId
 export const fetchSingleOrder = createAsyncThunk(
   "myOrder/fetchSingleOrder",
-  async (id, { rejectWithValue }) => {
+  async ({ userId, orderId }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.get(`/order/single/${id}`);
-      return response.data;
+      const response = await axios.get(`${BASE_URL}/users/${userId}`);
+      const orders = response.data.orders || [];
+      const order = orders.find((o) => o.orderId === orderId);
+      if (!order) throw new Error("Order not found");
+      return order;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
 
+// Cancel order by updating order status inside user's orders and patch user
 export const cancelOrder = createAsyncThunk(
   "myOrder/cancelOrder",
-  async (id, { rejectWithValue }) => {
+  async ({ userId, orderId, cancelledDate }, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.put(`/order/cancel/${id}`);
-      return response.data;
+      const userResponse = await axios.get(`${BASE_URL}/users/${userId}`);
+      const user = userResponse.data;
+
+      const updatedOrders = (user.orders || []).map((order) =>
+        order.orderId === orderId
+          ? { ...order, status: "Cancelled", cancelledDate }
+          : order
+      );
+
+      await axios.patch(`${BASE_URL}/users/${userId}`, {
+        orders: updatedOrders,
+      });
+
+      const cancelledOrder = updatedOrders.find((o) => o.orderId === orderId);
+
+      return cancelledOrder;
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
@@ -53,7 +75,8 @@ const myOrderSlice = createSlice({
   initialState,
   reducers: {
     removeSingleOrderData: (state) => {
-      (state.singleOrder = ""), (state.singleOrderStatus = "idle");
+      state.singleOrder = null;
+      state.singleOrderStatus = "idle";
       state.singleOrderError = "";
     },
   },
@@ -65,12 +88,12 @@ const myOrderSlice = createSlice({
       })
       .addCase(fetchMyOrders.fulfilled, (state, action) => {
         state.fetchStatus = "success";
+        state.ordersData = action.payload;
         state.fetchError = "";
-        state.ordersData = action.payload.data;
       })
       .addCase(fetchMyOrders.rejected, (state, action) => {
         state.fetchStatus = "failed";
-        state.fetchError = action.payload.message;
+        state.fetchError = action.payload || "Failed to fetch orders";
       })
 
       .addCase(fetchSingleOrder.pending, (state) => {
@@ -79,12 +102,12 @@ const myOrderSlice = createSlice({
       })
       .addCase(fetchSingleOrder.fulfilled, (state, action) => {
         state.singleOrderStatus = "success";
+        state.singleOrder = action.payload;
         state.singleOrderError = "";
-        state.singleOrder = action.payload.data;
       })
       .addCase(fetchSingleOrder.rejected, (state, action) => {
         state.singleOrderStatus = "failed";
-        state.singleOrderError = action.payload.message;
+        state.singleOrderError = action.payload || "Failed to fetch order";
       })
 
       .addCase(cancelOrder.pending, (state) => {
@@ -94,20 +117,18 @@ const myOrderSlice = createSlice({
       .addCase(cancelOrder.fulfilled, (state, action) => {
         state.cancelStatus = "success";
         state.cancelError = "";
-        state.singleOrder = {
-          ...state.singleOrder,
-          status: action.payload.status,
-          cancelledDate: action.payload.cancelledDate,
-        };
-        state.ordersData = state.ordersData.map((entry) =>
-          entry._id === action.payload.id
-            ? { ...entry, status: action.payload.status }
-            : entry
+
+        if (state.singleOrder?.orderId === action.payload.orderId) {
+          state.singleOrder = action.payload;
+        }
+
+        state.ordersData = state.ordersData.map((order) =>
+          order.orderId === action.payload.orderId ? action.payload : order
         );
       })
       .addCase(cancelOrder.rejected, (state, action) => {
         state.cancelStatus = "failed";
-        state.cancelError = action.payload.message;
+        state.cancelError = action.payload || "Failed to cancel order";
       });
   },
 });
@@ -119,8 +140,7 @@ export const getMyOrderFetchStatus = (state) => state.myOrder.fetchStatus;
 export const getMyOrderFetchError = (state) => state.myOrder.fetchError;
 
 export const getSingleMyOrder = (state) => state.myOrder.singleOrder;
-export const getSingleMyOrderStatus = (state) =>
-  state.myOrder.singleOrderStatus;
+export const getSingleMyOrderStatus = (state) => state.myOrder.singleOrderStatus;
 export const getSingleMyOrderError = (state) => state.myOrder.singleOrderError;
 
 export const getCancelStatus = (state) => state.myOrder.cancelStatus;

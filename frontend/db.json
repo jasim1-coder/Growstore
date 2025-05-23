@@ -21,13 +21,15 @@
           "productId": 1,
           "name": "Nike Air Max",
           "quantity": 2,
-          "price": 120.00
+          "price": 120.00,
+          "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
         },
         {
           "productId": 2,
           "name": "Adidas UltraBoost",
           "quantity": 1,
-          "price": 110.00
+          "price": 110.00,
+          "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
         }
       ]
     }

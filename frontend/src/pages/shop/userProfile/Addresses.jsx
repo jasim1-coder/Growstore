@@ -9,18 +9,28 @@ import {
 } from "../../../redux/slice/addressSlice";
 import AddressCard from "../../../components/shop/profile/address/AddressCard";
 import { getFeaturedProductError } from "../../../redux/slice/productSlice";
+import { getUser } from "../../../redux/slice/authSlice";
 
 const Addresses = () => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser)
   const addressData = useSelector(getAllAddress);
   const status = useSelector(getFetchAddressStatus);
   const error = useSelector(getFeaturedProductError);
 
+  const userId = user?.id;
+  console.log("userId : ",userId)
+
   useEffect(() => {
-    if (addressData.length === 0) {
-      dispatch(fetchAddress());
-    }
-  }, []);
+    
+// or get it from Redux
+      if (user && userId) {
+        
+        dispatch(fetchAddress(userId));
+      }
+    
+  }, [userId,user]);
+  
 
   return (
     <ProfileLayout>

@@ -8,8 +8,11 @@ import {
   getMyOrderFetchStatus,
   getMyOrders,
 } from "../../../redux/slice/myOrderSlice";
+import { getUser } from "../../../redux/slice/authSlice";
 
 const OrderHistory = () => {
+const user = useSelector(getUser);
+const userId = user.id;
   const dispatch = useDispatch();
   const myOrders = useSelector(getMyOrders);
   const fetchStatus = useSelector(getMyOrderFetchStatus);
@@ -17,7 +20,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     if (myOrders.length === 0) {
-      dispatch(fetchMyOrders());
+      dispatch(fetchMyOrders(userId));
     }
   }, []);
 

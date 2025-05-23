@@ -43,13 +43,13 @@ const ProductItem = ({ data }) => {
         <div className="flex sm:flex-row flex-col gap-1 sm:gap-3 sm:items-center">
           <img
             className="h-[100px] object-cover w-[100px] rounded-sm"
-            src={data.imageUrl}
+            src={data.image}
             alt=""
           />
           <Link to={`/product/${data.productId}`}>
             <span
               className="text-sm hover:text-uiOrange"
-              dangerouslySetInnerHTML={{ __html: data.title }}
+              dangerouslySetInnerHTML={{ __html: data.name }}
             />
           </Link>
         </div>
