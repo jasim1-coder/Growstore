@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PRIVATE_PYTHON_API } from "../../api/apiIndex";
-
+import axios from "axios";
 const initialState = {
   responses: [
     {
@@ -14,15 +14,23 @@ const initialState = {
 
 export const fetchChatResponses = createAsyncThunk(
   "chat/fetchChatResponses",
-  async (message, { rejectWithValue }) => {
+  async (userMessage, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_PYTHON_API.get("/chat", {
-        params: { query: message },
-        withCredentials: true,
-      });
-      return response.data;
+      const res = await axios.get("http://localhost:3001/botReplies");
+      const replies = res.data;
+
+      // Simple keyword matching, case-insensitive
+      const match = replies.find((item) =>
+        userMessage.toLowerCase().includes(item.keyword.toLowerCase())
+      );
+
+      const botReply = match
+        ? match.response
+        : "Sorry, I didn't understand that. Can you please rephrase?";
+
+      return { reply: botReply };
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue(error.message || "Failed to fetch replies");
     }
   }
 );
@@ -42,26 +50,25 @@ const chatSlice = createSlice({
       state.status = "idle";
     },
   },
-  extraReducers: (builder) => {
-    builder
-      // GET FEATURED Product
-      .addCase(fetchChatResponses.pending, (state) => {
-        state.status = "loading";
-        state.error = "";
-      })
-      .addCase(fetchChatResponses.fulfilled, (state, action) => {
-        state.status = "success";
-        state.error = "";
-        state.responses = [
-          ...state.responses,
-          { sender: "bot", message: action.payload.data },
-        ];
-      })
-      .addCase(fetchChatResponses.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload.message;
-      });
-  },
+extraReducers: (builder) => {
+  builder
+    .addCase(fetchChatResponses.pending, (state) => {
+      state.status = "loading";
+      state.error = "";
+    })
+    .addCase(fetchChatResponses.fulfilled, (state, action) => {
+      state.status = "success";
+      state.error = "";
+      state.responses = [
+        ...state.responses,
+        { sender: "bot", message: action.payload.reply },
+      ];
+    })
+    .addCase(fetchChatResponses.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.payload || "Error fetching chatbot reply";
+    });
+},
 });
 
 export const { setUserResponse, removeChatErrorMessage } = chatSlice.actions;

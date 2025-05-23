@@ -1,89 +1,112 @@
 {
   "users": [
     {
-  "id": 1,
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "123456",
-  "mobileNumber": "9876543210",
-  "role": "CUSTOMER",
-  "verified": true,
-  "total_orders":"1",
-  "orders": [
-    {
-      "id": 1,
-      "orderId": 101,
-      "date": "2024-05-21",
-      "status": "Completed",
-      "amount": 250.00,
-      "items": [
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "123456",
+      "mobileNumber": "9876543210",
+      "role": "CUSTOMER",
+      "verified": true,
+      "total_orders": "1",
+      "orders": [
+        {
+          "id": 1,
+          "orderId": 101,
+          "date": "2024-05-21",
+          "status": "Delivered",
+          "amount": 250,
+          "items": [
+            {
+              "productId": 1,
+              "name": "Nike Air Max",
+              "quantity": 2,
+              "price": 120,
+              "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
+            },
+            {
+              "productId": 2,
+              "name": "Adidas UltraBoost",
+              "quantity": 1,
+              "price": 110,
+              "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "orderId": 102,
+          "date": "2024-05-21",
+          "status": "Pending",
+          "amount": 250,
+          "items": [
+            {
+              "productId": 1,
+              "name": "Nike Air Max",
+              "quantity": 2,
+              "price": 120,
+              "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
+            },
+            {
+              "productId": 2,
+              "name": "Adidas UltraBoost",
+              "quantity": 1,
+              "price": 110,
+              "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
+            }
+          ]
+        }
+      ],
+      "cart": [
         {
           "productId": 1,
           "name": "Nike Air Max",
-          "quantity": 2,
-          "price": 120.00,
+          "quantity": 1,
+          "price": 120,
           "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
         },
         {
+          "productId": 3,
+          "name": "Puma Running Shoes",
+          "quantity": 2,
+          "price": 90,
+          "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRj9_7c03alTUI5fX4RNwqFfAHm-KhFvVvb37-uGO9OxKVqQfbYQtnUPDCI2CYLCshLXt3jzaL61ukX6FYVblFYGZdJ_o-Qo_oCve8v4vHxsConUDN8e9wFMA"
+        }
+      ],
+      "wishlist": [
+        {
           "productId": 2,
           "name": "Adidas UltraBoost",
-          "quantity": 1,
-          "price": 110.00,
+          "price": 110,
+          "addedOn": "2024-05-20T10:00:00Z",
           "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
         }
+      ],
+      "addresses": [
+        {
+          "_id": 1,
+          "title": "Home",
+          "mobileNumber": "9876543210",
+          "street": "123 Main St",
+          "city": "New York",
+          "state": "NY",
+          "zipCode": "10001",
+          "country": "USA"
+        },
+        {
+          "_id": 2,
+          "title": "Office",
+          "mobileNumber": "9876543211",
+          "street": "456 Office Ave",
+          "city": "San Francisco",
+          "state": "CA",
+          "zipCode": "94105",
+          "country": "USA"
+        }
       ]
-    }
-  ],
-  "cart": [
-    {
-      "productId": 1,
-      "name": "Nike Air Max",
-      "quantity": 1,
-      "price": 120.00,
-      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTXB3R0JOO-7MPQ3Qs14xA5aBSz6ju62FY2fwqNkkQwDTs8PrIGzZJ51El9Hbw_lkog_B670hxO03u0f04iPDW7iRjQ8d7vl6ipcAt_4KeU4e1a4vDVkO4obRU"
     },
     {
-      "productId": 3,
-      "name": "Puma Running Shoes",
-      "quantity": 2,
-      "price": 90.00,
-      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRj9_7c03alTUI5fX4RNwqFfAHm-KhFvVvb37-uGO9OxKVqQfbYQtnUPDCI2CYLCshLXt3jzaL61ukX6FYVblFYGZdJ_o-Qo_oCve8v4vHxsConUDN8e9wFMA"
-    }
-  ],
-  "wishlist": [
-    {
-      "productId": 2,
-      "name": "Adidas UltraBoost",
-      "price": 110.00,
-      "addedOn": "2024-05-20T10:00:00Z",
-      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
-    }
-  ],
-  "addresses": [
-    {
-      "_id": 1,
-      "title": "Home",
-      "mobileNumber": "9876543210",
-      "street": "123 Main St",
-      "city": "New York",
-      "state": "NY",
-      "zipCode": "10001",
-      "country": "USA"
-    },
-    {
-      "_id": 2,
-      "title": "Office",
-      "mobileNumber": "9876543211",
-      "street": "456 Office Ave",
-      "city": "San Francisco",
-      "state": "CA",
-      "zipCode": "94105",
-      "country": "USA"
-    }
-  ]
-},
-    {
-      "id": 2,
+      "id": "2",
       "name": "Admin User",
       "email": "admin@example.com",
       "password": "admin123",
@@ -102,7 +125,7 @@
   ],
   "wishlists": [
     {
-      "id": 1,
+      "id": "1",
       "userId": 1,
       "items": [
         {
@@ -122,7 +145,7 @@
   ],
   "carts": [
     {
-      "id": 1,
+      "id": "1",
       "userId": 1,
       "items": [
         {
@@ -150,7 +173,8 @@
       "bestSeller": false,
       "recommended": false,
       "popular": true,
-      "topPick": false
+      "topPick": false,
+      "id": "1a3b"
     },
     {
       "_id": "p2",
@@ -166,7 +190,8 @@
       "bestSeller": true,
       "recommended": false,
       "popular": true,
-      "topPick": false
+      "topPick": false,
+      "id": "6b42"
     },
     {
       "_id": "p3",
@@ -182,7 +207,8 @@
       "bestSeller": true,
       "recommended": true,
       "popular": true,
-      "topPick": true
+      "topPick": true,
+      "id": "faf4"
     },
     {
       "_id": "p4",
@@ -198,7 +224,8 @@
       "bestSeller": true,
       "recommended": false,
       "popular": false,
-      "topPick": false
+      "topPick": false,
+      "id": "63e1"
     },
     {
       "_id": "p5",
@@ -214,7 +241,8 @@
       "bestSeller": false,
       "recommended": true,
       "popular": false,
-      "topPick": false
+      "topPick": false,
+      "id": "938f"
     },
     {
       "_id": "p6",
@@ -230,7 +258,8 @@
       "bestSeller": true,
       "recommended": true,
       "popular": true,
-      "topPick": true
+      "topPick": true,
+      "id": "8113"
     },
     {
       "_id": "p7",
@@ -246,7 +275,8 @@
       "bestSeller": false,
       "recommended": false,
       "popular": true,
-      "topPick": false
+      "topPick": false,
+      "id": "5811"
     },
     {
       "_id": "p8",
@@ -262,7 +292,8 @@
       "bestSeller": true,
       "recommended": true,
       "popular": false,
-      "topPick": false
+      "topPick": false,
+      "id": "59f6"
     },
     {
       "_id": "p9",
@@ -278,7 +309,8 @@
       "bestSeller": false,
       "recommended": false,
       "popular": true,
-      "topPick": false
+      "topPick": false,
+      "id": "9fe4"
     },
     {
       "_id": "p10",
@@ -294,18 +326,20 @@
       "bestSeller": true,
       "recommended": true,
       "popular": false,
-      "topPick": true
+      "topPick": true,
+      "id": "079e"
     }
   ],
   "tokens": [
     {
       "userId": 1,
-      "accessToken": "fake-jwt-token-for-user-1"
+      "accessToken": "fake-jwt-token-for-user-1",
+      "id": "c965"
     }
   ],
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Fruits",
       "featuredImage": "https://hips.hearstapps.com/hmg-prod/images/assortment-of-colorful-ripe-tropical-fruits-top-royalty-free-image-1729774230.jpg",
       "products": [
@@ -344,7 +378,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Dairy",
       "featuredImage": "https://img.freepik.com/free-vector/group-dairy-product-cheese-butter-milk_1308-160301.jpg?semt=ais_hybrid&w=740",
       "products": [
@@ -383,7 +417,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Vegetables",
       "featuredImage": "https://cdn.britannica.com/17/196817-159-9E487F15/vegetables.jpg",
       "products": [
@@ -427,89 +461,398 @@
       "_id": "b1",
       "name": "Fresh Farms",
       "description": "Organic fruit brand",
-      "logo": "https://img.freepik.com/free-vector/farm-fresh-green-leafy-food-label-design_1017-30769.jpg"
+      "logo": "https://img.freepik.com/free-vector/farm-fresh-green-leafy-food-label-design_1017-30769.jpg",
+      "id": "b889"
     },
     {
       "_id": "b2",
       "name": "Dairy Fresh",
       "description": "High-quality dairy products",
-      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2O4clWnW9GUjxBQG1N2WkQ5rKXsSdDmFJeg&s"
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2O4clWnW9GUjxBQG1N2WkQ5rKXsSdDmFJeg&s",
+      "id": "c978"
     },
     {
       "_id": "b3",
       "name": "Bakery Delights",
       "description": "High-quality dairy products",
-      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwCPLzGQAQ9eevXVzLY8tJxOirm16pY_MAOw&s"
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwCPLzGQAQ9eevXVzLY8tJxOirm16pY_MAOw&s",
+      "id": "a506"
     },
     {
       "_id": "b4",
       "name": "Green Fields",
       "description": "High-quality dairy products",
-      "logo": "https://static.vecteezy.com/system/resources/previews/031/705/662/non_2x/green-field-logo-icon-design-inspiration-with-tree-sun-and-hand-illustration-vector.jpg"
+      "logo": "https://static.vecteezy.com/system/resources/previews/031/705/662/non_2x/green-field-logo-icon-design-inspiration-with-tree-sun-and-hand-illustration-vector.jpg",
+      "id": "5fe0"
     },
     {
       "_id": "b5",
       "name": "Golden Grains",
       "description": "High-quality dairy products",
-      "logo": "https://m.media-amazon.com/images/S/stores-image-uploads-eu-prod/3/AmazonStores/A21TJRUUN4KGV/bbb03adffc34bcc855c464109f6ec7a6.w400.h400.png"
+      "logo": "https://m.media-amazon.com/images/S/stores-image-uploads-eu-prod/3/AmazonStores/A21TJRUUN4KGV/bbb03adffc34bcc855c464109f6ec7a6.w400.h400.png",
+      "id": "b0c9"
     },
     {
       "_id": "b6",
       "name": "Tropical Farms",
       "description": "High-quality dairy products",
-      "logo": "https://c8.alamy.com/comp/2F6MJD9/beach-and-farm-design-tropical-and-agricultural-logo-design-vector-beach-farm-logo-design-concept-vector-image-2F6MJD9.jpg"
+      "logo": "https://c8.alamy.com/comp/2F6MJD9/beach-and-farm-design-tropical-and-agricultural-logo-design-vector-beach-farm-logo-design-concept-vector-image-2F6MJD9.jpg",
+      "id": "2401"
     }
   ],
-   "orders": [
+  "orders": [
     {
-      "id": "1",
-      "orderId": "ORD001",
-      "orderDate": "2024-01-01T10:00:00Z",
-      "status": "Pending", 
-      "totalAmount": 120.5,
-      "paymentMethod": "Credit Card",
-      "paymentId": "PAY123456789",
-
-      "user": {
-        "userId": 1,
-        "userName": "John Doe",
-        "userEmail": "john.doe@example.com",
-        "mobileNumber": "1234567890"
-      },
-
-      "address": {
-        "mobileNumber": "1234567890",
-        "zipCode": "10001"
-      },
-
-      "shippingAddress": {
-        "street": "123 Main St",
-        "city": "New York",
-        "state": "NY",
-        "zip": "10001",
-        "country": "USA"
-      },
-
-      "products": [
-        {
-          "productId": "prod1",
-          "title": "Smartphone X200",
-          "brand": "BrandX",
-          "quantity": 1,
-          "price": 100,
-          "subTotal": 100,
-          "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQdmvyVhWRmKC5iVedubukLd6XFC6y31JAROb1PGiNXB3MoWHBdgdcUui1YccMRGRk2vhcDWdrR2V6ep3PStmDqwWp58RMmShbo2tDASxfyRRfU9FTR7qhu9g"
-        },
-        {
-          "productId": "prod2",
-          "title": "Fast Charger 20W",
-          "brand": "BrandX",
-          "quantity": 1,
-          "price": 20.5,
-          "subTotal": 20.5,
-          "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS84dJsKufEFzPsV8LZ4mKmQOqq2_ilu8-HWrdBtZN5ZQUNl3osdM283B2pwVsSC4ep_L1nOV3-Uy47L-Za_8eFP-svQdWA_hcS5b4_YT96ozFwKR0CpqeRiA"
-        }
-      ]
+       "user": {
+    "userId": 1},
+  "id": "1",
+  "orderId": "ORD001",
+  "orderDate": "2024-01-01T10:00:00Z",
+  "status": "Delivered",
+  "totalAmount": 120.5,
+  "paymentMethod": "Credit Card",
+  "paymentId": "PAY123456789",
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "country": "USA",
+    "mobileNumber": "1234567890"
+  },
+  "products": [
+    {
+      "productId": "prod1",
+      "title": "Smartphone X200",
+      "brand": "BrandX",
+      "quantity": 1,
+      "price": 100,
+      "subTotal": 100,
+      "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQdmvyVhWRmKC5iVedubukLd6XFC6y31JAROb1PGiNXB3MoWHBdgdcUui1YccMRGRk2vhcDWdrR2V6ep3PStmDqwWp58RMmShbo2tDASxfyRRfU9FTR7qhu9g"
+    },
+    {
+      "productId": "prod2",
+      "title": "Fast Charger 20W",
+      "brand": "BrandX",
+      "quantity": 1,
+      "price": 20.5,
+      "subTotal": 20.5,
+      "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS84dJsKufEFzPsV8LZ4mKmQOqq2_ilu8-HWrdBtZN5ZQUNl3osdM283B2pwVsSC4ep_L1nOV3-Uy47L-Za_8eFP-svQdWA_hcS5b4_YT96ozFwKR0CpqeRiA"
+    }
+  ]
+},
+    {
+       "user": {
+    "userId": 1},
+  "id": "2",
+  "orderId": "ORD002",
+  "orderDate": "2024-01-01T10:00:00Z",
+  "status": "Placed",
+  "totalAmount": 120.5,
+  "paymentMethod": "Credit Card",
+  "paymentId": "PAY123456789",
+  "shippingAddress": {
+    "street": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10001",
+    "country": "USA",
+    "mobileNumber": "1234567890"
+  },
+  "products": [
+    {
+      "productId": "prod1",
+      "title": "Smartphone X200",
+      "brand": "BrandX",
+      "quantity": 1,
+      "price": 100,
+      "subTotal": 100,
+      "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQdmvyVhWRmKC5iVedubukLd6XFC6y31JAROb1PGiNXB3MoWHBdgdcUui1YccMRGRk2vhcDWdrR2V6ep3PStmDqwWp58RMmShbo2tDASxfyRRfU9FTR7qhu9g"
+    },
+    {
+      "productId": "prod2",
+      "title": "Fast Charger 20W",
+      "brand": "BrandX",
+      "quantity": 1,
+      "price": 20.5,
+      "subTotal": 20.5,
+      "imageUrl": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS84dJsKufEFzPsV8LZ4mKmQOqq2_ilu8-HWrdBtZN5ZQUNl3osdM283B2pwVsSC4ep_L1nOV3-Uy47L-Za_8eFP-svQdWA_hcS5b4_YT96ozFwKR0CpqeRiA"
     }
   ]
 }
+,
+    {
+      "id": "1eb4",
+      "paymentMethod": "Card (Mock)",
+      "paymentId": "pi_mock_success",
+      "addressId": 2,
+      "cartId": ""
+    }
+  ],
+  "payment": [
+    {
+      "id": "1",
+      "clientSecret": "pi_mock_123456789_secret_abcdefg"
+    }
+  ],
+  
+  "messages": [
+    {
+      "id": 1,
+      "sender": "bot",
+      "message": "Hey, Welcome to Growcomers Chatbot! How may I help you?"
+    },
+    {
+      "id": 2,
+      "sender": "user",
+      "message": "Hello"
+    }
+  ],
+  "botReplies": [
+    {
+      "id": 1,
+      "keyword": "hello",
+      "response": "Hello! Welcome to FreshMart Grocery. How can I assist you today?"
+    },
+    {
+      "id": 2,
+      "keyword": "hi",
+      "response": "Hi there! Looking for fresh groceries or something specific?"
+    },
+    {
+      "id": 3,
+      "keyword": "price",
+      "response": "Our prices vary by product. Let me know what you're interested in and I can help!"
+    },
+    {
+      "id": 4,
+      "keyword": "delivery",
+      "response": "We offer home delivery within 5 miles radius. Delivery charges depend on your location."
+    },
+    {
+      "id": 5,
+      "keyword": "hours",
+      "response": "Our store is open from 8 AM to 9 PM, Monday to Saturday."
+    },
+    {
+      "id": 6,
+      "keyword": "organic",
+      "response": "We have a great selection of organic fruits and vegetables. Would you like to see our latest offers?"
+    },
+    {
+      "id": 7,
+      "keyword": "discount",
+      "response": "We currently have discounts on seasonal fruits and some dairy products. Check our deals section!"
+    },
+    {
+      "id": 8,
+      "keyword": "vegetables",
+      "response": "Fresh vegetables are stocked daily! Any particular vegetable you’re looking for?"
+    },
+    {
+      "id": 9,
+      "keyword": "fruits",
+      "response": "We have a variety of fresh fruits including apples, bananas, oranges, and more."
+    },
+    {
+      "id": 10,
+      "keyword": "payment",
+      "response": "We accept all major credit cards, debit cards, and mobile payments."
+    },
+    {
+      "id": 11,
+      "keyword": "return",
+      "response": "If you're unsatisfied with a product, you can return it within 7 days with the receipt."
+    },
+    {
+      "id": 12,
+      "keyword": "store location",
+      "response": "We are located at 123 Market Street, downtown. Would you like directions?"
+    },
+    {
+      "id": 13,
+      "keyword": "hours",
+      "response": "We’re open daily from 8 AM to 9 PM. Closed on Sundays."
+    },
+    {
+      "id": 14,
+      "keyword": "fresh",
+      "response": "All our products are fresh and sourced from trusted local farmers."
+    },
+    {
+      "id": 15,
+      "keyword": "special offers",
+      "response": "Check out our weekly specials on dairy, bakery, and organic items."
+    },
+    {
+      "id": 16,
+      "keyword": "bakery",
+      "response": "Our bakery offers fresh bread, cakes, and pastries baked daily."
+    },
+    {
+      "id": 17,
+      "keyword": "meat",
+      "response": "We have fresh cuts of chicken, beef, and pork available every day."
+    },
+    {
+      "id": 18,
+      "keyword": "customer support",
+      "response": "Our customer support team is here to help you Monday to Saturday, 9 AM to 6 PM."
+    },
+    {
+      "id": 19,
+      "keyword": "order status",
+      "response": "Please provide your order number, and I will check the status for you."
+    },
+    {
+      "id": 20,
+      "keyword": "thank you",
+      "response": "You're welcome! If you have any other questions, feel free to ask."
+    },
+    {
+  "id": 21,
+  "keyword": "milk",
+  "response": "We have regular, low-fat, and plant-based milk options. Would you like to see the brands?"
+},
+{
+  "id": 22,
+  "keyword": "eggs",
+  "response": "We stock farm-fresh eggs, organic eggs, and free-range eggs."
+},
+{
+  "id": 23,
+  "keyword": "bread",
+  "response": "We offer white, brown, multigrain, and gluten-free bread."
+},
+{
+  "id": 24,
+  "keyword": "gluten free",
+  "response": "Yes, we have gluten-free snacks, bread, and flours."
+},
+{
+  "id": 25,
+  "keyword": "vegan",
+  "response": "Yes! We carry a variety of vegan products including dairy alternatives, snacks, and frozen meals."
+},
+{
+  "id": 26,
+  "keyword": "sugar",
+  "response": "We stock white sugar, brown sugar, jaggery, and sugar substitutes like stevia."
+},
+{
+  "id": 27,
+  "keyword": "baby food",
+  "response": "Yes, we have a dedicated baby food section with trusted brands."
+},
+{
+  "id": 28,
+  "keyword": "track order",
+  "response": "Please provide your order ID so I can check the status."
+},
+{
+  "id": 29,
+  "keyword": "delivery time",
+  "response": "Most deliveries arrive within 60 to 90 minutes depending on your location."
+},
+{
+  "id": 30,
+  "keyword": "same day delivery",
+  "response": "Yes, we offer same-day delivery on orders before 5 PM."
+},
+{
+  "id": 31,
+  "keyword": "minimum order",
+  "response": "The minimum order for delivery is ₹300."
+},
+{
+  "id": 32,
+  "keyword": "cancel order",
+  "response": "Please share your order ID and we’ll assist with the cancellation."
+},
+{
+  "id": 33,
+  "keyword": "complaint",
+  "response": "Sorry to hear that! Please tell me what went wrong and I’ll notify support."
+},
+{
+  "id": 34,
+  "keyword": "wrong item",
+  "response": "Apologies! Please share the order number and we’ll arrange a replacement."
+},
+{
+  "id": 35,
+  "keyword": "expired product",
+  "response": "That’s serious. Please provide a photo and your bill, and we’ll replace it."
+},
+{
+  "id": 36,
+  "keyword": "payment failed",
+  "response": "Sorry about that. If payment was deducted, it will be refunded within 2–3 working days."
+},
+{
+  "id": 37,
+  "keyword": "offers",
+  "response": "You can check our homepage for current offers or ask me about a specific product."
+},
+{
+  "id": 38,
+  "keyword": "invoice",
+  "response": "You can download your invoice from the 'My Orders' section of your account."
+},
+{
+  "id": 39,
+  "keyword": "refund",
+  "response": "Refunds are processed within 2–5 working days after approval."
+},
+{
+  "id": 40,
+  "keyword": "payment methods",
+  "response": "We accept cards, UPI, cash on delivery, and mobile wallets."
+},
+{
+  "id": 41,
+  "keyword": "ice cream",
+  "response": "We offer a variety of flavors from Amul, Kwality Walls, and more."
+},
+{
+  "id": 42,
+  "keyword": "frozen food",
+  "response": "We stock frozen parathas, peas, fries, nuggets, and more."
+},
+{
+  "id": 43,
+  "keyword": "store cold items",
+  "response": "Cold items are kept refrigerated till delivery. Please store them immediately after delivery."
+},
+{
+  "id": 44,
+  "keyword": "toothpaste",
+  "response": "Yes! We have Colgate, Pepsodent, Sensodyne, and more."
+},
+{
+  "id": 45,
+  "keyword": "detergent",
+  "response": "You can find Surf Excel, Tide, Ariel, and eco-friendly options."
+},
+{
+  "id": 46,
+  "keyword": "shampoo",
+  "response": "We have Head & Shoulders, Dove, Clinic Plus, and organic options."
+},
+{
+  "id": 47,
+  "keyword": "puja items",
+  "response": "We stock incense sticks, camphor, diyas, ghee, and more."
+},
+{
+  "id": 48,
+  "keyword": "diwali",
+  "response": "We have special Diwali packs, sweets, and decorative items. Check our festive section!"
+},
+{
+  "id": 49,
+  "keyword": "rakhi",
+  "response": "Yes, Rakhis and Raksha Bandhan gift boxes are available during the season."
+}
+  ]
+}
+

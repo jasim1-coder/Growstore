@@ -28,6 +28,7 @@ const ManageOrder = () => {
 
   useEffect(() => {
     dispatch(fetchSingleOrder(id));
+    console.log("data for the invoice too:",orderData)
     return () => {
       dispatch(removeSingleOrderData());
     };
@@ -102,8 +103,8 @@ const ManageOrder = () => {
               }}
             />
             <OrderProducts data={orderData.products} />
-            <AddressSummary data={orderData.address} />
-            <OrderActions orderStatus={orderData.status} id={orderData._id} />
+            <AddressSummary data={orderData} />
+            <OrderActions orderStatus={orderData.status} id={orderData.id} orderData={orderData} />
           </>
         ) : null}
       </section>

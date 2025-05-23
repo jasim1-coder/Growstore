@@ -15,9 +15,13 @@ import { getAddressId, setAddressId } from "../../../redux/slice/orderSlice";
 import AddressForm from "../../../components/shop/profile/address/AddressForm";
 import { initialAddressValues } from "../../../utils/DefaultValues";
 import AlertBox from "../../../components/common/AlertBox";
+import { getUser } from "../../../redux/slice/authSlice";
+
 
 const Shipping = ({ onNextStep }) => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
+  const userId = user.id;
 
   const addressId = useSelector(getAddressId);
   const addressData = useSelector(getAllAddress);
@@ -41,7 +45,7 @@ const Shipping = ({ onNextStep }) => {
 
   useEffect(() => {
     
-      dispatch(fetchAddress());
+      dispatch(fetchAddress(userId));
     
   }, []);
 
@@ -65,7 +69,7 @@ const Shipping = ({ onNextStep }) => {
               initialValues={initialAddressValues}
               buttonName="Add"
               handleSubmit={handleAddAddress}
-              handleCancel={() => setAddAddressActive(false)}
+              handleCancell={() => setAddAddressActive(false)}
               status={addAddress}
             />
           ) : (

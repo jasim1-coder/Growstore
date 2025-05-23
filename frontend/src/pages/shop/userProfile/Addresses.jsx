@@ -20,6 +20,7 @@ const Addresses = () => {
 
   const userId = user?.id;
   console.log("userId : ",userId)
+  console.log("address data that lookin for:",addressData)
 
   useEffect(() => {
     

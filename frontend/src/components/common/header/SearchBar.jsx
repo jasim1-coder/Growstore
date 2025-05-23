@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import AsyncSelect from "react-select/async";
-import { NODE_API } from "../../../api/apiIndex";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,45 +11,44 @@ import {
   getSearchPrice,
   getSearchQuery,
 } from "../../../redux/slice/productSlice";
-import { useDebounce } from "./useDebounce"; // Import the custom hook
+import { useDebounce } from "./useDebounce";
 
 const customStyles = {
   option: (provided) => ({
     ...provided,
-    cursor: 'pointer',
+    cursor: "pointer",
   }),
   container: (provided) => ({
     ...provided,
-    minWidth: '200px',
+    minWidth: "200px",
   }),
   control: (provided) => ({
     ...provided,
-    padding: '0 4px',
-    backgroundColor: 'transparent',
-    border: '1px solid #ddd',
-    boxShadow: 'none',
-    minHeight: '0',
+    padding: "0 4px",
+    backgroundColor: "transparent",
+    border: "1px solid #ddd",
+    boxShadow: "none",
+    minHeight: "0",
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: '#333',
+    color: "#333",
   }),
   valueContainer: (provided) => ({
     ...provided,
-    padding: '0 0 0 6px',
+    padding: "0 0 0 6px",
   }),
-  indicatorSeparator: (provided) => ({
-    ...provided,
-    display: 'none',
+  indicatorSeparator: () => ({
+    display: "none",
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
-    padding: '0',
+    padding: "0",
   }),
   input: (provided) => ({
     ...provided,
-    padding: '0',
-    margin: '0',
+    padding: "0",
+    margin: "0",
   }),
 };
 
@@ -61,65 +59,70 @@ const SearchBar = () => {
   const oldQuery = useSelector(getSearchQuery);
   const order = useSelector(getSearchOrder);
   const priceRange = useSelector(getSearchPrice);
-  const _categories = useSelector(getSearchCategory);
   const brands = useSelector(getSearchBrand);
+  const reduxCategory = useSelector(getSearchCategory);
 
-  const [query, setQuery] = useState(oldQuery);
-  const [categories, setCategories] = useState(_categories);
+  const [query, setQuery] = useState(oldQuery || "");
+  const [selectedCategory, setSelectedCategory] = useState(reduxCategory || null);
 
-  const debouncedQuery = useDebounce(query, 500); // 500ms debounce delay
+  const debouncedQuery = useDebounce(query, 500);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
 
-    const __categories = categories?.value || null;
-    const _brands = brands?.map((entry) => entry.value).join(",") || null;
+    const selectedCatValue = selectedCategory?.value || null;
+    const brandValues = brands?.map((entry) => entry.value).join(",") || null;
 
     const params = {
-      query: debouncedQuery,  // Use debounced query
+      query: debouncedQuery,
       order,
       price: priceRange.toString(),
-      categories: __categories,
-      brands: _brands,
+      categories: selectedCatValue,
+      brands: brandValues,
     };
 
-    // Only dispatch if there's a valid query
     if (params.query || params.categories || params.brands) {
       dispatch(fetchFilteredProducts(params));
       navigate("/products");
     }
   };
 
-  const loadCategories = async (searchQuery) => {
+  const loadCategories = async (inputValue = "") => {
     try {
-      const { data } = await NODE_API.get(
-        `/category/select-search?searchQuery=${searchQuery}`
-      );
-      return data.data || [];
+      const response = await fetch(`http://localhost:3001/categories?q=${inputValue}`);
+      const data = await response.json();
+
+      return data.map((cat) => ({
+        label: cat.name || cat.title,
+        value: cat.name || cat.title,
+      }));
     } catch (error) {
-      console.error(error);
+      console.error("Error loading categories:", error);
       return [];
     }
   };
 
   useEffect(() => {
-    setCategories(_categories);
-  }, [_categories]);
+    setSelectedCategory(reduxCategory || null);
+  }, [reduxCategory]);
 
   useEffect(() => {
-    setQuery(oldQuery);
+    setQuery(oldQuery || "");
   }, [oldQuery]);
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4 sm:h-[48px] h-[40px]">
+    <form
+      onSubmit={handleSearch}
+      className="flex flex-row max-w-full sm:w-auto w-full sm:px-0 px-4 sm:h-[48px] h-[40px]"
+    >
       <div className="bg-greyLight rounded-tl-sm rounded-bl-sm flex items-center">
         <AsyncSelect
           cacheOptions
           loadOptions={loadCategories}
           defaultOptions
           name="category"
-          onChange={setCategories}
-          value={categories}
+          onChange={setSelectedCategory}
+          value={selectedCategory}
           isClearable
           placeholder="Select Category"
           className="sm:text-sm text-xs sm:w-[200px] w-[130px]"
@@ -137,7 +140,10 @@ const SearchBar = () => {
           placeholder="Search for products, brands, or categories..."
         />
       </div>
-      <button type="submit" className="bg-baseGreen text-white sm:px-5 px-2 sm:text-[24px] text-[12px] rounded-tr-sm rounded-br-sm">
+      <button
+        type="submit"
+        className="bg-baseGreen text-white sm:px-5 px-2 sm:text-[24px] text-[12px] rounded-tr-sm rounded-br-sm"
+      >
         <FiSearch />
       </button>
     </form>

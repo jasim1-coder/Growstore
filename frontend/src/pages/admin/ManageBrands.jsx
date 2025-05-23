@@ -15,7 +15,11 @@ import {
   getAdminSingleBrandFetchError,
   getAdminSingleBrandFetchStatus,
   removeAdminSingleBrand,
+  getAdminSingleBrandData
+  
+  
 } from "../../redux/adminSlice/brandsSlice";
+ 
 
 const AdminManageBrands = () => {
   const {id} = useParams();

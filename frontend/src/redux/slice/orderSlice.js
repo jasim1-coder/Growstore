@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { PRIVATE_API } from "../../api/apiIndex";
 
 const initialState = {
   addressId: "",
@@ -9,14 +8,31 @@ const initialState = {
   orderId: "",
 };
 
+// Updated thunk for mock server
 export const placeOrder = createAsyncThunk(
   "order/placeOrder",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await PRIVATE_API.post("/order/create", data);
-      return response.data;
+      const isDev = process.env.NODE_ENV === "development";
+      const apiUrl = isDev
+        ? "http://localhost:3001/orders"
+        : "/order/create"; // Replace with PRIVATE_API in prod
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue({ message: errorData.message || "Order failed" });
+      }
+
+      const resData = await response.json();
+      return { ...resData, orderId: resData.id || "mock_order_123" };
     } catch (error) {
-      return rejectWithValue(error.response ? error.response.data : error);
+      return rejectWithValue({ message: error.message || "Unknown error" });
     }
   }
 );
@@ -47,8 +63,7 @@ const orderSlice = createSlice({
       .addCase(placeOrder.pending, (state) => {
         state.orderStatus = "loading";
         state.orderError = "";
-        state.orderMessage =
-          "Payment processed successfully. Finalizing your order.";
+        state.orderMessage = "Payment processed successfully. Finalizing your order.";
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.orderStatus = "success";
@@ -73,7 +88,6 @@ export const {
 
 export const getAddressId = (state) => state.order.addressId;
 export const getOrderId = (state) => state.order.orderId;
-
 export const getOrderStatus = (state) => state.order.orderStatus;
 export const getOrderMessage = (state) => state.order.orderMessage;
 export const getOrderError = (state) => state.order.orderError;

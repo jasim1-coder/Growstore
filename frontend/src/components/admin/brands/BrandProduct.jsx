@@ -6,14 +6,21 @@ import { fetchProductsByBrand } from "../../../redux/adminSlice/brandsSlice";
 import Pagination from "../../common/pagination/Pagination";
 import AlertBox from "../../common/AlertBox";
 import SimpleLoading from "../../common/loaders/SimpleLoading";
-
+import { getAdminSingleBrandData } from "../../../redux/adminSlice/brandsSlice";
+import SingleBrand from "../../../pages/shop/SingleBrand";
 const ProductItem = ({ entry }) => {
   const navigate = useNavigate();
+  console.log("brand products entry:",entry)
 
   const handleProductNavigation = () => {
     navigate(`/admin/products/${entry._id}`);
   };
+  const brandData = useSelector(getAdminSingleBrandData) || {};
+useEffect(()=>{
+  dispatch(fetchProductsByBrand(brandData.name))
+},[brandData])
 
+const data =useSelector(SingleBrand)
   return (
     <tr
       className="border hover:bg-uiBlue/10 cursor-pointer text-sm text-bodyText"
@@ -55,7 +62,7 @@ const BrandProduct = ({ id }) => {
   useEffect(() => {
     dispatch(fetchProductsByBrand(id)); // Dispatch the action to fetch products by brand
   }, [dispatch, id, currentPage]); // Dependency array includes currentPage
-
+console.log("brands products:",products)
   return (
     <div className="flex flex-col">
       {fetchProdStatus === "failed" && <AlertBox message={fetchProdError} type="failed" />}

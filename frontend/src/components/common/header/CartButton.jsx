@@ -19,9 +19,9 @@ const CartButton = () => {
 
   useEffect(() => {
     if (user && itemsLength === 0) {
-      dispatch(fetchCartItems());
+      dispatch(fetchCartItems(user.id));
     }
-  }, []);
+  }, [user]);
 
   return (
     <Link to="/cart" className="flex flex-row items-center gap-3">

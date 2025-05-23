@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { ImSpinner2 } from "react-icons/im";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const country = ["India", "Nepal"];
 
@@ -76,6 +77,10 @@ const AddressForm = ({
   handleCancel,
   status,
 }) => {
+
+  console.log("initaila values:",initialValues)
+
+  const navigate = useNavigate();
   return (
     <Formik
       onSubmit={handleSubmit}
@@ -157,11 +162,11 @@ const AddressForm = ({
                 className="input-box h-[36px] text-sm"
               >
                 <option value="">Select state</option>
-                {states[values.country].map((stateName) => (
-                  <option value={stateName} key={stateName}>
-                    {stateName}
-                  </option>
-                ))}
+              {(states[values.country] || []).map((stateName) => (
+                <option value={stateName} key={stateName}>
+                  {stateName}
+                </option>
+              ))}
               </Field>
               {errors.state && touched.state ? (
                 <span className="input-error">{errors.state}</span>
@@ -198,7 +203,7 @@ const AddressForm = ({
           <div className="self-end flex flex-row gap-4">
             <button
               type="button"
-              onClick={handleCancel}
+              onClick={() => navigate("/profile/address")}
               className="border border-uiGrey text-bodyText h-[34px] px-6 font-normal min-w-[100px]"
               disabled={status === "loading"}
             >

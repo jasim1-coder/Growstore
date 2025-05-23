@@ -34,7 +34,10 @@ export const fetchSingleAddress = createAsyncThunk(
   async ({ userId, addressId }, { rejectWithValue }) => {
     try {
       const response = await axios.get(`http://localhost:3001/users/${userId}`);
-      const address = response.data.addresses.find((addr) => addr._id === addressId);
+      const address = response.data.addresses.find((addr) => addr._id == addressId);
+      console.log("addresss id in the slice:",addressId)
+      console.log("Adddres single respnse:", response)
+      console.log("Adddres single fetched:", address)
       return address || null;
     } catch (error) {
       return rejectWithValue(error.message);

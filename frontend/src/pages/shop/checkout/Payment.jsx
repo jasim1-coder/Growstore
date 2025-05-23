@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CheckoutCard from "../../../components/shop/cart/CheckoutCard";
 import CardCheckoutForm from "../../../components/shop/checkout/payment/CardCheckoutForm";
 import {
-  CardNumberElement,
+  
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -24,9 +24,11 @@ import AlertBox from "../../../components/common/AlertBox";
 import CryptoPayment from "../../../components/shop/checkout/payment/CryptoPayment";
 import { ethers } from "ethers";
 import { getINRvalue } from "../../../redux/slice/daiSlice";
+import CardWrapper from "../../../components/shop/checkout/payment/CardWrapper";
 
 const Payment = ({ onNextStep }) => {
   const dispatch = useDispatch();
+
 
   const addressId = useSelector(getAddressId);
   const cartId = useSelector(getCartId);
@@ -48,53 +50,60 @@ const Payment = ({ onNextStep }) => {
   const totalAmount = useSelector(getCartTotal);
   const inrValue = useSelector(getINRvalue);
 
-  const handleCardSubmit = async () => {
-    dispatch(
-      setOrderStatus({
-        status: "loading",
-        message: "Processing your payment. Please wait",
-      })
-    );
-    const { data } = await PRIVATE_API.post("/payment/stripe", {
-      totalAmount,
-    });
+const handleCardSubmit = async () => {
+  dispatch(
+    setOrderStatus({
+      status: "loading",
+      message: "Processing your payment. Please wait",
+    })
+  );
 
-    if (!stripe || !elements) {
-      return;
-    }
+  try {
+    // 1. Get mock payment intent from json-server
+    const response = await fetch("http://localhost:3001/payment/1");
+    const data = await response.json();
 
-    const result = await stripe.confirmCardPayment(data.clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardNumberElement),
-        billing_details: {
-          name: userName,
-        },
+    // 2. Simulate Stripe response
+    const result = {
+      paymentIntent: {
+        status: "succeeded",
+        id: "pi_mock_success",
       },
-    });
+    };
 
-    if (result.error) {
+    if (result.paymentIntent.status === "succeeded") {
+      const orderData = {
+        paymentMethod: "Card (Mock)",
+        paymentId: result.paymentIntent.id,
+        addressId,
+        cartId,
+      };
+
+      // 3. Send to mock backend order API
+      await dispatch(placeOrder(orderData)).unwrap();
+      onNextStep();
+    } else {
       dispatch(
         setOrderStatus({
           status: "failed",
           message: "",
-          error: result.error.message,
+          error: "Mock payment failed",
         })
       );
       setPaymentValidated(false);
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
-        console.log(result);
-        const data = {
-          paymentMethod: "Card",
-          paymentId: result.paymentIntent.id,
-          addressId,
-          cartId,
-        };
-        await dispatch(placeOrder(data)).unwrap();
-        onNextStep();
-      }
     }
-  };
+  } catch (err) {
+    dispatch(
+      setOrderStatus({
+        status: "failed",
+        message: "",
+        error: err.message,
+      })
+    );
+    setPaymentValidated(false);
+  }
+};
+
 
   const handleCryptoSubmit = async () => {
     try {
@@ -206,10 +215,12 @@ const Payment = ({ onNextStep }) => {
                 </button>
               </div>
               {paymentMethod === "card" ? (
-                <CardCheckoutForm
-                  validated={paymentValidated}
-                  setValidated={setPaymentValidated}
-                />
+<CardWrapper>
+  <CardCheckoutForm
+    validated={paymentValidated}
+    setValidated={setPaymentValidated}
+  />
+</CardWrapper>
               ) : (
                 <CryptoPayment
                   setPaymentProcessor={setPaymentProcessor}

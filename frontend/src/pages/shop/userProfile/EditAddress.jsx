@@ -15,9 +15,14 @@ import {
   updateAddress,
 } from "../../../redux/slice/addressSlice";
 import AlertBox from "../../../components/common/AlertBox";
+import { getUser } from "../../../redux/slice/authSlice";
 
 const EditAddress = () => {
-  const id = useParams().id;
+  const {id} = useParams();
+  const user = useSelector(getUser);
+  const userId = user.id;
+  console.log("single addrsss :",id)
+  console.log("userId:",userId)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,10 +33,11 @@ const EditAddress = () => {
   const updateError = useSelector(getUpdateAddressError);
 
   const initialValues = useSelector(getSingleAddress);
+  
 
   const handleEditAddress = async (values) => {
     try {
-      await dispatch(updateAddress({ id, data: values })).unwrap();
+      await dispatch(updateAddress({ userId, data: values })).unwrap();
       navigate("/profile/address");
     } catch (err) {
       console.log(err);
@@ -39,13 +45,13 @@ const EditAddress = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchSingleAddress(id));
+    dispatch(fetchSingleAddress({userId, addressId:id}));
 
     return () => {
       dispatch(removeSingleAddress());
     };
-  }, []);
-
+  }, [id,userId]);
+if(userId) console.log("initial values:",initialValues)
   return (
     <ProfileLayout>
       {fetchStatus === "failed" ? (

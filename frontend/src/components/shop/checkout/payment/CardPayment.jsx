@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  CardNumberElement,
   Elements,
   useElements,
   useStripe,
+  CardNumberElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -14,13 +14,13 @@ import { getUserName } from "../../../../redux/slice/authSlice";
 import { getCartTotal } from "../../../../redux/slice/cartSlice";
 
 const stripePromise = loadStripe(
-  "pk_test_51MtbcoSFTB0iFfwzKI856s72h3EJ36wDX63z2aERFrldMqpKgNyPMLkrtj0ZiqSYiEVAZ5IdMGZ46lcj0Cdvs6ES00RjeRuQQt"
+  "pkkkpk_test_51MtbcoSFTB0iFfwzKI856s72h3EJ36wDX63z2aERFrldMqpKgNyPMLkrtj0ZiqSYiEVAZ5IdMGZ46lcj0Cdvs6ES00RjeRuQQt"
 );
 
-const CardPayment = ({ validated, setValidated }) => {
+// Inner component: has access to Stripe context via hooks
+const CheckoutFormWrapper = ({ validated, setValidated }) => {
   const stripe = useStripe();
   const elements = useElements();
-
   const userName = useSelector(getUserName);
   const totalAmount = useSelector(getCartTotal);
 
@@ -31,6 +31,7 @@ const CardPayment = ({ validated, setValidated }) => {
     });
 
     if (!stripe || !elements) {
+      console.log("Stripe.js has not loaded yet.");
       return;
     }
 
@@ -45,20 +46,26 @@ const CardPayment = ({ validated, setValidated }) => {
 
     if (result.error) {
       console.log(result.error.message);
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
-        console.log(result);
-      }
+    } else if (result.paymentIntent.status === "succeeded") {
+      console.log("Payment succeeded!", result);
+      // You can add more success logic here
     }
   };
 
   return (
+    <CardCheckoutForm
+      validated={validated}
+      setValidated={setValidated}
+      handleSubmit={handleSubmit}
+    />
+  );
+};
+
+// Outer component: loads Stripe and provides Elements context
+const CardPayment = ({ validated, setValidated }) => {
+  return (
     <Elements stripe={stripePromise}>
-      <CardCheckoutForm
-        validated={validated}
-        setValidated={setValidated}
-        handleSubmit={handleSubmit}
-      />
+      <CheckoutFormWrapper validated={validated} setValidated={setValidated} />
     </Elements>
   );
 };

@@ -15,9 +15,9 @@ const WishlistButton = () => {
 
   useEffect(() => {
     if (user && length === 0) {
-      dispatch(fetchWishlist());
+      dispatch(fetchWishlist(user.id));
     }
-  }, []);
+  }, [user]);
 
   return (
     <Link to="/wishlist" className="flex flex-row items-center gap-2">

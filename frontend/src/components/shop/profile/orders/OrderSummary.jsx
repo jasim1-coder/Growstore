@@ -3,6 +3,7 @@ import React from "react";
 import { formatCurrency } from "../../../../utils/FormatCurrency";
 
 const OrderSummary = ({ data }) => {
+  const totalItem = 2;
   return (
     <div className="flex flex-col gap-3">
       <div className="py-2 border-b border-b-greyLight">
@@ -33,7 +34,7 @@ const OrderSummary = ({ data }) => {
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Total Items</p>
-          <p className="text-bodyText">{data.totalItems}</p>
+          <p className="text-bodyText">{totalItem}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Total Amount</p>

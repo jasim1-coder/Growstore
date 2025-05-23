@@ -30,18 +30,17 @@ export const fetchMyOrders = createAsyncThunk(
 // Fetch a single order by userId and orderId
 export const fetchSingleOrder = createAsyncThunk(
   "myOrder/fetchSingleOrder",
-  async ({ userId, orderId }, { rejectWithValue }) => {
+  async (orderId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/users/${userId}`);
-      const orders = response.data.orders || [];
-      const order = orders.find((o) => o.orderId === orderId);
-      if (!order) throw new Error("Order not found");
-      return order;
+      // Assuming orderId is the "id" or "1" in your example
+      const response = await axios.get(`${BASE_URL}/orders/${orderId}`);
+      return response.data; // This is the single order object directly
     } catch (error) {
       return rejectWithValue(error.response ? error.response.data : error.message);
     }
   }
 );
+
 
 // Cancel order by updating order status inside user's orders and patch user
 export const cancelOrder = createAsyncThunk(

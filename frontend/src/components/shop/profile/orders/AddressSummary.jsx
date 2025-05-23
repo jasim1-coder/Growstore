@@ -5,6 +5,7 @@ import { getUserEmail, getUserName } from "../../../../redux/slice/authSlice";
 const AddressSummary = ({ data }) => {
   const name = useSelector(getUserName);
   const email = useSelector(getUserEmail);
+  console.log("Data for the single order latest:",data)
 
   return (
     <div className="flex flex-col gap-3">
@@ -22,31 +23,31 @@ const AddressSummary = ({ data }) => {
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Mobile Number</p>
-          <p className="text-bodyText">{data.mobileNumber}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.mobileNumber}</p>
         </div>
       </div>
       <div className="grid-list-3">
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Street</p>
-          <p className="text-bodyText">{data.street}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.street}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">City</p>
-          <p className="text-bodyText">{data.city}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.city}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">State</p>
-          <p className="text-bodyText">{data.state}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.state}</p>
         </div>
       </div>
       <div className="grid-list-3">
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">ZIP Code</p>
-          <p className="text-bodyText">{data.zipCode}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.zip}</p>
         </div>
         <div className="flex flex-col gap-1 flex-1">
           <p className="text-sm text-textDim">Country</p>
-          <p className="text-bodyText">{data.country}</p>
+          <p className="text-bodyText">{data?.shippingAddress?.country}</p>
         </div>
       </div>
     </div>
