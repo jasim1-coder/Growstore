@@ -3,17 +3,24 @@ import AsyncSelect from "react-select/async";
 import { NODE_API } from "../../../api/apiIndex";
 
 const BrandFilter = ({ brand, setBrand }) => {
-  const loadBrands = async (searchQuery) => {
-    try {
-      const { data } = await NODE_API.get(
-        `/brand/select-search?searchQuery=${searchQuery}`
-      );
-      return data.data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
+const loadBrands = async (searchQuery) => {
+  try {
+    const response = await fetch(`http://localhost:3001/brands?q=${encodeURIComponent(searchQuery)}`);
+    if (!response.ok) throw new Error("Failed to fetch brands");
+
+    const data = await response.json();
+    console.log("data for the brands:",data.map(brand => ({value:brand._id,label:brand.name})));
+    return data.map(brand => ({
+      label: brand.name,
+      value: brand._id,
+
+    }));
+  } catch (error) {
+    console.error("Error loading brands:", error);
+    return [];
+  }
+};
+
 
   return (
     <div className="flex flex-col gap-4">

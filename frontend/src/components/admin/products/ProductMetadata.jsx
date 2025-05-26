@@ -9,19 +9,19 @@ import { formatCurrency } from "../../../utils/FormatCurrency";
 const ProductMetadata = () => {
   const data = useSelector(getAdminSingleProductData) || {};
   const [editActive, setEditActive] = useState(false);
+  console.log("data for the admin specific product: ", data)
 
   const brandLabel =
     typeof data.brand === "string"
       ? data.brand
       : data?.brand?.label || "Unknown Brand";
 
-  const categories =
-    Array.isArray(data.category) && data.category.length > 0
-      ? data.category
+  const categories = data.category ? Array.isArray(data.category)
+      ? data.category : [data.category]
       : [];
 
-  const images = Array.isArray(data.imageURLHighRes)
-    ? data.imageURLHighRes
+  const images = data.imageUrl ? Array.isArray(data.imageUrl) 
+    ? data.imageUrl : [data.imageUrl]
     : [];
 
   return (
@@ -98,14 +98,14 @@ const ProductMetadata = () => {
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-textDim">Total Reviews</span>
-          <span>{data?.totalReviews ?? 0}</span>
+          <span>{data?.reviews?.length ?? 0 }</span>
         </div>
       </div>
 
       {/* Feature */}
       <div className="p-3 flex flex-col border border-greyLight">
         <span className="text-sm text-textDim">Feature</span>
-        <span>{data?.feature || "No feature info"}</span>
+        <span>{data?.features || "No feature info"}</span>
       </div>
 
       {/* Description */}

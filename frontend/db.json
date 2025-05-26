@@ -81,6 +81,7 @@
           "addedOn": "2024-05-20T10:00:00Z",
           "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
         }
+        
       ],
       "addresses": [
         {
@@ -174,7 +175,29 @@
       "recommended": false,
       "popular": true,
       "topPick": false,
-      "id": "1a3b"
+      "id": "1a3b",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p2",
@@ -191,7 +214,29 @@
       "recommended": false,
       "popular": true,
       "topPick": false,
-      "id": "6b42"
+      "id": "6b42",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p3",
@@ -208,7 +253,29 @@
       "recommended": true,
       "popular": true,
       "topPick": true,
-      "id": "faf4"
+      "id": "faf4",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p4",
@@ -225,7 +292,29 @@
       "recommended": false,
       "popular": false,
       "topPick": false,
-      "id": "63e1"
+      "id": "63e1",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p5",
@@ -242,7 +331,29 @@
       "recommended": true,
       "popular": false,
       "topPick": false,
-      "id": "938f"
+      "id": "938f",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p6",
@@ -259,7 +370,29 @@
       "recommended": true,
       "popular": true,
       "topPick": true,
-      "id": "8113"
+      "id": "8113",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p7",
@@ -276,7 +409,29 @@
       "recommended": false,
       "popular": true,
       "topPick": false,
-      "id": "5811"
+      "id": "5811",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p8",
@@ -293,7 +448,29 @@
       "recommended": true,
       "popular": false,
       "topPick": false,
-      "id": "59f6"
+      "id": "59f6",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p9",
@@ -310,7 +487,29 @@
       "recommended": false,
       "popular": true,
       "topPick": false,
-      "id": "9fe4"
+      "id": "9fe4",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     },
     {
       "_id": "p10",
@@ -327,9 +526,30 @@
       "recommended": true,
       "popular": false,
       "topPick": true,
-      "id": "079e"
-    }
-    ,
+      "id": "079e",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
+    },
     {
       "_id": "2",
       "title": "Adidas UltraBoost",
@@ -345,9 +565,30 @@
       "recommended": true,
       "popular": false,
       "topPick": true,
-      "id": "079e"
-    }
-    ,
+      "id": "079e",
+      "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
+    },
     {
       "_id": "1",
       "title": "Nike Air Max",
@@ -363,7 +604,29 @@
       "recommended": true,
       "popular": false,
       "topPick": true,
-      "id": "079e"
+      "id": "079e",
+       "features": [
+        "12 large organic eggs",
+        "Cage-free and antibiotic-free",
+        "Rich in Omega-3"
+      ],
+      "description": "Fresh organic brown eggs laid by cage-free hens, perfect for a healthy breakfast. Packed with protein and Omega-3 fatty acids.",
+      "reviews": [
+        {
+          "userId": "U001",
+          "username": "john_doe",
+          "rating": 5,
+          "comment": "Great quality eggs! Always fresh.",
+          "date": "2024-12-10T14:23:00Z"
+        },
+        {
+          "userId": "U002",
+          "username": "emma_89",
+          "rating": 4,
+          "comment": "Good taste but a bit expensive.",
+          "date": "2024-12-11T09:15:00Z"
+        }
+      ]
     }
   ],
   "tokens": [
@@ -717,7 +980,7 @@
       "response": "We’re open daily from 8 AM to 9 PM. Closed on Sundays."
     },
     {
-      "id": "14",
+"id": "14",
       "keyword": "fresh",
       "response": "All our products are fresh and sourced from trusted local farmers."
     },

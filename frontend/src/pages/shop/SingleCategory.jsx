@@ -22,9 +22,10 @@ const SingleCategory = () => {
   const categoryName = useSelector(getCategoryName);
   const status = useSelector(getCategoriesProductStatus);
   const error = useSelector(getCategoriesProductError);
-
+console.log("poducts for the categories: ",data) 
   useEffect(() => {
-    dispatch(fetchCategoriesProduct(id));  // Fetch products when the category changes
+    dispatch(fetchCategoriesProduct(id));
+     // Fetch products when the category changes
     return () => {
       dispatch(removeCategoriesProductData());  // Reset product data when component unmounts
     };

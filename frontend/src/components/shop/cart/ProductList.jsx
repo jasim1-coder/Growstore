@@ -9,7 +9,7 @@ import {
 const ProductList = () => {
   const data = useSelector(getCartItems);
   const fetchStatus = useSelector(getCartItemFetchStatus);
-
+console.log("data for the cart item:",data)
   return (
     <div className="flex flex-col">
       {fetchStatus === "loading" ? (
@@ -17,7 +17,7 @@ const ProductList = () => {
       ) : data.length === 0 ? (
         <p className="font-medium">No items found in your cart</p>
       ) : (
-        data.map((entry) => <ProductItem data={entry} key={entry.id} />)
+        data.map((entry) => <ProductItem data={entry} key={entry._id} />)
       )}
     </div>
   );

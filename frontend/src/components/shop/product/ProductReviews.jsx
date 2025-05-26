@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { NODE_API } from "../../../api/apiIndex";
+import axios from "axios";
 import Pagination from "../../common/pagination/Pagination";
 import AddReviewCard from "./AddReviewCard";
 import RatingCard from "./RatingCard";
@@ -10,27 +9,45 @@ import {
   reviewsSortOrderData,
 } from "../../../utils/DefaultValues";
 
-const ProductReviews = () => {
-  const id = useParams().id;
+const ProductReviews = ({ productData }) => {
   const [reviewsData, setReviewsData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [field, setField] = useState("Rating");
-  const [order, setOrder] = useState("DESC");
+  const [field, setField] = useState("date");
+  const [order, setOrder] = useState("desc");
 
-  const getReviews = async (page, limit, sortField, orderField) => {
-    const { data } = await NODE_API.get(
-      `/review/byproduct/${id}?page=${page}&limit=${limit}&field=${sortField}&order=${orderField}`
+const getReviews = async (page, limit, sortField, orderField) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:3001/products/${productData.id}`
     );
-    console.log(data);
-    setReviewsData(data.data);
-    setPageCount(data.count);
-  };
+
+    const allReviews = data.reviews || [];
+
+    // Sort
+    allReviews.sort((a, b) => {
+      if (orderField === "asc") return a[sortField] > b[sortField] ? 1 : -1;
+      return a[sortField] < b[sortField] ? 1 : -1;
+    });
+
+    // Paginate
+    const start = (page - 1) * limit;
+    const paginatedReviews = allReviews.slice(start, start + limit);
+
+    setReviewsData(paginatedReviews);
+    setPageCount(Math.ceil(allReviews.length / limit));
+  } catch (error) {
+    console.error("Failed to fetch reviews:", error);
+  }
+};
+
 
   useEffect(() => {
-    getReviews(page, 10, field, order);
-  }, [page, field, order]);
-
+    if (productData?.id) {
+      getReviews(page, 10, field, order);
+    }
+  }, [page, field, order, productData]);
+console.log("reviewsData:",productData)
   return (
     <div className="flex flex-col gap-4">
       <h3 className="heading3">Reviews for this product</h3>

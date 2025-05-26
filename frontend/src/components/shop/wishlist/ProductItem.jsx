@@ -18,7 +18,7 @@ const ProductItem = ({ data }) => {
   const [existsInCart, setExistsInCart] = useState(false);
 
   const addedOn = moment(data.addedOn).format("DD MMM, YYYY");
-
+console.log("data for the product item in the wishlist:",data);
   const handleDelete = async () => {
     setDeleteStatus("loading");
     await dispatch(removeWishlistItem(data._id)).unwrap();

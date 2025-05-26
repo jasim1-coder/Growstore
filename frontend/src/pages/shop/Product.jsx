@@ -21,6 +21,7 @@ const Product = () => {
   const productData = useSelector(getProductDetails);
   const status = useSelector(getProductStatus);
   const error = useSelector(getProductError);
+  console.log("Product data for the reviews:",productData)
 
   useEffect(() => {
     dispatch(fetchProductDetails(id)); // fetch product based on the id
@@ -60,7 +61,7 @@ const Product = () => {
     </div>
 
     {productData.relatedProducts?.length > 0 && <ProductRelated />}
-    {productData.reviews?.length > 0 && <ProductReviews />}
+    {productData.reviews?.length > 0 && <ProductReviews productData = {productData}/>}
   </div>
 ) : null}
       </div>

@@ -19,26 +19,33 @@ import { formatCurrency } from "../../../utils/FormatCurrency";
 
 const ProductCard = ({ data }) => {
   console.log("ProductCard Data:", data);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector(getUser);
   const cartItems = useSelector(getCartItems);
   const wishlistItems = useSelector(getWishlist);
+  console.log("this is the wishlist itme:",wishlistItems)
 
   const [existsInCart, setExistsInCart] = useState(false);
+  console.log("already exist in the cart: ",existsInCart)
   const [existsInWishlist, setExistsInWishlist] = useState(false);
   const [addStatus, setAddStatus] = useState("idle");
 
   useEffect(() => {
-    const exists = cartItems.find((item) => item.id === data._id);
+    const exists = cartItems.find((item) => item.id === data.id);
     setExistsInCart(!!exists);
-  }, [cartItems, data._id]);
+  }, [cartItems, data.id]);
 
-  useEffect(() => {
-    const exists = wishlistItems.find((item) => item.productId === data._id);
-    setExistsInWishlist(!!exists);
-  }, [wishlistItems, data._id]);
+ useEffect(() => {
+  const exists = Array.isArray(wishlistItems) 
+    ? wishlistItems.filter(Boolean).find((item) => item.productId === data.id) 
+    : null;
+    
+  setExistsInWishlist(!!exists);
+}, [wishlistItems, data._id]);
+
 
   const handleAddtoCart = async () => {
     const quantity = 1;

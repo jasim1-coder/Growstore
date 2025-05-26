@@ -40,7 +40,7 @@ const ProductMain = () => {
         id: data._id,
         title: data.title,
         price: data.price,
-        imageUrl: data.imageURLHighRes[0],
+        imageUrl: data.imageUrl,
         quantity,
         total,
         stock: data.quantity,
@@ -66,7 +66,7 @@ const ProductMain = () => {
         />
         <p>
           <span className="text-textDim">By</span>&nbsp;
-          <span className="text-baseGreen">{data.brand.label}</span>
+          <span className="text-baseGreen">{data.brand}</span>
         </p>
       </div>
 
@@ -86,7 +86,7 @@ const ProductMain = () => {
           </div>
           <p className="">
             <span className="text-uiBlack font-medium">
-              {data.totalReviews}
+              {data.reviews.length}
             </span>
             &nbsp;
             <span className="text-textDim">Reviews</span>
@@ -116,7 +116,7 @@ const ProductMain = () => {
 
       <div className="flex flex-col gap-2 border-b border-b-uiGrey pb-4">
         <p className="text-textDim font-[18px]">Features</p>
-        <p className="text-uiBlack">{data.feature}</p>
+        <p className="text-uiBlack">{data.features}</p>
       </div>
 
       <div className="flex flex-col gap-4">

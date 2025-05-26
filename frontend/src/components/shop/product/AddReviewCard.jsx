@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { PRIVATE_API } from "../../../api/apiIndex";
+import axios from "axios";
 import { getUser } from "../../../redux/slice/authSlice";
 import AddReviewForm from "./AddReviewForm";
 import UserReviewCard from "./UserReviewCard";
 
 const AddReviewCard = () => {
-  const id = useParams().id;
+  const { id } = useParams();
   const user = useSelector(getUser);
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,16 +21,17 @@ const AddReviewCard = () => {
 
   const checkReview = async () => {
     try {
-      const { data } = await PRIVATE_API.get(`/review/check/${id}`);
+      const { data: product } = await axios.get(`http://localhost:3001/products/${id}`);
+      const foundReview = product.reviews?.find(
+        (review) => review.userId === user?.id
+      );
 
-      const hasAlreadyAdded = data.found;
-
-      if (hasAlreadyAdded) {
-        data.data.reviewerName = user.name;
-        setOldReview(data.data);
+      if (foundReview) {
+        foundReview.reviewerName = user.name;
+        setOldReview(foundReview);
       }
     } catch (error) {
-      setError(error.response ? error.response.data.message : error);
+      setError(error.response ? error.response.data.message : error.message);
     }
   };
 
@@ -38,7 +39,7 @@ const AddReviewCard = () => {
     if (user) {
       checkReview();
     }
-  }, [user]);
+  }, [user, id]);
 
   return (
     <div className="flex flex-col gap-3 border border-greyLight p-4 rounded-sm">
@@ -55,9 +56,7 @@ const AddReviewCard = () => {
           <span className="text-bodyText">to add a review</span>
         </div>
       ) : oldReview ? (
-        <div className="">
-          <UserReviewCard data={oldReview} setOldReview={setOldReview} />
-        </div>
+        <UserReviewCard data={oldReview} setOldReview={setOldReview} />
       ) : error ? (
         <p>{error}</p>
       ) : (

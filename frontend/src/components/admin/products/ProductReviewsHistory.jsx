@@ -7,9 +7,7 @@ import {
   reviewsFieldData,
   reviewsSortOrderData,
 } from "../../../utils/DefaultValues";
-import { useState } from "react";
-import { NODE_API } from "../../../api/apiIndex";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Pagination from "../../common/pagination/Pagination";
 import { useParams } from "react-router-dom";
 
@@ -41,11 +39,47 @@ const ProductReviewsByUser = () => {
   const [order, setOrder] = useState("DESC");
 
   const getReviews = async (page, limit, sortField, orderField) => {
-    const { data } = await NODE_API.get(
-      `/review/byproduct/${id}?page=${page}&limit=${limit}&field=${sortField}&order=${orderField}`
-    );
-    setReviewsData(data.data);
-    setPageCount(data.count);
+    try {
+      const response = await fetch(`http://localhost:3001/products/?&_id=${id}`);
+      if (!response.ok) throw new Error("Failed to fetch product");
+
+      const product = await response.json();
+      let reviews = product[0].reviews || [];
+      console.log("admin product reviews :",product[0].reviews)
+
+      // Normalize keys for consistent sorting & display
+      reviews = reviews.map((review) => ({
+        ...review,
+        Rating: review.Rating ?? review.rating,
+        Time: review.Time ?? review.date,
+        reviewerName: review.reviewerName ?? review.username,
+        reviewText: review.reviewText ?? review.comment,
+      }));
+
+      // Sort reviews by field and order
+      reviews.sort((a, b) => {
+        const valA = a[sortField];
+        const valB = b[sortField];
+        if (valA === undefined || valB === undefined) return 0;
+
+        if (orderField.toLowerCase() === "asc") {
+          return valA > valB ? 1 : valA < valB ? -1 : 0;
+        } else {
+          return valA < valB ? 1 : valA > valB ? -1 : 0;
+        }
+      });
+
+      // Pagination
+      const start = (page - 1) * limit;
+      const paginated = reviews.slice(start, start + limit);
+
+      setReviewsData(paginated);
+      setPageCount(reviews.length);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      setReviewsData([]);
+      setPageCount(0);
+    }
   };
 
   useEffect(() => {

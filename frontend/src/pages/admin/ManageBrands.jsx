@@ -65,7 +65,7 @@ console.log("brand id:",id)
             ) : null}
 
             <BrandMetadata id={id} />
-            <BrandProduct id={id} />
+            <BrandProduct  />
           </div>
         </section>
       </div>
