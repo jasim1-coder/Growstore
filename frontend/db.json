@@ -80,8 +80,8 @@
           "price": 110,
           "addedOn": "2024-05-20T10:00:00Z",
           "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRMOKoaJ8_YQ1P9V9ljGFoBJIrmgrzVl7a0fYgqesBIJJSEDnBtuqyMyVGj5h6cNd6ws0QN5klhgdGoRuuTZj5r_MH0G3gA9Rbx8TKwEs7YjGRpRoIljOJPTQ"
-        }
-        
+        },
+        null
       ],
       "addresses": [
         {
@@ -176,7 +176,7 @@
       "popular": true,
       "topPick": false,
       "id": "1a3b",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -215,7 +215,7 @@
       "popular": true,
       "topPick": false,
       "id": "6b42",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -293,7 +293,7 @@
       "popular": false,
       "topPick": false,
       "id": "63e1",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -449,7 +449,7 @@
       "popular": false,
       "topPick": false,
       "id": "59f6",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -488,7 +488,7 @@
       "popular": true,
       "topPick": false,
       "id": "9fe4",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -605,7 +605,7 @@
       "popular": false,
       "topPick": true,
       "id": "079e",
-       "features": [
+      "features": [
         "12 large organic eggs",
         "Cage-free and antibiotic-free",
         "Rich in Omega-3"
@@ -980,7 +980,7 @@
       "response": "We’re open daily from 8 AM to 9 PM. Closed on Sundays."
     },
     {
-"id": "14",
+      "id": "14",
       "keyword": "fresh",
       "response": "All our products are fresh and sourced from trusted local farmers."
     },
