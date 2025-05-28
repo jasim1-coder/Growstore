@@ -84,6 +84,7 @@ export const fetchCartItems = createAsyncThunk(
     try {
       const res = await fetch(`http://localhost:3001/users/${userId}`);
       const user = await res.json();
+      console.log("user id for cart:",userId)
       return user.cart || []; // Ensure it's always an array
     } catch (error) {
       return rejectWithValue(error.message || "Failed to fetch cart");

@@ -18,6 +18,7 @@ const ChatBox = () => {
   const dispatch = useDispatch();
 
   const responses = useSelector(getChatResponses);
+  console.log("Bot response: ",responses)
   const status = useSelector(getChatStatus);
   const error = useSelector(getChatError);
 

@@ -1158,6 +1158,11 @@
       "id": "49",
       "keyword": "rakhi",
       "response": "Yes, Rakhis and Raksha Bandhan gift boxes are available during the season."
+    },
+    {
+      "id": "50",
+      "keyword": "hlo",
+      "response":"Hello how can i help you today"
     }
   ]
 }
